@@ -1,0 +1,4 @@
+**/obj
+**/bin
+Backend/Arekbor.EventHub/src/Api/appsettings.Development.json
+**/.vscode

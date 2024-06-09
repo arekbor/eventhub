@@ -10,15 +10,10 @@ public class CacheManager<TValue>(
 {
     private readonly Func<string, string> _keyCache = (key) => $"{typeof(TValue).Name}:{key}";
 
-    public Task<TValue?> GetAsync(string key, CancellationToken cancellationToken)
+    public async Task<TValue?> GetAsync(string key, CancellationToken cancellationToken)
     {
-        return cache.GetStringAsync(_keyCache(key), cancellationToken).ContinueWith(task => {
-            if (task.IsFaulted || task.IsCanceled)
-                return default;
-        
-            var data = task.Result;
-            return data is null ? default : JsonConvert.DeserializeObject<TValue>(data);
-        }, cancellationToken);
+        var data = await cache.GetStringAsync(_keyCache(key), cancellationToken);
+        return data is null ? default : JsonConvert.DeserializeObject<TValue>(data);
     }
 
     public Task RemoveAsync(string key, CancellationToken cancellationToken)

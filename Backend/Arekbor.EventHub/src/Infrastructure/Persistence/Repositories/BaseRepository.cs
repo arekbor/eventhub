@@ -12,11 +12,11 @@ public class BaseRepository<TEntity>(
 
     public Task<TEntity?> FindAsync(Guid userId, CancellationToken cancellationToken)
     {
-        var cursor = MongoDbContext.Collection<TEntity>()
-            .FindAsync<TEntity>(Builders<TEntity>.Filter
-                .Eq(x => x.Id, userId), cancellationToken: cancellationToken);
+        var filter = Builders<TEntity>.Filter.Eq(x => x.Id, userId);
 
-        return cursor.Result.FirstOrDefaultAsync(cancellationToken)!;
+        return MongoDbContext.Collection<TEntity>()
+            .Find(filter)
+            .FirstOrDefaultAsync(cancellationToken)!;
     }
 
     public Task InsertAsync(TEntity entity, CancellationToken cancellationToken)

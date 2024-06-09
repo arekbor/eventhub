@@ -9,10 +9,9 @@ public class UserRepository(
 {
     public Task<User?> FindByEmailAsync(string email, CancellationToken cancellationToken)
     {
-        var cursor = MongoDbContext.Collection<User>()
-            .FindAsync<User>(Builders<User>.Filter
-                .Eq(x => x.Email, email), cancellationToken: cancellationToken);
+        var filter = Builders<User>.Filter.Eq(x => x.Email, email);
 
-        return cursor.Result.FirstOrDefaultAsync(cancellationToken)!;
+        return MongoDbContext.Collection<User>().Find(filter)
+            .FirstOrDefaultAsync(cancellationToken)!;
     }
 }

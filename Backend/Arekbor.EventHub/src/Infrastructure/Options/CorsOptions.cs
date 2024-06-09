@@ -4,8 +4,6 @@ namespace Arekbor.EventHub.Infrastructure.Options;
 
 public class CorsOptions
 {
-    public const string Position = "Cors";
-
     [Required]
     public required string AllowedOrigins { get; init; }
     [Required]

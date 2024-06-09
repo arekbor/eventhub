@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using FluentValidation;
 
 namespace Arekbor.TouchBase.Application.Common.Validators;
@@ -30,5 +31,15 @@ public static class ValidatorsExtensions
             .WithMessage("{PropertyName} must contain at least one number.")
             .Matches(@"[][""!@#$%^&*(){}:;<>,.?/+_=|'~\\-]")
             .WithMessage("{PropertyName} must contain at least one special character.");
+    }
+
+    public static IRuleBuilderOptions<T, string> ConfirmPassword<T>
+        (this IRuleBuilder<T, string> ruleBuilder, Expression<Func<T, string>> password)
+    {
+        return ruleBuilder
+            .NotEmpty()
+            .NotNull()
+            .Equal(password)
+            .WithMessage("Passwords do not match.");
     }
 }

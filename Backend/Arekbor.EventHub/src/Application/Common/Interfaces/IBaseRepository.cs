@@ -5,5 +5,6 @@ namespace Arekbor.EventHub.Application.Common.Interfaces;
 public interface IBaseRepository<TEntity>
     where TEntity : BaseEntity
 {
-    Task AddAsync(TEntity entity, CancellationToken cancellationToken);
+    Task InsertAsync(TEntity document, CancellationToken cancellationToken);
+    Task<TEntity?> FindAsync(Guid userId, CancellationToken cancellationToken);
 }

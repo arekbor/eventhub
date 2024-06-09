@@ -1,13 +1,18 @@
 using Arekbor.EventHub.Application.Common.Interfaces;
 using Arekbor.EventHub.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace Arekbor.EventHub.Infrastructure.Persistence.Repositories;
 
 public class UserRepository(
     MongoDbContext mongoDbContext) : BaseRepository<User>(mongoDbContext), IUserRepository
 {
-    public Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
-        => MongoDbContext.Users
-            .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+    public Task<User?> FindByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        var cursor = MongoDbContext.Collection<User>()
+            .FindAsync<User>(Builders<User>.Filter
+                .Eq(x => x.Email, email), cancellationToken: cancellationToken);
+
+        return cursor.Result.FirstOrDefaultAsync(cancellationToken)!;
+    }
 }

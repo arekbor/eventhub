@@ -7,11 +7,12 @@ using MediatR;
 
 namespace Arekbor.EventHub.Application.Users;
 
-public record RegisterUserCommand(string Username, string Email, string Password) : IRequest<Unit>;
+public record RegisterUser
+    (string Username, string Email, string Password, string ConfirmPassword) : IRequest<Unit>;
 
-public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
+public class RegisterUserValidator : AbstractValidator<RegisterUser>
 {
-    public RegisterUserCommandValidator()
+    public RegisterUserValidator()
     {
         RuleFor(x => x.Username)
             .Username();
@@ -20,33 +21,34 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
             .EmailAddress();
         
         RuleFor(x => x.Password)
-            .Password();
+            .Password(); 
+
+        RuleFor(x => x.ConfirmPassword)
+            .ConfirmPassword(x => x.Password);
     }
 }
 
-internal class RegisterUserCommandHandler(
-    IUnitOfWork unitOfWork,
+internal class RegisterUserHandler(
     IUserRepository userRepository,
     IIdentityService identityService
-) : IRequestHandler<RegisterUserCommand, Unit>
+) : IRequestHandler<RegisterUser, Unit>
 {
-    public async Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(RegisterUser request, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetByEmailAsync(request.Email, cancellationToken);
-        if (user is not null)
+        var existingUser = await userRepository
+            .FindByEmailAsync(request.Email, cancellationToken);
+        if (existingUser is not null)
             throw new BadRequestException($"User with email: {request.Email} already exists");
-
-        var newUser = new User
+            
+        var user = new User
         {
             Username = request.Username,
             Email = request.Email,
             Password = identityService.HashPassword(request.Password)
         };
 
-        await userRepository.AddAsync(newUser, cancellationToken);
+        await userRepository.InsertAsync(user, cancellationToken);
  
-        await unitOfWork.CommitAsync(cancellationToken);
-
         return Unit.Value;
     }
 }

@@ -17,13 +17,9 @@ export class ErrorInterceptor implements HttpInterceptor {
     req: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    console.log("POCZĄTEK");
-
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         const errorsToDisplay = this.handleHttpErrors(error);
-
-        console.log("DUPA INTERCEPTOR");
 
         errorsToDisplay.forEach((errorToDisplay: string) => {
           this.messageService.add({

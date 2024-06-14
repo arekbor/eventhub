@@ -31,7 +31,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
   }
 
   protected onCreateAccount(): void {
-    this.router.navigate(["auth/register"]);
+    this.router.navigate(["user/register"]);
   }
 
   private initForm(): void {

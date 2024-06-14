@@ -2,3 +2,4 @@
 **/bin
 Backend/Arekbor.EventHub/src/Api/appsettings.Development.json
 **/.vscode
+**/node_modules

@@ -1,0 +1,38 @@
+{
+  "name": "eventhub",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "npm run lint && ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "lint": "ng lint",
+    "dev": "npm run lint && ng serve --configuration development"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^18.0.0",
+    "@angular/common": "^18.0.0",
+    "@angular/compiler": "^18.0.0",
+    "@angular/core": "^18.0.0",
+    "@angular/forms": "^18.0.0",
+    "@angular/platform-browser": "^18.0.0",
+    "@angular/platform-browser-dynamic": "^18.0.0",
+    "@angular/router": "^18.0.0",
+    "primeflex": "^3.3.1",
+    "primeicons": "^7.0.0",
+    "primeng": "^17.18.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.3"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^18.0.3",
+    "@angular/cli": "^18.0.3",
+    "@angular/compiler-cli": "^18.0.0",
+    "angular-eslint": "18.0.1",
+    "eslint": "^9.3.0",
+    "typescript": "~5.4.2",
+    "typescript-eslint": "8.0.0-alpha.20"
+  }
+}

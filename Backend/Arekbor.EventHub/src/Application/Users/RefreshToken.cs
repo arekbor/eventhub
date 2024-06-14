@@ -34,7 +34,7 @@ internal class RefreshTokenHandler(
         await cacheManager.SetAsync(
             refreshToken.Token, 
             refreshToken, 
-            refreshToken.GetExpirationSeconds,
+            refreshToken.TotalExpirationSeconds,
             cancellationToken);
 
         return new TokensResult(accessToken, refreshToken.Token);

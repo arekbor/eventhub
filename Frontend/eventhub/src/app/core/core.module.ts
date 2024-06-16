@@ -1,7 +1,7 @@
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { ErrorInterceptor } from "@core/interceptors/error.interceptor";
-import { FormService } from "@core/services/form.service";
+import { HttpService } from "@core/services/http.service";
 import { UserService } from "@core/services/user.service";
 import { SharedModule } from "@shared/shared.module";
 
@@ -11,6 +11,6 @@ const HttpInterceptors = [
 
 @NgModule({
   imports: [SharedModule],
-  providers: [FormService, UserService, HttpInterceptors],
+  providers: [HttpService, UserService, HttpInterceptors],
 })
 export class CoreModule {}

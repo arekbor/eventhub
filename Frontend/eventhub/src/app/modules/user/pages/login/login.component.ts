@@ -2,8 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Login } from "@core/models/login.model";
-import { FormService } from "@core/services/form.service";
-import { FormFieldErrorMap } from "@core/utils/form-field-error-map.type";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
 import { BaseComponent } from "@modules/base.component";
 import { FormControls } from "@shared/utils/form-controls";
@@ -14,9 +12,8 @@ import { FormControls } from "@shared/utils/form-controls";
 })
 export class LoginComponent extends BaseComponent implements OnInit {
   protected form: FormGroup<FormGroupControl<Login>>;
-  protected formFieldErrorMap: FormFieldErrorMap = {};
 
-  constructor(private formService: FormService, private router: Router) {
+  constructor(private router: Router) {
     super();
   }
 
@@ -25,9 +22,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
   }
 
   protected onSubmit(): void {
-    if (!this.formService.isFormValid(this.form)) {
-      return;
-    }
+    throw new Error("Method not implemented.");
   }
 
   protected onCreateAccount(): void {
@@ -39,13 +34,5 @@ export class LoginComponent extends BaseComponent implements OnInit {
       email: FormControls.email(),
       password: FormControls.password(),
     });
-
-    this.safeSub(
-      this.formService.handlerErrors(this.form).subscribe({
-        next: (formFieldErrorMap: FormFieldErrorMap) => {
-          this.formFieldErrorMap = formFieldErrorMap;
-        },
-      })
-    );
   }
 }

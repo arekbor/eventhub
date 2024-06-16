@@ -7,6 +7,7 @@ import { DividerModule } from "primeng/divider";
 import { FloatLabelModule } from "primeng/floatlabel";
 import { ImageModule } from "primeng/image";
 import { PasswordModule } from "primeng/password";
+import { SkeletonModule } from "primeng/skeleton";
 import { ToastModule } from "primeng/toast";
 
 export const AppPrimeNgModule = [
@@ -19,4 +20,5 @@ export const AppPrimeNgModule = [
   DividerModule,
   FloatLabelModule,
   PasswordModule,
+  SkeletonModule,
 ];

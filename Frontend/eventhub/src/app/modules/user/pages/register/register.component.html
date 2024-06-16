@@ -1,98 +1,50 @@
-@if (form) {
 <div class="flex justify-content-center mt-8">
   <p-card>
     <ng-template pTemplate="header">
-      <app-event-hub-img-logo />
+      <app-logo />
     </ng-template>
 
     <ng-template pTemplate="content">
       <form [formGroup]="form">
-        <div class="field required">
-          <p-floatLabel>
-            <input
-              type="email"
-              id="email"
-              pInputText
-              formControlName="email"
-              class="w-full"
-              [ngClass]="{ 'ng-invalid ng-dirty': formFieldErrorMap['email'] }"
-            />
-            <label for="email">Email</label>
-          </p-floatLabel>
+        <app-input
+          type="email"
+          label="Email"
+          inputId="email"
+          formControlName="email"
+        />
 
-          <app-field-error [errors]="formFieldErrorMap['email']" />
-        </div>
+        <app-input
+          type="text"
+          label="User name"
+          class="mt-5"
+          inputId="username"
+          formControlName="username"
+        />
 
-        <div class="field mt-5 required">
-          <p-floatLabel>
-            <input
-              type="text"
-              id="username"
-              pInputText
-              formControlName="username"
-              class="w-full"
-              [ngClass]="{
-                'ng-invalid ng-dirty': formFieldErrorMap['username']
-              }"
-            />
-            <label for="username">User name</label>
-          </p-floatLabel>
+        <app-input
+          type="password"
+          label="Password"
+          class="mt-5"
+          inputId="password"
+          formControlName="password"
+        />
 
-          <app-field-error [errors]="formFieldErrorMap['email']" />
-        </div>
-
-        <div class="field mt-5 required">
-          <p-floatLabel>
-            <p-password
-              toggleMask="true"
-              feedback="false"
-              id="password"
-              formControlName="password"
-              class="p-password-block"
-              [ngClass]="{
-                'ng-invalid ng-dirty': formFieldErrorMap['password']
-              }"
-            />
-            <label for="password">Password</label>
-          </p-floatLabel>
-
-          <app-field-error [errors]="formFieldErrorMap['password']" />
-        </div>
-
-        <div class="field mt-5 required">
-          <p-floatLabel>
-            <p-password
-              toggleMask="true"
-              feedback="false"
-              id="confirmPassword"
-              formControlName="confirmPassword"
-              class="p-password-block"
-              [ngClass]="{
-                'ng-invalid ng-dirty': formFieldErrorMap['confirmPassword']
-              }"
-            />
-            <label for="confirmPassword">Confirm password</label>
-          </p-floatLabel>
-
-          <app-field-error [errors]="formFieldErrorMap['confirmPassword']" />
-        </div>
+        <app-input
+          type="password"
+          label="Confirm password"
+          class="mt-5"
+          inputId="confirmPassword"
+          formControlName="confirmPassword"
+        />
       </form>
     </ng-template>
 
     <ng-template pTemplate="footer">
       <div class="flex justify-content-center">
-        <button
-          pButton
-          type="submit"
-          outlined="true"
-          severity="contrast"
-          size="small"
-          (click)="onSubmit()"
+        <app-form-submit [form]="form" (validSubmit)="onSubmit()"
+          >Register</app-form-submit
         >
-          Register
-        </button>
       </div>
     </ng-template>
   </p-card>
 </div>
-}

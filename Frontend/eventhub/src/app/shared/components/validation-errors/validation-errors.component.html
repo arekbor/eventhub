@@ -1,0 +1,6 @@
+<div
+  *ngFor="let error of errors | keyvalue"
+  class="text-red-400 font-light mt-1"
+>
+  <small>{{ errorMessages[error.key](errors![error.key]) }}</small>
+</div>

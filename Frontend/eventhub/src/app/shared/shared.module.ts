@@ -7,21 +7,26 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AppPrimeNgModule } from "@app/app.primeng.module";
-import { EventHubImgLogoComponent } from "@shared/components/event-hub-img-logo/event-hub-img-logo.component";
-import { FieldErrorComponent } from "@shared/components/field-error/field-error.component";
+import { FormSubmitComponent } from "@shared/components/form-submit/form-submit.component";
+import { InputComponent } from "@shared/components/input/input.component";
+import { ValidationErrorsComponent } from "@shared/components/validation-errors/validation-errors.component";
 import { MessageService } from "primeng/api";
 
 @NgModule({
-  imports: [CommonModule, AppPrimeNgModule, FormsModule],
+  imports: [CommonModule, AppPrimeNgModule, FormsModule, ReactiveFormsModule],
   providers: [provideHttpClient(withInterceptorsFromDi()), MessageService],
-  declarations: [FieldErrorComponent, EventHubImgLogoComponent],
+  declarations: [
+    InputComponent,
+    ValidationErrorsComponent,
+    FormSubmitComponent,
+  ],
   exports: [
     CommonModule,
     AppPrimeNgModule,
     RouterModule,
     ReactiveFormsModule,
-    FieldErrorComponent,
-    EventHubImgLogoComponent,
+    InputComponent,
+    FormSubmitComponent,
   ],
 })
 export class SharedModule {}

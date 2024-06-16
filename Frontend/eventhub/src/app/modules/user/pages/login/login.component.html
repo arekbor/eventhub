@@ -1,59 +1,32 @@
-<p-toast />
-@if (form) {
 <div class="flex justify-content-center mt-8">
   <p-card>
     <ng-template pTemplate="header">
-      <app-event-hub-img-logo />
+      <app-logo />
     </ng-template>
 
     <ng-template pTemplate="content">
       <form [formGroup]="form">
-        <div class="field required">
-          <p-floatLabel>
-            <input
-              type="email"
-              id="email"
-              pInputText
-              formControlName="email"
-              class="w-full"
-              [ngClass]="{ 'ng-invalid ng-dirty': formFieldErrorMap['email'] }"
-            />
-            <label for="email">Email</label>
-          </p-floatLabel>
+        <app-input
+          type="email"
+          inputId="email"
+          label="Email"
+          formControlName="email"
+        />
 
-          <app-field-error [errors]="formFieldErrorMap['email']" />
-        </div>
-
-        <div class="field mt-5 required">
-          <p-floatLabel>
-            <p-password
-              toggleMask="true"
-              feedback="false"
-              id="password"
-              formControlName="password"
-              class="p-password-block"
-              [ngClass]="{
-                'ng-invalid ng-dirty': formFieldErrorMap['password']
-              }"
-            />
-            <label for="password">Password</label>
-          </p-floatLabel>
-
-          <app-field-error [errors]="formFieldErrorMap['password']" />
-        </div>
+        <app-input
+          type="password"
+          inputId="password"
+          label="Password"
+          formControlName="password"
+        />
       </form>
     </ng-template>
 
     <ng-template pTemplate="footer">
       <div class="flex flex-column align-items-center">
-        <p-button
-          label="Login"
-          type="submit"
-          outlined="true"
-          severity="contrast"
-          size="small"
-          (onClick)="onSubmit()"
-        />
+        <app-form-submit [form]="form" (validSubmit)="onSubmit()"
+          >Login</app-form-submit
+        >
 
         <p-divider class="w-full" />
 
@@ -68,4 +41,3 @@
     </ng-template>
   </p-card>
 </div>
-}

@@ -1,0 +1,19 @@
+@if(control) {
+<div class="field mt-5" [ngClass]="{ required: isRequired }">
+  <p-floatLabel>
+    <input
+      [type]="type"
+      [id]="inputId"
+      [formControl]="control"
+      pInputText
+      class="w-full"
+    />
+    <label [for]="inputId">{{ label }}</label>
+  </p-floatLabel>
+
+  @if(control.invalid && (control.dirty || control.touched)) {
+  <app-validation-errors [errors]="control.errors" />
+  }
+</div>
+
+}

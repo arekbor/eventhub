@@ -18,5 +18,4 @@ export class InputComponent<T> extends ControlValueAccessorDirective<T> {
   @Input({ required: true }) type: InputType;
   @Input({ required: true }) label: string;
   @Input({ required: true }) inputId: string;
-  @Input() class: string;
 }

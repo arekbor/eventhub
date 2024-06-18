@@ -27,8 +27,16 @@
           </div>
           <div class="overflow-y-auto">
             <p-divider />
-            <app-sidebar-link icon="pi pi-user">Profile</app-sidebar-link>
-            <app-sidebar-link icon="pi pi-lock"
+            <app-sidebar-link
+              icon="pi pi-user"
+              (click)="onCloseSidebar($event)"
+              routerLink="user/profile"
+              >Profile</app-sidebar-link
+            >
+            <app-sidebar-link
+              icon="pi pi-lock"
+              (click)="onCloseSidebar($event)"
+              routerLink="user/password"
               >Change password</app-sidebar-link
             >
             <p-divider />

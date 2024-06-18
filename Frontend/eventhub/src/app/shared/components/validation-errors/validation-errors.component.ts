@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { ValidationErrors } from "@angular/forms";
-import { ErrorParams } from "@core/models/error-params";
+import { ErrorParams } from "@core/models/error-params.model";
 
 @Component({
   selector: "app-validation-errors",

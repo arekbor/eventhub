@@ -1,2 +1,46 @@
-<p-toast />
-<router-outlet />
+<p-toast></p-toast>
+
+@if (isUserLogged) {
+<p-menubar [model]="items">
+  <ng-template pTemplate="end">
+    <p-button type="button" (onClick)="sidebarVisible = true" [link]="true">{{
+      username
+    }}</p-button>
+
+    <p-sidebar position="right" [(visible)]="sidebarVisible" #sidebarRef>
+      <ng-template pTemplate="headless">
+        <div class="flex flex-column h-full">
+          <div
+            class="flex align-items-center justify-content-between px-3 pt-3 flex-shrink-0"
+          >
+            <span class="inline-flex align-items-center gap-2"> </span>
+            <span>
+              <p-button
+                type="button"
+                (click)="onCloseSidebar($event)"
+                icon="pi pi-times"
+                rounded="true"
+                outlined="true"
+                styleClass="h-2rem w-2rem"
+              ></p-button>
+            </span>
+          </div>
+          <div class="overflow-y-auto">
+            <p-divider />
+            <app-sidebar-link icon="pi pi-user">Profile</app-sidebar-link>
+            <app-sidebar-link icon="pi pi-lock"
+              >Change password</app-sidebar-link
+            >
+            <p-divider />
+            <app-sidebar-link icon="pi pi-sign-out" (click)="onLogout()"
+              >Logout</app-sidebar-link
+            >
+          </div>
+        </div>
+      </ng-template>
+    </p-sidebar>
+  </ng-template>
+</p-menubar>
+}
+
+<router-outlet></router-outlet>

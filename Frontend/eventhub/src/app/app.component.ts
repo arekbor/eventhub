@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { UserService } from "@core/services/user.service";
 import { MenuItem } from "primeng/api";
 import { Sidebar } from "primeng/sidebar";
-import { UserService } from "./core/services/user.service";
 
 @Component({
   selector: "app-root",
@@ -16,16 +16,10 @@ export class AppComponent implements OnInit {
 
   @ViewChild("sidebarRef") protected sidebarRef: Sidebar;
 
-  constructor(private userService: UserService) {
-    this.isUserLogged = this.userService.isLogged();
-
-    const unique_name = this.userService.getClaims()?.unique_name;
-    if (unique_name) {
-      this.username = unique_name;
-    }
-  }
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.initUser();
     this.initItems();
   }
 
@@ -35,6 +29,15 @@ export class AppComponent implements OnInit {
 
   protected onCloseSidebar(event: Event): void {
     this.sidebarRef.close(event);
+  }
+
+  private initUser(): void {
+    this.isUserLogged = this.userService.isLogged();
+
+    const unique_name = this.userService.getClaims()?.unique_name;
+    if (unique_name) {
+      this.username = unique_name;
+    }
   }
 
   private initItems(): void {

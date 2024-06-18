@@ -8,42 +8,35 @@
       <form [formGroup]="form">
         <app-input
           type="email"
-          label="Email"
           inputId="email"
+          label="Email"
           formControlName="email"
         />
 
         <app-input
-          type="text"
-          label="User name"
-          class="mt-5"
-          inputId="username"
-          formControlName="username"
-        />
-
-        <app-input
           type="password"
-          label="Password"
-          class="mt-5"
           inputId="password"
+          label="Password"
           formControlName="password"
-        />
-
-        <app-input
-          type="password"
-          label="Confirm password"
-          class="mt-5"
-          inputId="confirmPassword"
-          formControlName="confirmPassword"
         />
       </form>
     </ng-template>
 
     <ng-template pTemplate="footer">
-      <div class="flex justify-content-center">
+      <div class="flex flex-column align-items-center">
         <app-form-submit [form]="form" (validSubmit)="onSubmit()"
-          >Register</app-form-submit
+          >Login</app-form-submit
         >
+
+        <p-divider class="w-full" />
+
+        <p-button
+          label="Not registered? Create an account"
+          link="true"
+          severity="contrast"
+          size="small"
+          (onClick)="onCreateAccount()"
+        />
       </div>
     </ng-template>
   </p-card>

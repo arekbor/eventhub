@@ -9,6 +9,7 @@ import { RouterModule } from "@angular/router";
 import { AppPrimeNgModule } from "@app/app.primeng.module";
 import { FormSubmitComponent } from "@shared/components/form-submit/form-submit.component";
 import { InputComponent } from "@shared/components/input/input.component";
+import { SidebarLinkComponent } from "@shared/components/sidebar-link/sidebar-link.component";
 import { ValidationErrorsComponent } from "@shared/components/validation-errors/validation-errors.component";
 import { MessageService } from "primeng/api";
 
@@ -19,6 +20,7 @@ import { MessageService } from "primeng/api";
     InputComponent,
     ValidationErrorsComponent,
     FormSubmitComponent,
+    SidebarLinkComponent,
   ],
   exports: [
     CommonModule,
@@ -27,6 +29,7 @@ import { MessageService } from "primeng/api";
     ReactiveFormsModule,
     InputComponent,
     FormSubmitComponent,
+    SidebarLinkComponent,
   ],
 })
 export class SharedModule {}

@@ -1,1 +1,60 @@
-<h3>Profile component</h3>
+<div class="grid mt-3 mx-3">
+  <div class="col-12">
+    <div class="mx-0 md:mx-8 mt-5">
+      <div class="grid">
+        <div class="col-fixes">
+          <div class="flex flex-column justify-content-center h-full p-2">
+            <p-avatar icon="pi pi-user" shape="circle" size="xlarge" />
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="flex flex-column justify-content-center h-full">
+            <div class="text-xl">{{ user?.username }}</div>
+            <div class="font-light text-sm">Your account</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <p-divider />
+  </div>
+
+  <div class="col-12">
+    <div class="mx-0 md:mx-8 mt-5">
+      <div class="grid">
+        <div class="col-12">
+          <div class="text-lg font-light">Your account data</div>
+        </div>
+
+        <div class="col-12">
+          <form [formGroup]="form">
+            <app-input
+              type="email"
+              label="Email"
+              inputId="email"
+              formControlName="email"
+            />
+
+            <app-input
+              type="text"
+              label="User name"
+              inputId="username"
+              formControlName="username"
+            />
+          </form>
+        </div>
+
+        <div class="col-12">
+          <div class="flex flex-row-reverse">
+            <app-form-submit [form]="form" (validSubmit)="onSubmit()"
+              >Update profile</app-form-submit
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

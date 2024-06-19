@@ -1,6 +1,7 @@
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { JWT_OPTIONS, JwtHelperService } from "@auth0/angular-jwt";
+import { AccessInterceptor } from "@core/interceptors/access.interceptor";
 import { ErrorInterceptor } from "@core/interceptors/error.interceptor";
 import { HttpService } from "@core/services/http.service";
 import { StorageService } from "@core/services/storage.service";
@@ -8,16 +9,25 @@ import { UserService } from "@core/services/user.service";
 import { SharedModule } from "@shared/shared.module";
 
 const HttpInterceptors = [
-  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AccessInterceptor,
+    multi: true,
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: ErrorInterceptor,
+    multi: true,
+  },
 ];
 
 @NgModule({
   imports: [SharedModule],
   providers: [
+    HttpInterceptors,
     HttpService,
     UserService,
     StorageService,
-    HttpInterceptors,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
   ],

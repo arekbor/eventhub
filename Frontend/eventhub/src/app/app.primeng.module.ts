@@ -1,3 +1,5 @@
+import { AvatarModule } from "primeng/avatar";
+import { AvatarGroupModule } from "primeng/avatargroup";
 import { ButtonModule } from "primeng/button";
 import { CardModule } from "primeng/card";
 import { DividerModule } from "primeng/divider";
@@ -13,6 +15,8 @@ import { TieredMenuModule } from "primeng/tieredmenu";
 import { ToastModule } from "primeng/toast";
 
 export const AppPrimeNgModule = [
+  AvatarModule,
+  AvatarGroupModule,
   ButtonModule,
   MenubarModule,
   CardModule,

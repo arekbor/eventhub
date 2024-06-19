@@ -21,6 +21,7 @@ export class ControlValueAccessorDirective<T>
   public isDisabled = false;
   public onTouched: () => T;
   public onChange: (val: T | null) => T;
+  public value: T;
 
   constructor(@Inject(Injector) private injector: Injector) {}
 
@@ -30,11 +31,7 @@ export class ControlValueAccessorDirective<T>
   }
 
   writeValue(value: T): void {
-    if (this.control) {
-      this.control.setValue(value);
-    } else {
-      this.control = new FormControl(value);
-    }
+    this.value = value;
   }
 
   registerOnChange(fn: (val: T | null) => T): void {

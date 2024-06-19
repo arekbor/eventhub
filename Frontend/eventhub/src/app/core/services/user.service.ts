@@ -5,6 +5,7 @@ import { AuthTokens } from "@core/models/auth-tokens.model";
 import { Login } from "@core/models/login.model";
 import { Register } from "@core/models/register.model";
 import { UserClaims } from "@core/models/user-claims.model";
+import { User } from "@core/models/user.model";
 import { StorageService } from "@core/services/storage.service";
 import { environment } from "@src/environments/environment";
 import { Observable } from "rxjs";
@@ -43,5 +44,9 @@ export class UserService {
   public logout(): void {
     this.storageService.removeAuthTokens();
     window.location.reload();
+  }
+
+  public getUser(): Observable<User> {
+    return this.httpClient.get<User>(`${environment.apiUrl}/Users/user`);
   }
 }

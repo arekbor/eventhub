@@ -12,6 +12,7 @@ export class FormControls {
   static password(): FormControl<string> {
     return new FormControl("", {
       nonNullable: true,
+
       validators: [Validators.required],
     });
   }

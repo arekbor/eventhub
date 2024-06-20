@@ -28,8 +28,9 @@ export class ProfileComponent extends BaseComponent implements OnInit {
   protected onSubmit(): void {
     this.safeSub(
       this.updatePerform
-        .load(this.userService.updateProfile(this.form.getRawValue()))
+        .load(this.userService.updateProfile(this.form.getRawValue()), false)
         .subscribe((): void => {
+          window.location.reload();
           throw Error("Refresh token not implemented.");
         })
     );

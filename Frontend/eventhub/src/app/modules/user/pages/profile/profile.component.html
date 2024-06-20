@@ -2,7 +2,7 @@
   <div class="col-12">
     <div class="mx-0 md:mx-8 mt-5">
       <div class="grid">
-        @if(userPerform.isLoading || updatePerform.isLoading) {
+        @if(userPerform.isLoading) {
         <div class="col-fixes">
           <div class="flex flex-column justify-content-center h-full p-2">
             <p-skeleton shape="circle" size="4rem" />
@@ -44,7 +44,7 @@
               type="email"
               label="Email"
               inputId="email"
-              [isLoading]="userPerform.isLoading || updatePerform.isLoading"
+              [isLoading]="userPerform.isLoading"
               formControlName="email"
             />
 
@@ -52,7 +52,7 @@
               type="text"
               label="User name"
               inputId="username"
-              [isLoading]="userPerform.isLoading || updatePerform.isLoading"
+              [isLoading]="userPerform.isLoading"
               formControlName="username"
             />
           </form>

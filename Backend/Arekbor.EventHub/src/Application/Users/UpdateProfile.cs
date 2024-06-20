@@ -31,6 +31,9 @@ internal class UpdateProfileHandler(
             .FindAsync(currentUserService.GetId(), cancellationToken)
                 ?? throw new NotFoundException($"User {currentUserService.GetId()} not found");
 
+        if (user.Username.Equals(request.Username) && user.Email.Equals(request.Email))
+            throw new BadRequestException("No changes detected");
+
         var userWithSameEmail = await userRepository
             .FindByEmailAsync(request.Email, cancellationToken);
 

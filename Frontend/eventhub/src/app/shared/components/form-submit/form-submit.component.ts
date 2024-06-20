@@ -7,6 +7,8 @@ import { FormGroup } from "@angular/forms";
 })
 export class FormSubmitComponent {
   @Input({ required: true }) form: FormGroup;
+  @Input() isLoading: boolean;
+
   @Output() validSubmit = new EventEmitter<void>();
 
   protected onClick() {

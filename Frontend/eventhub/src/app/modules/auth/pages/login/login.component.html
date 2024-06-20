@@ -10,6 +10,7 @@
           type="email"
           inputId="email"
           label="Email"
+          [isLoading]="data.isLoading"
           formControlName="email"
         />
 
@@ -17,6 +18,7 @@
           type="password"
           inputId="password"
           label="Password"
+          [isLoading]="data.isLoading"
           formControlName="password"
         />
       </form>
@@ -24,7 +26,10 @@
 
     <ng-template pTemplate="footer">
       <div class="flex flex-column align-items-center">
-        <app-form-submit [form]="form" (validSubmit)="onSubmit()"
+        <app-form-submit
+          [form]="form"
+          [isLoading]="data.isLoading"
+          (validSubmit)="onSubmit()"
           >Login</app-form-submit
         >
 
@@ -35,6 +40,7 @@
           link="true"
           severity="contrast"
           size="small"
+          [loading]="data.isLoading"
           (onClick)="onCreateAccount()"
         />
       </div>

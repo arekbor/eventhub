@@ -3,8 +3,8 @@ import { FormGroup } from "@angular/forms";
 import { User } from "@core/models/user.model";
 import { UserService } from "@core/services/user.service";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
-import { Perform } from "@core/utils/perform";
 import { BaseComponent } from "@modules/base.component";
+import { Perform } from "@modules/perform";
 import { FormControls } from "@shared/utils/form-controls";
 
 @Component({

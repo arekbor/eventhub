@@ -6,8 +6,8 @@ import { Login } from "@core/models/login.model";
 import { StorageService } from "@core/services/storage.service";
 import { UserService } from "@core/services/user.service";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
-import { Perform } from "@core/utils/perform";
 import { BaseComponent } from "@modules/base.component";
+import { Perform } from "@modules/perform";
 import { FormControls } from "@shared/utils/form-controls";
 
 @Component({
@@ -16,7 +16,7 @@ import { FormControls } from "@shared/utils/form-controls";
 })
 export class LoginComponent extends BaseComponent implements OnInit {
   protected form: FormGroup<FormGroupControl<Login>>;
-  protected data: Perform<AuthTokens> = new Perform<AuthTokens>();
+  protected authTokensPerform: Perform<AuthTokens> = new Perform<AuthTokens>();
 
   constructor(
     private router: Router,
@@ -32,7 +32,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
   protected onSubmit(): void {
     this.safeSub(
-      this.data
+      this.authTokensPerform
         .load(this.userService.login(this.form.getRawValue()), false)
         .subscribe((authTokens: AuthTokens) => {
           this.storageService.setAuthTokens(authTokens);

@@ -1,5 +1,11 @@
 @if(control) {
 <div class="field mt-5" [ngClass]="{ required: isRequired }">
+  @if(isLoading) {
+  <p-iconField iconPosition="right">
+    <p-inputIcon styleClass="pi pi-spinner pi-spin" />
+    <input type="text" [disabled]="true" pInputText class="w-full" />
+  </p-iconField>
+  } @else {
   <p-floatLabel>
     <input
       [type]="type"
@@ -10,8 +16,7 @@
     />
     <label [for]="inputId">{{ label }}</label>
   </p-floatLabel>
-
-  @if(control.invalid && (control.dirty || control.touched)) {
+  } @if(control.invalid && (control.dirty || control.touched)) {
   <app-validation-errors [errors]="control.errors" />
   }
 </div>

@@ -12,7 +12,10 @@ export class Perform<T> {
   isLoading = false;
   hasError = false;
 
-  public load(action$: Observable<T>, reset = true): Observable<T> {
+  public load(
+    action$: Observable<T>,
+    resetStatementsOnFinalize = true
+  ): Observable<T> {
     this.data = null;
     this.isLoading = true;
     this.hasError = false;
@@ -29,7 +32,7 @@ export class Perform<T> {
         return throwError(() => err);
       }),
       finalize(() => {
-        if (reset) {
+        if (resetStatementsOnFinalize) {
           this.isLoading = false;
           this.hasError = false;
         }

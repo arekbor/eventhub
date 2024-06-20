@@ -32,6 +32,13 @@ export class UserService {
     );
   }
 
+  public updateProfile(user: User): Observable<void> {
+    return this.httpClient.put<void>(
+      `${environment.apiUrl}/Users/updateProfile`,
+      user
+    );
+  }
+
   public isLogged(): boolean {
     return this.getClaims() != null;
   }

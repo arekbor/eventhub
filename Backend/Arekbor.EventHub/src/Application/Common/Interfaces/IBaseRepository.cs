@@ -7,4 +7,5 @@ public interface IBaseRepository<TEntity>
 {
     Task InsertAsync(TEntity document, CancellationToken cancellationToken);
     Task<TEntity?> FindAsync(Guid userId, CancellationToken cancellationToken);
+    Task UpdateOneAsync(TEntity entity, CancellationToken cancellationToken);
 }

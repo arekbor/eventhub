@@ -2,6 +2,14 @@
   <div class="col-12">
     <div class="mx-0 md:mx-8 mt-5">
       <div class="grid">
+        @if(userPerform.isLoading || updatePerform.isLoading) {
+        <div class="col-fixes">
+          <div class="flex flex-column justify-content-center h-full p-2">
+            <p-skeleton shape="circle" size="4rem" />
+          </div>
+        </div>
+
+        } @else {
         <div class="col-fixes">
           <div class="flex flex-column justify-content-center h-full p-2">
             <p-avatar icon="pi pi-user" shape="circle" size="xlarge" />
@@ -10,10 +18,11 @@
 
         <div class="col">
           <div class="flex flex-column justify-content-center h-full">
-            <div class="text-xl">{{ user.data?.username }}</div>
+            <div class="text-xl">{{ userPerform.data?.username }}</div>
             <div class="font-light text-sm">Your account</div>
           </div>
         </div>
+        }
       </div>
     </div>
   </div>
@@ -35,7 +44,7 @@
               type="email"
               label="Email"
               inputId="email"
-              [isLoading]="user.isLoading"
+              [isLoading]="userPerform.isLoading || updatePerform.isLoading"
               formControlName="email"
             />
 
@@ -43,7 +52,7 @@
               type="text"
               label="User name"
               inputId="username"
-              [isLoading]="user.isLoading"
+              [isLoading]="userPerform.isLoading || updatePerform.isLoading"
               formControlName="username"
             />
           </form>
@@ -53,7 +62,7 @@
           <div class="flex flex-row-reverse">
             <app-form-submit
               [form]="form"
-              [isLoading]="user.isLoading"
+              [isLoading]="userPerform.isLoading || updatePerform.isLoading"
               (validSubmit)="onSubmit()"
               >Update profile</app-form-submit
             >

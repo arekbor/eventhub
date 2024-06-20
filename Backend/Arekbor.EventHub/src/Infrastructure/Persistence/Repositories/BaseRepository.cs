@@ -22,4 +22,8 @@ public class BaseRepository<TEntity>(
     public Task InsertAsync(TEntity entity, CancellationToken cancellationToken)
         => MongoDbContext.Collection<TEntity>()
             .InsertOneAsync(entity, cancellationToken: cancellationToken);
+
+    public Task UpdateOneAsync(TEntity entity, CancellationToken cancellationToken)
+        => MongoDbContext.Collection<TEntity>()
+            .ReplaceOneAsync(d => d.Id == entity.Id, entity, cancellationToken: cancellationToken);
 }

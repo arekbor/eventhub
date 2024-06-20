@@ -13,7 +13,8 @@ import { FormControls } from "@shared/utils/form-controls";
 })
 export class ProfileComponent extends BaseComponent implements OnInit {
   protected form: FormGroup<FormGroupControl<User>>;
-  protected user: Perform<User> = new Perform<User>();
+  protected userPerform: Perform<User> = new Perform<User>();
+  protected updatePerform: Perform<void> = new Perform<void>();
 
   constructor(private userService: UserService) {
     super();
@@ -25,14 +26,22 @@ export class ProfileComponent extends BaseComponent implements OnInit {
   }
 
   protected onSubmit(): void {
-    throw new Error("Not Implemented");
+    this.safeSub(
+      this.updatePerform
+        .load(this.userService.updateProfile(this.form.getRawValue()))
+        .subscribe((): void => {
+          throw Error("Refresh token not implemented.");
+        })
+    );
   }
 
   private initUser(): void {
     this.safeSub(
-      this.user.load(this.userService.getUser()).subscribe((user: User) => {
-        this.updateForm(user);
-      })
+      this.userPerform
+        .load(this.userService.getUser())
+        .subscribe((user: User) => {
+          this.updateForm(user);
+        })
     );
   }
 

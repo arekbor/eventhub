@@ -10,6 +10,7 @@
           type="email"
           label="Email"
           inputId="email"
+          [isLoading]="data.isLoading"
           formControlName="email"
         />
 
@@ -18,6 +19,7 @@
           label="User name"
           class="mt-5"
           inputId="username"
+          [isLoading]="data.isLoading"
           formControlName="username"
         />
 
@@ -26,6 +28,7 @@
           label="Password"
           class="mt-5"
           inputId="password"
+          [isLoading]="data.isLoading"
           formControlName="password"
         />
 
@@ -34,6 +37,7 @@
           label="Confirm password"
           class="mt-5"
           inputId="confirmPassword"
+          [isLoading]="data.isLoading"
           formControlName="confirmPassword"
         />
       </form>
@@ -41,7 +45,10 @@
 
     <ng-template pTemplate="footer">
       <div class="flex flex-column align-items-center">
-        <app-form-submit [form]="form" (validSubmit)="onSubmit()"
+        <app-form-submit
+          [form]="form"
+          [isLoading]="data.isLoading"
+          (validSubmit)="onSubmit()"
           >Register</app-form-submit
         >
 
@@ -52,6 +59,7 @@
           link="true"
           severity="contrast"
           size="small"
+          [loading]="data.isLoading"
           (onClick)="onLogin()"
         />
       </div>

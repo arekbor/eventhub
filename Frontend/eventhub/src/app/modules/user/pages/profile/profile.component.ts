@@ -3,9 +3,9 @@ import { FormGroup } from "@angular/forms";
 import { User } from "@core/models/user.model";
 import { UserService } from "@core/services/user.service";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
+import { Perform } from "@core/utils/perform";
 import { BaseComponent } from "@modules/base.component";
 import { FormControls } from "@shared/utils/form-controls";
-import { tap } from "rxjs";
 
 @Component({
   selector: "app-profile",
@@ -13,8 +13,7 @@ import { tap } from "rxjs";
 })
 export class ProfileComponent extends BaseComponent implements OnInit {
   protected form: FormGroup<FormGroupControl<User>>;
-
-  protected user: User | null;
+  protected user: Perform<User> = new Perform<User>();
 
   constructor(private userService: UserService) {
     super();
@@ -31,16 +30,9 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
   private initUser(): void {
     this.safeSub(
-      this.userService
-        .getUser()
-        .pipe(
-          tap((user: User) => {
-            this.updateForm(user);
-          })
-        )
-        .subscribe((user: User) => {
-          this.user = user;
-        })
+      this.user.load(this.userService.getUser()).subscribe((user: User) => {
+        this.updateForm(user);
+      })
     );
   }
 

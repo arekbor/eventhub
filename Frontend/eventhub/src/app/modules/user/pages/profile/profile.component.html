@@ -10,7 +10,7 @@
 
         <div class="col">
           <div class="flex flex-column justify-content-center h-full">
-            <div class="text-xl">{{ user?.username }}</div>
+            <div class="text-xl">{{ user.data?.username }}</div>
             <div class="font-light text-sm">Your account</div>
           </div>
         </div>
@@ -35,6 +35,7 @@
               type="email"
               label="Email"
               inputId="email"
+              [isLoading]="user.isLoading"
               formControlName="email"
             />
 
@@ -42,6 +43,7 @@
               type="text"
               label="User name"
               inputId="username"
+              [isLoading]="user.isLoading"
               formControlName="username"
             />
           </form>
@@ -49,7 +51,10 @@
 
         <div class="col-12">
           <div class="flex flex-row-reverse">
-            <app-form-submit [form]="form" (validSubmit)="onSubmit()"
+            <app-form-submit
+              [form]="form"
+              [isLoading]="user.isLoading"
+              (validSubmit)="onSubmit()"
               >Update profile</app-form-submit
             >
           </div>

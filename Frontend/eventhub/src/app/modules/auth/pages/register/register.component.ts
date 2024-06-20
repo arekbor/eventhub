@@ -5,6 +5,7 @@ import { Register } from "@core/models/register.model";
 import { UserService } from "@core/services/user.service";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
 import { nameof } from "@core/utils/nameof";
+import { Perform } from "@core/utils/perform";
 import { BaseComponent } from "@modules/base.component";
 import { CustomValidators } from "@shared/utils/custom-validators";
 import { FormControls } from "@shared/utils/form-controls";
@@ -15,6 +16,7 @@ import { FormControls } from "@shared/utils/form-controls";
 })
 export class RegisterComponent extends BaseComponent implements OnInit {
   protected form: FormGroup<FormGroupControl<Register>>;
+  protected data: Perform<void> = new Perform<void>();
 
   constructor(private router: Router, private userService: UserService) {
     super();
@@ -30,9 +32,11 @@ export class RegisterComponent extends BaseComponent implements OnInit {
 
   protected onSubmit(): void {
     this.safeSub(
-      this.userService.register(this.form.getRawValue()).subscribe((): void => {
-        this.router.navigate(["/auth/login"]);
-      })
+      this.data
+        .load(this.userService.register(this.form.getRawValue()), false)
+        .subscribe((): void => {
+          this.router.navigate(["/auth/login"]);
+        })
     );
   }
 

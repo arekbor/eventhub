@@ -6,6 +6,7 @@ import { FormGroupControl } from "@core/utils/form-group-control.type";
 import { BaseComponent } from "@modules/base.component";
 import { Perform } from "@modules/perform";
 import { FormControls } from "@shared/utils/form-controls";
+import { switchMap } from "rxjs";
 
 @Component({
   selector: "app-profile",
@@ -29,9 +30,9 @@ export class ProfileComponent extends BaseComponent implements OnInit {
     this.safeSub(
       this.updatePerform
         .load(this.userService.updateProfile(this.form.getRawValue()), false)
+        .pipe(switchMap(() => this.userService.reloadTokens()))
         .subscribe((): void => {
           window.location.reload();
-          throw Error("Refresh token not implemented.");
         })
     );
   }

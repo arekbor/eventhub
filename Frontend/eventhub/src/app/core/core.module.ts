@@ -2,7 +2,6 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { JWT_OPTIONS, JwtHelperService } from "@auth0/angular-jwt";
 import { AccessInterceptor } from "@core/interceptors/access.interceptor";
-import { ErrorInterceptor } from "@core/interceptors/error.interceptor";
 import { HttpService } from "@core/services/http.service";
 import { StorageService } from "@core/services/storage.service";
 import { UserService } from "@core/services/user.service";
@@ -12,11 +11,6 @@ const HttpInterceptors = [
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AccessInterceptor,
-    multi: true,
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: ErrorInterceptor,
     multi: true,
   },
 ];

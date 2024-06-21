@@ -35,7 +35,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   private handleHttpErrors(error: HttpErrorResponse): string[] {
     const handledErrors: string[] = [];
 
-    const errorDetail = error.error.detail || error.statusText;
+    const errorDetail = error.error.detail;
     if (errorDetail) {
       handledErrors.push(errorDetail);
     }

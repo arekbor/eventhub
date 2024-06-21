@@ -37,10 +37,10 @@ internal class LoginUserHandler(
             throw new BadRequestException("Invalid email or password.");
 
         var accessToken = identityService.GetAccessToken(user)
-            ?? throw new BadRequestException();
+            ?? throw new UnauthorizedException();
         
         var refreshToken = identityService.GetRefreshToken(user)
-            ?? throw new BadRequestException();
+            ?? throw new UnauthorizedException();
 
         await cacheManager.SetAsync(
             refreshToken.Token, 

@@ -1,13 +1,13 @@
 import {
   HttpErrorResponse,
   HttpEvent,
-  HttpEventType,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
+  HttpStatusCode,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { AuthTokens } from "@core/models/auth-tokens.model";
 import { StorageService } from "@core/services/storage.service";
 import { UserService } from "@core/services/user.service";
 import {
@@ -15,8 +15,6 @@ import {
   Observable,
   catchError,
   filter,
-  finalize,
-  map,
   switchMap,
   take,
   throwError,
@@ -24,77 +22,78 @@ import {
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  private isRefreshingToken = false;
-  private tokenRefreshed$ = new BehaviorSubject<boolean>(false);
+  private isRefreshing = false;
+  private refreshToken$: BehaviorSubject<string | null> = new BehaviorSubject<
+    string | null
+  >(null);
 
   constructor(
-    private storageService: StorageService,
     private userService: UserService,
-    private jwtHelperService: JwtHelperService
+    private storageService: StorageService
   ) {}
 
   intercept(
     req: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if (!this.isUrlForRefreshTokenIsAllowed(req.url)) {
-      return next.handle(req);
+    const accessToken = this.storageService.getAccessToken();
+    if (accessToken) {
+      req = this.addAccessTokenToHeader(req, accessToken);
     }
 
-    return this.refreshToken(
-      next.handle(this.setAuthorizationHeader(req)),
-      req,
-      next
-    );
-  }
-
-  private refreshToken(
-    action$: Observable<HttpEvent<unknown>>,
-    req: HttpRequest<unknown>,
-    next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
-    return action$.pipe(
-      filter((x) => x.type === HttpEventType.Response),
-      map((action: HttpEvent<unknown>) => {
-        return action;
-      }),
+    return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
-        const accessToken = this.storageService.getAccessToken();
-        if (!accessToken) {
-          this.userService.logout();
-        }
-
-        if (this.jwtHelperService.isTokenExpired(accessToken)) {
-          if (this.isRefreshingToken) {
-            return this.tokenRefreshed$.pipe(
-              filter(Boolean),
-              take(1),
-              switchMap(() => next.handle(this.setAuthorizationHeader(req)))
-            );
-          }
-          this.isRefreshingToken = true;
-          this.tokenRefreshed$.next(false);
-
-          return this.userService.reloadTokens().pipe(
-            switchMap(() => {
-              this.tokenRefreshed$.next(true);
-              return next.handle(this.setAuthorizationHeader(req));
-            }),
-            catchError((err: HttpErrorResponse) => {
-              this.userService.logout();
-              return throwError(() => err);
-            }),
-            finalize(() => {
-              this.isRefreshingToken = false;
-            })
-          );
+        if (
+          err.status === HttpStatusCode.Unauthorized &&
+          this.isUrlAllowed(req.url)
+        ) {
+          return this.handleUnauthorizedError(req, next);
         }
         return throwError(() => err);
       })
     );
   }
 
-  private isUrlForRefreshTokenIsAllowed(url: string): boolean {
+  private handleUnauthorizedError(
+    req: HttpRequest<unknown>,
+    next: HttpHandler
+  ) {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.refreshToken$.next(null);
+
+      return this.userService.refreshToken().pipe(
+        switchMap((authTokens: AuthTokens) => {
+          this.isRefreshing = false;
+          this.refreshToken$.next(authTokens.accessToken);
+          return next.handle(
+            this.addAccessTokenToHeader(req, authTokens.accessToken)
+          );
+        })
+      );
+    } else {
+      return this.refreshToken$.pipe(
+        filter((accessToken: string | null) => accessToken != null),
+        take(1),
+        switchMap((accessToken: string | null) => {
+          return next.handle(this.addAccessTokenToHeader(req, accessToken!));
+        })
+      );
+    }
+  }
+
+  private addAccessTokenToHeader(
+    request: HttpRequest<unknown>,
+    accessToken: string
+  ): HttpRequest<unknown> {
+    return request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  }
+
+  private isUrlAllowed(url: string): boolean {
     const skipUrls: string[] = [
       `/Users/register`,
       `/Users/login`,
@@ -102,17 +101,5 @@ export class AuthInterceptor implements HttpInterceptor {
     ];
 
     return !skipUrls.some((urls) => url.includes(urls));
-  }
-
-  private setAuthorizationHeader(
-    req: HttpRequest<unknown>
-  ): HttpRequest<unknown> {
-    const accessToken = this.storageService.getAccessToken();
-
-    return accessToken
-      ? req.clone({
-          headers: req.headers.set("Authorization", `Bearer ${accessToken}`),
-        })
-      : req;
   }
 }

@@ -16,7 +16,7 @@ internal class RefreshTokenHandler(
     public async Task<TokensResult> Handle(RefreshToken request, CancellationToken cancellationToken)
     {
         if (request.Token is null)
-            throw new UnauthorizedException("Refresh token not found");
+            throw new UnauthorizedException();
 
         var oldRefreshToken = await cacheManager
             .GetAsync(request.Token, cancellationToken)

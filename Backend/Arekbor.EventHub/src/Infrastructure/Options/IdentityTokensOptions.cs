@@ -14,6 +14,6 @@ public class IdentityTokensOptions
     [Range(10, 3600)]
     public required int AccessTokenExpiresInSeconds { get; set; }
     [Required]
-    [Range(50, 604_800)]
+    [Range(10, 604_800)]
     public required int RefreshTokenExpiresInSeconds { get; set; }
 }

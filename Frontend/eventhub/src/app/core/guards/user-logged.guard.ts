@@ -7,7 +7,6 @@ export const UserLoggedGuard: CanActivateFn = () => {
   const router = inject(Router);
 
   if (!authService.isLogged()) {
-    console.log("guard error");
     router.navigate(["auth/login"]);
     return false;
   }

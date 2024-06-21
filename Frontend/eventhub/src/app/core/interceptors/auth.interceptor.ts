@@ -10,6 +10,7 @@ import {
 import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { StorageService } from "@core/services/storage.service";
+import { UserService } from "@core/services/user.service";
 import {
   BehaviorSubject,
   Observable,
@@ -21,7 +22,6 @@ import {
   take,
   throwError,
 } from "rxjs";
-import { UserService } from "../services/user.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

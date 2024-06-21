@@ -1,7 +1,5 @@
 namespace Arekbor.EventHub.Application.Common.Exceptions;
 
-public class NotFoundException : Exception
+public class NotFoundException(string message) : Exception(message)
 {
-    public NotFoundException(string message) : base(message) { }
-    public NotFoundException() : base() { }
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { AuthTokens } from "@core/models/auth-tokens.model";
@@ -8,7 +8,7 @@ import { UserClaims } from "@core/models/user-claims.model";
 import { User } from "@core/models/user.model";
 import { StorageService } from "@core/services/storage.service";
 import { environment } from "@src/environments/environment";
-import { Observable, map } from "rxjs";
+import { Observable, catchError, tap, throwError } from "rxjs";
 
 @Injectable()
 export class UserService {
@@ -39,22 +39,26 @@ export class UserService {
     );
   }
 
-  public reloadTokens(): Observable<void> {
-    const refreshToken = this.storageService.getRefreshToken();
-
+  public refreshToken(): Observable<AuthTokens> {
     return this.httpClient
       .post<AuthTokens>(`${environment.apiUrl}/Users/refresh`, {
-        token: refreshToken,
+        token: this.storageService.getRefreshToken(),
       })
       .pipe(
-        map((authTokens: AuthTokens) => {
+        tap((authTokens: AuthTokens) => {
           this.storageService.setAuthTokens(authTokens);
+        }),
+        catchError((err: HttpErrorResponse) => {
+          this.logout();
+          return throwError(() => err);
         })
       );
   }
 
   public isLogged(): boolean {
-    return this.getClaims() != null;
+    return (
+      this.getClaims() != null && this.storageService.getRefreshToken() != null
+    );
   }
 
   public getClaims(): UserClaims | null {

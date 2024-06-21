@@ -30,7 +30,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
     this.safeSub(
       this.updatePerform
         .load(this.userService.updateProfile(this.form.getRawValue()), false)
-        .pipe(switchMap(() => this.userService.reloadTokens()))
+        .pipe(switchMap(() => this.userService.refreshToken()))
         .subscribe((): void => {
           window.location.reload();
         })

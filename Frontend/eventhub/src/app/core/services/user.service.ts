@@ -8,7 +8,7 @@ import { UserClaims } from "@core/models/user-claims.model";
 import { User } from "@core/models/user.model";
 import { StorageService } from "@core/services/storage.service";
 import { environment } from "@src/environments/environment";
-import { Observable } from "rxjs";
+import { Observable, map } from "rxjs";
 
 @Injectable()
 export class UserService {
@@ -37,6 +37,20 @@ export class UserService {
       `${environment.apiUrl}/Users/updateProfile`,
       user
     );
+  }
+
+  public reloadTokens(): Observable<void> {
+    const refreshToken = this.storageService.getRefreshToken();
+
+    return this.httpClient
+      .post<AuthTokens>(`${environment.apiUrl}/Users/refresh`, {
+        token: refreshToken,
+      })
+      .pipe(
+        map((authTokens: AuthTokens) => {
+          this.storageService.setAuthTokens(authTokens);
+        })
+      );
   }
 
   public isLogged(): boolean {

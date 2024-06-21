@@ -4,36 +4,52 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
+  HttpStatusCode,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { HttpService } from "@core/services/http.service";
 import { MessageService } from "primeng/api";
 import { Observable, catchError, throwError } from "rxjs";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(
-    private messageService: MessageService,
-    private httpService: HttpService
-  ) {}
+  constructor(private messageService: MessageService) {}
 
   intercept(
     req: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => {
-        this.httpService
-          .handleHttpErrors(error)
-          .forEach((errorToDisplay: string) => {
+      catchError((err: HttpErrorResponse) => {
+        if (err.status !== HttpStatusCode.Unauthorized) {
+          this.handleHttpErrors(err).forEach((error: string) => {
             this.messageService.add({
               severity: "error",
-              summary: "Error",
-              detail: errorToDisplay,
+              summary: "Server error",
+              detail: error,
             });
           });
-        return throwError(() => error);
+        }
+
+        return throwError(() => err);
       })
     );
+  }
+
+  private handleHttpErrors(error: HttpErrorResponse): string[] {
+    const handledErrors: string[] = [];
+
+    const errorDetail = error.error.detail || error.statusText;
+    if (errorDetail) {
+      handledErrors.push(errorDetail);
+    }
+
+    const otherErrors = error.error.errors;
+    if (otherErrors) {
+      Object.keys(otherErrors).forEach((errorKey: string) => {
+        handledErrors.push(otherErrors[errorKey]);
+      });
+    }
+
+    return handledErrors;
   }
 }

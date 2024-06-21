@@ -17,6 +17,7 @@ public class UsersController : BaseApiController
         => await Send(loginUser, cancellationToken);
 
     [HttpPost("refresh")]
+    [AllowAnonymous]
     public async Task<IActionResult> Refresh(RefreshToken refreshToken, CancellationToken cancellationToken)
         => await Send(refreshToken, cancellationToken);
 

@@ -28,4 +28,8 @@ public class UsersController : BaseApiController
     [HttpPut("updateProfile")]
     public async Task<IActionResult> UpdateProfile(UpdateProfile updateProfile, CancellationToken cancellationToken)
         => await Send(updateProfile, cancellationToken);
+
+    [HttpPut("updatePassword")]
+    public async Task<IActionResult> UpdatePassword(UpdatePassword updatePassword, CancellationToken cancellationToken)
+        => await Send(updatePassword, cancellationToken);
 }

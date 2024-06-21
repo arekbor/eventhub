@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { AuthTokens } from "@core/models/auth-tokens.model";
 import { Login } from "@core/models/login.model";
+import { Password } from "@core/models/password.model";
 import { Register } from "@core/models/register.model";
 import { UserClaims } from "@core/models/user-claims.model";
 import { User } from "@core/models/user.model";
@@ -36,6 +37,13 @@ export class UserService {
     return this.httpClient.put<void>(
       `${environment.apiUrl}/Users/updateProfile`,
       user
+    );
+  }
+
+  public updatePassword(password: Password): Observable<void> {
+    return this.httpClient.put<void>(
+      `${environment.apiUrl}/Users/updatePassword`,
+      password
     );
   }
 

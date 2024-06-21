@@ -5,7 +5,6 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpStatusCode,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
@@ -82,9 +81,7 @@ export class AuthInterceptor implements HttpInterceptor {
               return next.handle(this.setAuthorizationHeader(req));
             }),
             catchError((err: HttpErrorResponse) => {
-              if (err.status === HttpStatusCode.Unauthorized) {
-                this.userService.logout();
-              }
+              this.userService.logout();
               return throwError(() => err);
             }),
             finalize(() => {

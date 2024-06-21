@@ -4,7 +4,6 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpStatusCode,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { MessageService } from "primeng/api";
@@ -20,15 +19,13 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
-        if (err.status !== HttpStatusCode.Unauthorized) {
-          this.handleHttpErrors(err).forEach((error: string) => {
-            this.messageService.add({
-              severity: "error",
-              summary: "Server error",
-              detail: error,
-            });
+        this.handleHttpErrors(err).forEach((error: string) => {
+          this.messageService.add({
+            severity: "error",
+            summary: "Server error",
+            detail: error,
           });
-        }
+        });
 
         return throwError(() => err);
       })

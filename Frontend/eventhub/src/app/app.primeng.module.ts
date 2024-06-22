@@ -9,6 +9,7 @@ import { ImageModule } from "primeng/image";
 import { InputIconModule } from "primeng/inputicon";
 import { InputTextModule } from "primeng/inputtext";
 import { MenubarModule } from "primeng/menubar";
+import { PanelMenuModule } from "primeng/panelmenu";
 import { PasswordModule } from "primeng/password";
 import { RippleModule } from "primeng/ripple";
 import { SidebarModule } from "primeng/sidebar";
@@ -17,6 +18,7 @@ import { TieredMenuModule } from "primeng/tieredmenu";
 import { ToastModule } from "primeng/toast";
 
 export const AppPrimeNgModule = [
+  PanelMenuModule,
   IconFieldModule,
   InputIconModule,
   AvatarModule,

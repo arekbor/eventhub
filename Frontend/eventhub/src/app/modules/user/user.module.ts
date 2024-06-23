@@ -6,6 +6,6 @@ import { SharedModule } from "@shared/shared.module";
 
 @NgModule({
   declarations: [ProfileComponent, PasswordComponent],
-  imports: [UserRoutingModule, SharedModule],
+  imports: [UserRoutingModule, SharedModule.forRoot()],
 })
 export class UserModule {}

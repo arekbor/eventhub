@@ -1,6 +1,5 @@
-import { formatDate } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { CalendarView, DateFormatterParams } from "angular-calendar";
+import { CalendarView } from "angular-calendar";
 import { WeekDay } from "calendar-utils";
 
 @Component({
@@ -25,10 +24,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.setView(CalendarView.Week);
-  }
-
-  public dupaFormatter({ date, locale }: DateFormatterParams): string {
-    return formatDate(date, "EEE", locale!);
   }
 
   protected setView(view: CalendarView): void {

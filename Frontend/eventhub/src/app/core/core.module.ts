@@ -21,7 +21,7 @@ const HttpInterceptors = [
 ];
 
 @NgModule({
-  imports: [SharedModule],
+  imports: [SharedModule.forRoot()],
   providers: [
     HttpInterceptors,
     UserService,

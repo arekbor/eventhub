@@ -13,7 +13,7 @@ import { SharedModule } from "@shared/shared.module";
     BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,
-    SharedModule,
+    SharedModule.forRoot(),
   ],
   bootstrap: [AppComponent],
 })

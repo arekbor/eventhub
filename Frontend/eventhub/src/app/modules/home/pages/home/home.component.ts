@@ -12,9 +12,7 @@ export class HomeComponent implements OnInit {
   protected CalendarViewType = CalendarView;
   protected view: CalendarView;
 
-  protected setHeaderColStyle(weekDay: WeekDay): {
-    [klass: string]: unknown;
-  } {
+  protected setHeaderColStyle(weekDay: WeekDay): Record<string, boolean> {
     return {
       "text-teal-600": weekDay.isToday,
       "text-red-600": weekDay.isPast,

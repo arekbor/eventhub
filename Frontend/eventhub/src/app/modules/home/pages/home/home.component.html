@@ -41,12 +41,12 @@
   </div>
 </ng-template>
 
-<div class="grid mt-1">
+<div class="grid mt-1 mx-1">
   <div class="col-12">
     <div class="grid">
       <div class="col-12 md:col-6">
         <div
-          class="flex flex-row align-items-center justify-content-center h-full"
+          class="flex flex-row align-items-center justify-content-center md:justify-content-start h-full"
         >
           <p-button
             mwlCalendarToday
@@ -66,7 +66,7 @@
       </div>
       <div class="col-12 md:col-6">
         <div
-          class="flex flex-row align-items-center justify-content-center h-full"
+          class="flex flex-row align-items-center justify-content-center md:justify-content-end h-full"
         >
           <div>
             <p-button
@@ -113,7 +113,7 @@
     </div>
   </div>
   <div class="col-12">
-    <div class="scrollable-calendar p-3">
+    <div class="scrollable-calendar">
       @switch (view) { @case (CalendarView.Month) {
       <mwl-calendar-month-view
         [viewDate]="viewDate"

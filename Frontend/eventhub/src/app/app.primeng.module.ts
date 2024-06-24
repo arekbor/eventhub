@@ -17,8 +17,10 @@ import { SidebarModule } from "primeng/sidebar";
 import { SkeletonModule } from "primeng/skeleton";
 import { TieredMenuModule } from "primeng/tieredmenu";
 import { ToastModule } from "primeng/toast";
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 export const AppPrimeNgModule = [
+  SplitButtonModule,
   ButtonGroupModule,
   PanelMenuModule,
   IconFieldModule,

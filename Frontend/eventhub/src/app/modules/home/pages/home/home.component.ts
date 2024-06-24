@@ -11,21 +11,11 @@ export class HomeComponent implements OnInit {
   protected CalendarView = CalendarView;
   protected CalendarViewType = CalendarView;
   protected view: CalendarView;
-  protected calendarSettingsMenuItems: MenuItem[];
   protected calendarViewMenuItems: MenuItem[];
 
   ngOnInit(): void {
     this.setView(CalendarView.Month);
-    this.setCalendarSettingsMenuItems();
     this.setCalendarViewMenuItems();
-  }
-
-  private setCalendarSettingsMenuItems(): void {
-    this.calendarSettingsMenuItems = [
-      {
-        label: "Print",
-      },
-    ];
   }
 
   private setCalendarViewMenuItems(): void {

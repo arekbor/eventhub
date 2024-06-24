@@ -13,11 +13,12 @@ import { MenubarModule } from "primeng/menubar";
 import { PanelMenuModule } from "primeng/panelmenu";
 import { PasswordModule } from "primeng/password";
 import { RippleModule } from "primeng/ripple";
+import { ScrollerModule } from "primeng/scroller";
 import { SidebarModule } from "primeng/sidebar";
 import { SkeletonModule } from "primeng/skeleton";
+import { SplitButtonModule } from "primeng/splitbutton";
 import { TieredMenuModule } from "primeng/tieredmenu";
 import { ToastModule } from "primeng/toast";
-import { SplitButtonModule } from 'primeng/splitbutton';
 
 export const AppPrimeNgModule = [
   SplitButtonModule,
@@ -40,4 +41,5 @@ export const AppPrimeNgModule = [
   RippleModule,
   TieredMenuModule,
   SidebarModule,
+  ScrollerModule,
 ];

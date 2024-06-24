@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { CalendarView } from "angular-calendar";
-import { WeekDay } from "calendar-utils";
 import { MenuItem } from "primeng/api";
 
 @Component({
@@ -15,16 +14,8 @@ export class HomeComponent implements OnInit {
   protected calendarSettingsMenuItems: MenuItem[];
   protected calendarViewMenuItems: MenuItem[];
 
-  protected setHeaderColsStyle(weekDay: WeekDay): Record<string, boolean> {
-    return {
-      "text-teal-600": weekDay.isToday,
-      "text-red-600": weekDay.isPast,
-      "text-gray-600": weekDay.isFuture,
-    };
-  }
-
   ngOnInit(): void {
-    this.setView(CalendarView.Day);
+    this.setView(CalendarView.Month);
     this.setCalendarSettingsMenuItems();
     this.setCalendarViewMenuItems();
   }

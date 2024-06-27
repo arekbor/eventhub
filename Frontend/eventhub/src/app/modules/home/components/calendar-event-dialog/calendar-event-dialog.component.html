@@ -1,0 +1,32 @@
+<div class="flex flex-column">
+  <form [formGroup]="form">
+    <div>
+      <app-input
+        type="text"
+        label="Title"
+        inputId="title"
+        formControlName="title"
+      />
+
+      <p-calendar
+        selectionMode="range"
+        formControlName="rangeDates"
+        readonlyInput="true"
+        appendTo="body"
+        inputId="range-dates"
+      />
+    </div>
+
+    <p-toggleButton
+      formControlName="allDay"
+      onLabel="On"
+      offLabel="Off"
+    ></p-toggleButton>
+  </form>
+
+  <div class="flex justify-content-end">
+    <app-form-submit [form]="form" (validSubmit)="onSubmit()"
+      >Submit</app-form-submit
+    >
+  </div>
+</div>

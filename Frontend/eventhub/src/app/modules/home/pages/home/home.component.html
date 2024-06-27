@@ -1,77 +1,140 @@
-<p-buttonGroup>
-  <button
-    mwlCalendarPreviousView
-    pButton
-    [(viewDate)]="viewDate"
-    [view]="view"
-    size="small"
+<ng-template #col let-day="day">
+  <div
+    class="flex flex-column align-items-center font-medium"
+    [ngClass]="{
+      'text-teal-600': day.isToday,
+      'text-red-600': day.isPast,
+      'text-gray-600': day.isFuture
+    }"
   >
-    Previous
-  </button>
-  <button mwlCalendarToday pButton [(viewDate)]="viewDate" size="small">
-    Today
-  </button>
-  <button
-    mwlCalendarNextView
-    pButton
-    [(viewDate)]="viewDate"
-    [view]="view"
-    size="small"
-  >
-    Next
-  </button>
-</p-buttonGroup>
-
-<h3>{{ viewDate | calendarDate : view + "ViewTitle" : "en" }}</h3>
-
-<p-buttonGroup>
-  <button pButton size="small" (click)="setView(CalendarView.Month)">
-    Month
-  </button>
-  <button pButton size="small" (click)="setView(CalendarView.Day)">Day</button>
-  <button pButton size="small" (click)="setView(CalendarView.Week)">
-    Week
-  </button>
-</p-buttonGroup>
-
-<ng-template #calendarMonthViewHeader let-days="days" let-locale="locale">
-  <div class="cal-cell-row cal-header">
-    @for(day of days; track day) {
-    <div class="cal-cell text-xs" [ngClass]="setHeaderColStyle(day)">
+    <div class="block md:hidden">
       {{ day.date | date : "EEEEE" }}
     </div>
-    }
-  </div>
-</ng-template>
-
-<ng-template #calendarWeekViewHeader let-days="days" let-locale="locale">
-  <div class="cal-day-headers">
-    @for(day of days; track day) {
-    <div
-      class="flex flex-column align-items-center cal-header text-xs"
-      [ngClass]="setHeaderColStyle(day)"
-    >
-      <div>
-        {{ day.date | date : "EEEEE" }}
-      </div>
-      <div>
-        {{ day.date | date : "d" }}
-      </div>
+    <div class="hidden md:block">
+      {{ day.date | date : "E" }}
+    </div>
+    @if(currentView === CalendarView.Week) {
+    <div>
+      {{ day.date | date : "d" }}
     </div>
     }
   </div>
 </ng-template>
 
-@switch (view) { @case (CalendarView.Month) {
-<mwl-calendar-month-view
-  [viewDate]="viewDate"
-  [headerTemplate]="calendarMonthViewHeader"
-></mwl-calendar-month-view>
-} @case (CalendarView.Day) {
-<mwl-calendar-day-view [viewDate]="viewDate"></mwl-calendar-day-view>
-} @case(CalendarView.Week) {
-<mwl-calendar-week-view
-  [viewDate]="viewDate"
-  [headerTemplate]="calendarWeekViewHeader"
-></mwl-calendar-week-view>
-} }
+<ng-template #monthHeader let-days="days">
+  <div class="cal-cell-row cal-header">
+    @for(day of days; track day) {
+    <div class="cal-cell">
+      <ng-container
+        [ngTemplateOutlet]="col"
+        [ngTemplateOutletContext]="{ day }"
+      />
+    </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #weekHeader let-days="days">
+  <div class="cal-day-headers">
+    @for(day of days; track day) {
+    <div class="cal-header">
+      <ng-container
+        [ngTemplateOutlet]="col"
+        [ngTemplateOutletContext]="{ day }"
+      />
+    </div>
+    }
+  </div>
+</ng-template>
+
+<div class="grid mt-3 mx-0 md:mx-3">
+  <div class="col-12 md:col-6">
+    <div
+      class="flex flex-row align-items-center justify-content-center md:justify-content-start"
+    >
+      <p-button
+        severity="secondary"
+        size="small"
+        icon="pi pi-plus"
+        label="Create event"
+        outlined="true"
+        (click)="onCreateEvent()"
+      />
+
+      <span class="ml-4 text-2xl font-light">{{
+        currentView === CalendarView.Day
+          ? (viewDate | date : "d LLLL y")
+          : (viewDate | date : "LLLL y")
+      }}</span>
+    </div>
+  </div>
+
+  <div class="col-12 md:col-6">
+    <div
+      class="flex flex-row align-items-center justify-content-center md:justify-content-end"
+    >
+      <p-button
+        mwlCalendarToday
+        text
+        severity="secondary"
+        size="small"
+        label="Today"
+        [(viewDate)]="viewDate"
+      />
+
+      <p-button
+        mwlCalendarPreviousView
+        [(viewDate)]="viewDate"
+        [view]="currentView"
+        text
+        severity="secondary"
+        size="small"
+        icon="pi pi-chevron-left"
+      />
+
+      <p-button
+        mwlCalendarNextView
+        [(viewDate)]="viewDate"
+        [view]="currentView"
+        text
+        severity="secondary"
+        size="small"
+        icon="pi pi-chevron-right"
+        class="ml-1"
+      />
+
+      <p-splitButton
+        size="small"
+        severity="info"
+        text
+        [label]="currentView.charAt(0).toUpperCase() + currentView.slice(1)"
+        [model]="calendarViewMenuItems"
+        class="ml-2"
+      />
+    </div>
+  </div>
+
+  <div class="col-12">
+    @switch (currentView) { @case (CalendarView.Month) {
+    <mwl-calendar-month-view
+      [viewDate]="viewDate"
+      [headerTemplate]="monthHeader"
+      [events]="calendarEvents"
+      (eventClicked)="onEventClicked($event)"
+    ></mwl-calendar-month-view>
+    } @case (CalendarView.Day) {
+    <mwl-calendar-day-view
+      [viewDate]="viewDate"
+      [events]="calendarEvents"
+      (eventClicked)="onEventClicked($event)"
+    ></mwl-calendar-day-view>
+    } @case(CalendarView.Week) {
+    <mwl-calendar-week-view
+      [viewDate]="viewDate"
+      [headerTemplate]="weekHeader"
+      [events]="calendarEvents"
+      (eventClicked)="onEventClicked($event)"
+    ></mwl-calendar-week-view>
+    } }
+  </div>
+</div>

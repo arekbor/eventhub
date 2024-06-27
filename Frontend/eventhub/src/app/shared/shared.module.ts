@@ -14,10 +14,15 @@ import { ValidationErrorsComponent } from "@shared/components/validation-errors/
 import { CalendarModule, DateAdapter } from "angular-calendar";
 import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 import { MessageService } from "primeng/api";
+import { DialogService } from "primeng/dynamicdialog";
 
 @NgModule({
   imports: [CommonModule, AppPrimeNgModule, FormsModule, ReactiveFormsModule],
-  providers: [provideHttpClient(withInterceptorsFromDi()), MessageService],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    MessageService,
+    DialogService,
+  ],
   declarations: [
     InputComponent,
     ValidationErrorsComponent,

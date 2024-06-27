@@ -4,12 +4,6 @@
 @import "primeicons/primeicons.css";
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .field.required label::after {
   color: #d00;
   content: "*";

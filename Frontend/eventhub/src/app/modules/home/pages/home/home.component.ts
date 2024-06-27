@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
 
   private configDialog(data?: CalendarEvent<unknown>): DynamicDialogConfig {
     return {
-      data: data ? data : null,
+      data: data,
       focusOnShow: false,
       draggable: true,
     };

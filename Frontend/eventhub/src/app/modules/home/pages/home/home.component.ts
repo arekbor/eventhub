@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { CalendarView } from "angular-calendar";
+import { CalendarEventDialogComponent } from "@modules/home/components/calendar-event-dialog/calendar-event-dialog.component";
+import { CalendarEvent, CalendarView } from "angular-calendar";
 import { MenuItem } from "primeng/api";
+import { DialogService } from "primeng/dynamicdialog";
 
 @Component({
   selector: "app-home",
@@ -8,14 +10,45 @@ import { MenuItem } from "primeng/api";
 })
 export class HomeComponent implements OnInit {
   protected viewDate: Date = new Date();
+
+  protected calendarEvents: CalendarEvent[];
+
+  protected currentView: CalendarView;
   protected CalendarView = CalendarView;
-  protected CalendarViewType = CalendarView;
-  protected view: CalendarView;
+
   protected calendarViewMenuItems: MenuItem[];
+
+  constructor(private dialogService: DialogService) {}
 
   ngOnInit(): void {
     this.setView(CalendarView.Month);
     this.setCalendarViewMenuItems();
+
+    this.calendarEvents = [
+      {
+        title: "test",
+        start: new Date(2024, 5, 27, 10, 30),
+        end: new Date(2024, 5, 28, 2, 30),
+      },
+    ];
+  }
+
+  protected onCreateEvent(): void {
+    this.dialogService.open(CalendarEventDialogComponent, {
+      focusOnShow: false,
+      draggable: true,
+    });
+  }
+
+  protected onEventClicked(event: {
+    event: CalendarEvent<unknown>;
+    sourceEvent: MouseEvent | KeyboardEvent;
+  }): void {
+    this.dialogService.open(CalendarEventDialogComponent, {
+      data: event.event,
+      focusOnShow: false,
+      draggable: true,
+    });
   }
 
   private setCalendarViewMenuItems(): void {
@@ -42,6 +75,6 @@ export class HomeComponent implements OnInit {
   }
 
   private setView(view: CalendarView): void {
-    this.view = view;
+    this.currentView = view;
   }
 }

@@ -2,6 +2,23 @@ import { FormControl, Validators } from "@angular/forms";
 import { CustomValidators } from "@shared/utils/custom-validators";
 
 export class FormControls {
+  static boolean(): FormControl<boolean> {
+    return new FormControl(false, {
+      nonNullable: true,
+    });
+  }
+
+  static title(): FormControl<string> {
+    return new FormControl("", {
+      nonNullable: true,
+      validators: [Validators.required, Validators.maxLength(20)],
+    });
+  }
+
+  static rangeDates(): FormControl<Date[] | null> {
+    return new FormControl([]);
+  }
+
   static email(): FormControl<string> {
     return new FormControl("", {
       nonNullable: true,

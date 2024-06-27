@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Event } from "@core/models/event.model";
+import { CalendarEventBody } from "@core/models/calendar-event-body.model";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
 import { FormControls } from "@shared/utils/form-controls";
 import { CalendarEvent } from "angular-calendar";
@@ -12,7 +12,7 @@ import { DynamicDialogConfig } from "primeng/dynamicdialog";
 })
 export class CalendarEventDialogComponent implements OnInit {
   protected calendarEvent: CalendarEvent<unknown> | undefined;
-  protected form: FormGroup<FormGroupControl<Event>>;
+  protected form: FormGroup<FormGroupControl<CalendarEventBody>>;
 
   constructor(private config: DynamicDialogConfig<CalendarEvent<unknown>>) {}
 
@@ -26,7 +26,7 @@ export class CalendarEventDialogComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.form = new FormGroup<FormGroupControl<Event>>({
+    this.form = new FormGroup<FormGroupControl<CalendarEventBody>>({
       allDay: FormControls.boolean(),
       title: FormControls.title(),
       rangeDates: FormControls.rangeDates(),

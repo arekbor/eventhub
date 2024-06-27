@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { CalendarEventDialogComponent } from "@modules/home/components/calendar-event-dialog/calendar-event-dialog.component";
 import { CalendarEvent, CalendarView } from "angular-calendar";
 import { MenuItem } from "primeng/api";
-import { DialogService } from "primeng/dynamicdialog";
+import { DialogService, DynamicDialogConfig } from "primeng/dynamicdialog";
 
 @Component({
   selector: "app-home",
@@ -34,21 +34,17 @@ export class HomeComponent implements OnInit {
   }
 
   protected onCreateEvent(): void {
-    this.dialogService.open(CalendarEventDialogComponent, {
-      focusOnShow: false,
-      draggable: true,
-    });
+    this.dialogService.open(CalendarEventDialogComponent, this.configDialog());
   }
 
   protected onEventClicked(event: {
     event: CalendarEvent<unknown>;
     sourceEvent: MouseEvent | KeyboardEvent;
   }): void {
-    this.dialogService.open(CalendarEventDialogComponent, {
-      data: event.event,
-      focusOnShow: false,
-      draggable: true,
-    });
+    this.dialogService.open(
+      CalendarEventDialogComponent,
+      this.configDialog(event.event)
+    );
   }
 
   private setCalendarViewMenuItems(): void {
@@ -76,5 +72,13 @@ export class HomeComponent implements OnInit {
 
   private setView(view: CalendarView): void {
     this.currentView = view;
+  }
+
+  private configDialog(data?: CalendarEvent<unknown>): DynamicDialogConfig {
+    return {
+      data: data ? data : null,
+      focusOnShow: false,
+      draggable: true,
+    };
   }
 }

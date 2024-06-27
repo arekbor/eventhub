@@ -47,10 +47,6 @@ export class AppComponent implements OnInit {
         icon: "pi pi-home",
         routerLink: "home",
       },
-      {
-        label: "Events",
-        icon: "pi pi-calendar",
-      },
     ];
   }
 }

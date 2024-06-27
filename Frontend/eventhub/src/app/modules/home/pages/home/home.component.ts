@@ -21,16 +21,9 @@ export class HomeComponent implements OnInit {
   constructor(private dialogService: DialogService) {}
 
   ngOnInit(): void {
+    this.initCalendarEvents();
     this.setView(CalendarView.Month);
     this.setCalendarViewMenuItems();
-
-    this.calendarEvents = [
-      {
-        title: "test",
-        start: new Date(2024, 5, 27, 10, 30),
-        end: new Date(2024, 5, 28, 2, 30),
-      },
-    ];
   }
 
   protected onCreateEvent(): void {
@@ -45,6 +38,16 @@ export class HomeComponent implements OnInit {
       CalendarEventDialogComponent,
       this.configDialog(event.event)
     );
+  }
+
+  private initCalendarEvents(): void {
+    this.calendarEvents = [
+      {
+        title: "test",
+        start: new Date(2024, 5, 27, 10, 30),
+        end: new Date(2024, 5, 28, 2, 30),
+      },
+    ];
   }
 
   private setCalendarViewMenuItems(): void {

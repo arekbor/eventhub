@@ -1,27 +1,62 @@
 <div class="flex flex-column">
   <form [formGroup]="form">
-    <div>
-      <app-input
-        type="text"
-        label="Title"
-        inputId="title"
-        formControlName="title"
-      />
+    <app-input
+      type="text"
+      label="Title"
+      inputId="title"
+      formControlName="title"
+    />
 
-      <p-calendar
-        selectionMode="range"
-        formControlName="rangeDates"
-        readonlyInput="true"
-        appendTo="body"
-        inputId="range-dates"
-      />
+    <div class="field mt-5">
+      <div class="flex flex-row align-items-center">
+        <p-floatLabel>
+          <input
+            pInputText
+            [(ngModel)]="selectedMoments"
+            [ngModelOptions]="{ standalone: true }"
+            id="date-range-from"
+            [owlDateTimeTrigger]="dtFrom"
+            [owlDateTime]="dtFrom"
+            [max]="selectedMoments[1]"
+            [selectMode]="'rangeFrom'"
+            readonly="true"
+          />
+
+          <label for="date-range-from">Date time range from</label>
+        </p-floatLabel>
+        <owl-date-time #dtFrom [pickerMode]="'dialog'" />
+
+        <p-checkbox
+          [(ngModel)]="isAllDay"
+          binary="true"
+          [ngModelOptions]="{ standalone: true }"
+          label="All day"
+          class="ml-3"
+          [disabled]="!selectedMoments[0]"
+        />
+      </div>
     </div>
 
-    <p-toggleButton
-      formControlName="allDay"
-      onLabel="On"
-      offLabel="Off"
-    ></p-toggleButton>
+    <div class="field mt-5">
+      <p-floatLabel>
+        <input
+          pInputText
+          [(ngModel)]="selectedMoments"
+          [ngModelOptions]="{ standalone: true }"
+          id="date-range-to"
+          [owlDateTimeTrigger]="dtTo"
+          [owlDateTime]="dtTo"
+          [min]="selectedMoments[0]"
+          [selectMode]="'rangeTo'"
+          class="w-full"
+          readonly="true"
+          [disabled]="!selectedMoments[0] || isAllDay"
+        />
+
+        <label for="date-range-from">Date time range to</label>
+      </p-floatLabel>
+      <owl-date-time #dtTo [pickerMode]="'dialog'" />
+    </div>
   </form>
 
   <div class="flex justify-content-end">

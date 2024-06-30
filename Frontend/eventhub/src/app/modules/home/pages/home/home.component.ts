@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
       {
         title: "test",
         start: new Date(2024, 5, 27, 10, 30),
-        end: new Date(2024, 5, 28, 2, 30),
+        end: new Date(2024, 5, 27, 11, 0),
       },
     ];
   }

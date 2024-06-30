@@ -4,9 +4,15 @@
 @import "primeicons/primeicons.css";
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
+@import "@amrkh97/angular-datetime-picker/assets/style/picker.min.css";
+
 .field.required label::after {
   color: #d00;
   content: "*";
   position: absolute;
   margin-left: 0.1em;
+}
+
+.cdk-overlay-container {
+  z-index: 2000;
 }

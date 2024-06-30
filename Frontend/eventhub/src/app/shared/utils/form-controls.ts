@@ -15,8 +15,8 @@ export class FormControls {
     });
   }
 
-  static rangeDates(): FormControl<Date[] | null> {
-    return new FormControl([]);
+  static date(): FormControl<Date> {
+    return new FormControl();
   }
 
   static email(): FormControl<string> {

@@ -16,27 +16,36 @@ import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 import { MessageService } from "primeng/api";
 import { DialogService } from "primeng/dynamicdialog";
 
+import {
+  OwlDateTimeModule,
+  OwlNativeDateTimeModule,
+} from "@amrkh97/angular-datetime-picker";
+
 @NgModule({
-  imports: [CommonModule, AppPrimeNgModule, FormsModule, ReactiveFormsModule],
-  providers: [
-    provideHttpClient(withInterceptorsFromDi()),
-    MessageService,
-    DialogService,
-  ],
   declarations: [
     InputComponent,
     ValidationErrorsComponent,
     FormSubmitComponent,
     SidebarLinkComponent,
   ],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    MessageService,
+    DialogService,
+  ],
+  imports: [CommonModule, AppPrimeNgModule, FormsModule, ReactiveFormsModule],
+
   exports: [
     CommonModule,
+    FormsModule,
     AppPrimeNgModule,
     RouterModule,
     ReactiveFormsModule,
     InputComponent,
     FormSubmitComponent,
     SidebarLinkComponent,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
 })
 export class SharedModule {

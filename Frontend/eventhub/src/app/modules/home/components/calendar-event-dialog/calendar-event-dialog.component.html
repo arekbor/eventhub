@@ -11,9 +11,9 @@
       <div class="flex flex-row align-items-center">
         <p-floatLabel>
           <input
+            pInputText
             [(ngModel)]="selectedMoments"
             [ngModelOptions]="{ standalone: true }"
-            pInputText
             id="date-range-from"
             [owlDateTimeTrigger]="dtFrom"
             [owlDateTime]="dtFrom"
@@ -40,9 +40,9 @@
     <div class="field mt-5">
       <p-floatLabel>
         <input
+          pInputText
           [(ngModel)]="selectedMoments"
           [ngModelOptions]="{ standalone: true }"
-          pInputText
           id="date-range-to"
           [owlDateTimeTrigger]="dtTo"
           [owlDateTime]="dtTo"

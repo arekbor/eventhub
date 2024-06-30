@@ -30,8 +30,6 @@ export class CalendarEventDialogComponent implements OnInit {
       start: this.selectedMoments[0],
       end: this.isAllDay ? undefined : this.selectedMoments[1],
     });
-
-    console.log(this.form.getRawValue());
   }
 
   private initForm(): void {

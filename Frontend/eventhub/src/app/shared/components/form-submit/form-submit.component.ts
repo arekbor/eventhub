@@ -4,6 +4,7 @@ import { FormGroup } from "@angular/forms";
 @Component({
   selector: "app-form-submit",
   templateUrl: "form-submit.component.html",
+  
 })
 export class FormSubmitComponent {
   @Input({ required: true }) form: FormGroup;

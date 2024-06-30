@@ -24,8 +24,10 @@ import { SplitButtonModule } from "primeng/splitbutton";
 import { TieredMenuModule } from "primeng/tieredmenu";
 import { ToastModule } from "primeng/toast";
 import { ToggleButtonModule } from "primeng/togglebutton";
+import { CheckboxModule } from 'primeng/checkbox';
 
 export const AppPrimeNgModule = [
+  CheckboxModule,
   ToggleButtonModule,
   CalendarModule,
   DynamicDialogModule,

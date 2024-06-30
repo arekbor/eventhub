@@ -14,6 +14,9 @@ export class CalendarEventDialogComponent implements OnInit {
   protected calendarEvent: CalendarEvent<unknown> | undefined;
   protected form: FormGroup<FormGroupControl<CalendarEventBody>>;
 
+  protected selectedMoments: Date[] = [];
+  protected isAllDay: boolean;
+
   constructor(private config: DynamicDialogConfig<CalendarEvent<unknown>>) {}
 
   ngOnInit(): void {
@@ -22,14 +25,21 @@ export class CalendarEventDialogComponent implements OnInit {
   }
 
   protected onSubmit(): void {
-    throw new Error("Not implemented");
+    this.form.patchValue({
+      allDay: this.isAllDay,
+      start: this.selectedMoments[0],
+      end: this.isAllDay ? undefined : this.selectedMoments[1],
+    });
+
+    console.log(this.form.getRawValue());
   }
 
   private initForm(): void {
     this.form = new FormGroup<FormGroupControl<CalendarEventBody>>({
       allDay: FormControls.boolean(),
       title: FormControls.title(),
-      rangeDates: FormControls.rangeDates(),
+      start: FormControls.date(),
+      end: FormControls.date(),
     });
   }
 
@@ -38,6 +48,11 @@ export class CalendarEventDialogComponent implements OnInit {
 
     if (this.calendarEvent) {
       this.updateForm(this.calendarEvent);
+
+      this.selectedMoments = [
+        this.calendarEvent.start,
+        this.calendarEvent.end!,
+      ];
     }
   }
 
@@ -45,7 +60,8 @@ export class CalendarEventDialogComponent implements OnInit {
     this.form.setValue({
       title: calendarEvent.title,
       allDay: calendarEvent.allDay ?? false,
-      rangeDates: [calendarEvent.start, calendarEvent.end!],
+      start: calendarEvent.start,
+      end: calendarEvent.end,
     });
   }
 }

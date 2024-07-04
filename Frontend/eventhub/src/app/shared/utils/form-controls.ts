@@ -16,7 +16,7 @@ export class FormControls {
   }
 
   static meta(): FormControl<string | null> {
-    return new FormControl("", Validators.maxLength(30));
+    return new FormControl();
   }
 
   static date(date?: Date): FormControl<Date> {

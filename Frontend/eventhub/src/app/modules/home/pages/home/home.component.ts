@@ -11,7 +11,7 @@ import { DialogService, DynamicDialogConfig } from "primeng/dynamicdialog";
 export class HomeComponent implements OnInit {
   protected viewDate: Date = new Date();
 
-  protected calendarEvents: CalendarEvent[];
+  protected calendarEvents: CalendarEvent<string>[];
 
   protected currentView: CalendarView;
   protected CalendarView = CalendarView;
@@ -30,10 +30,7 @@ export class HomeComponent implements OnInit {
     this.dialogService.open(CalendarEventDialogComponent, this.configDialog());
   }
 
-  protected onEventClicked(event: {
-    event: CalendarEvent<unknown>;
-    sourceEvent: MouseEvent | KeyboardEvent;
-  }): void {
+  protected onEventClicked(event: { event: CalendarEvent<string> }): void {
     this.dialogService.open(
       CalendarEventDialogComponent,
       this.configDialog(event.event)
@@ -44,8 +41,10 @@ export class HomeComponent implements OnInit {
     this.calendarEvents = [
       {
         title: "test",
+        allDay: true,
+        meta: "<p>some test meta</p>",
         start: new Date(2024, 5, 27, 10, 30),
-        end: new Date(2024, 5, 27, 11, 0),
+        end: new Date(2024, 5, 29, 11, 0),
       },
     ];
   }
@@ -77,7 +76,9 @@ export class HomeComponent implements OnInit {
     this.currentView = view;
   }
 
-  private configDialog(data?: CalendarEvent<unknown>): DynamicDialogConfig {
+  private configDialog(
+    data?: CalendarEvent<string>
+  ): DynamicDialogConfig<CalendarEvent<string>> {
     return {
       data: data,
       focusOnShow: false,

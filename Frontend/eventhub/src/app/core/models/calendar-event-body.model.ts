@@ -3,4 +3,5 @@ export interface CalendarEventBody {
   allDay: boolean;
   start: Date;
   end: Date | undefined;
+  meta: string | null;
 }

@@ -15,8 +15,12 @@ export class FormControls {
     });
   }
 
-  static date(): FormControl<Date> {
-    return new FormControl();
+  static meta(): FormControl<string | null> {
+    return new FormControl("", Validators.maxLength(30));
+  }
+
+  static date(date?: Date): FormControl<Date> {
+    return date ? new FormControl(date) : new FormControl();
   }
 
   static email(): FormControl<string> {

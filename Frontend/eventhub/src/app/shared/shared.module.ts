@@ -7,6 +7,7 @@ import { ModuleWithProviders, NgModule, Type } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AppPrimeNgModule } from "@app/app.primeng.module";
+import { DateTimeInputComponent } from "@shared/components/date-time-input/date-time-input.component";
 import { FormSubmitComponent } from "@shared/components/form-submit/form-submit.component";
 import { InputComponent } from "@shared/components/input/input.component";
 import { SidebarLinkComponent } from "@shared/components/sidebar-link/sidebar-link.component";
@@ -16,14 +17,10 @@ import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 import { MessageService } from "primeng/api";
 import { DialogService } from "primeng/dynamicdialog";
 
-import {
-  OwlDateTimeModule,
-  OwlNativeDateTimeModule,
-} from "@amrkh97/angular-datetime-picker";
-
 @NgModule({
   declarations: [
     InputComponent,
+    DateTimeInputComponent,
     ValidationErrorsComponent,
     FormSubmitComponent,
     SidebarLinkComponent,
@@ -42,10 +39,9 @@ import {
     RouterModule,
     ReactiveFormsModule,
     InputComponent,
+    DateTimeInputComponent,
     FormSubmitComponent,
     SidebarLinkComponent,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
   ],
 })
 export class SharedModule {

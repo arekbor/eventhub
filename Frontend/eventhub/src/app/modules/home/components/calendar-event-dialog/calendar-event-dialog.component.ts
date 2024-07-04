@@ -4,20 +4,21 @@ import { CalendarEventBody } from "@core/models/calendar-event-body.model";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
 import { FormControls } from "@shared/utils/form-controls";
 import { CalendarEvent } from "angular-calendar";
-import { DynamicDialogConfig } from "primeng/dynamicdialog";
+import { addHours } from "date-fns";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 
 @Component({
   selector: "app-calendar-event-dialog",
   templateUrl: "calendar-event-dialog.component.html",
 })
 export class CalendarEventDialogComponent implements OnInit {
-  protected calendarEvent: CalendarEvent<unknown> | undefined;
+  protected calendarEvent: CalendarEvent<string> | undefined;
   protected form: FormGroup<FormGroupControl<CalendarEventBody>>;
 
-  protected selectedMoments: Date[] = [];
-  protected isAllDay: boolean;
-
-  constructor(private config: DynamicDialogConfig<CalendarEvent<unknown>>) {}
+  constructor(
+    private config: DynamicDialogConfig<CalendarEvent<string>>,
+    private ref: DynamicDialogRef
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -25,20 +26,7 @@ export class CalendarEventDialogComponent implements OnInit {
   }
 
   protected onSubmit(): void {
-    this.form.patchValue({
-      allDay: this.isAllDay,
-      start: this.selectedMoments[0],
-      end: this.isAllDay ? undefined : this.selectedMoments[1],
-    });
-  }
-
-  private initForm(): void {
-    this.form = new FormGroup<FormGroupControl<CalendarEventBody>>({
-      allDay: FormControls.boolean(),
-      title: FormControls.title(),
-      start: FormControls.date(),
-      end: FormControls.date(),
-    });
+    this.ref.close();
   }
 
   private initCalendarEvent(): void {
@@ -46,20 +34,29 @@ export class CalendarEventDialogComponent implements OnInit {
 
     if (this.calendarEvent) {
       this.updateForm(this.calendarEvent);
-
-      this.selectedMoments = [
-        this.calendarEvent.start,
-        this.calendarEvent.end!,
-      ];
     }
   }
 
-  private updateForm(calendarEvent: CalendarEvent<unknown>): void {
+  private updateForm(calendarEvent: CalendarEvent<string>): void {
     this.form.setValue({
       title: calendarEvent.title,
       allDay: calendarEvent.allDay ?? false,
       start: calendarEvent.start,
       end: calendarEvent.end,
+      meta: calendarEvent.meta ?? null,
+    });
+  }
+
+  private initForm(): void {
+    const startDate = new Date();
+    const endDate = addHours(startDate, 1);
+
+    this.form = new FormGroup<FormGroupControl<CalendarEventBody>>({
+      allDay: FormControls.boolean(),
+      title: FormControls.title(),
+      start: FormControls.date(startDate),
+      end: FormControls.date(endDate),
+      meta: FormControls.meta(),
     });
   }
 }

@@ -4,9 +4,11 @@ import { ButtonModule } from "primeng/button";
 import { ButtonGroupModule } from "primeng/buttongroup";
 import { CalendarModule } from "primeng/calendar";
 import { CardModule } from "primeng/card";
+import { CheckboxModule } from "primeng/checkbox";
 import { DialogModule } from "primeng/dialog";
 import { DividerModule } from "primeng/divider";
 import { DynamicDialogModule } from "primeng/dynamicdialog";
+import { EditorModule } from "primeng/editor";
 import { FloatLabelModule } from "primeng/floatlabel";
 import { IconFieldModule } from "primeng/iconfield";
 import { ImageModule } from "primeng/image";
@@ -24,9 +26,9 @@ import { SplitButtonModule } from "primeng/splitbutton";
 import { TieredMenuModule } from "primeng/tieredmenu";
 import { ToastModule } from "primeng/toast";
 import { ToggleButtonModule } from "primeng/togglebutton";
-import { CheckboxModule } from 'primeng/checkbox';
 
 export const AppPrimeNgModule = [
+  EditorModule,
   CheckboxModule,
   ToggleButtonModule,
   CalendarModule,

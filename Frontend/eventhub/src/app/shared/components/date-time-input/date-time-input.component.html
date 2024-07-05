@@ -1,0 +1,21 @@
+@if(control) {
+<div class="field mt-5" [ngClass]="{ required: isRequired }">
+  @if(isLoading) {
+  <app-loading-input />
+  } @else {
+  <p-floatLabel>
+    <p-calendar
+      [formControl]="control"
+      [inputId]="inputId"
+      styleClass="w-full"
+      [appendTo]="appendTo"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+      [showTime]="showTime"
+    />
+
+    <label [for]="inputId">{{ label }}</label>
+  </p-floatLabel>
+  }
+</div>
+}

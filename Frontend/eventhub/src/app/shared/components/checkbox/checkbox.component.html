@@ -1,0 +1,5 @@
+@if(control) { @if(enabled) {
+<p-checkbox [label]="label" binary="true" [formControl]="control" />
+} @else{
+<p-checkbox [label]="label" binary="true" [disabled]="true" />
+} }

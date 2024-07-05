@@ -36,7 +36,7 @@
 
 <ng-template #weekHeader let-days="days">
   <div class="cal-day-headers">
-    @for(day of days; track day.date;) {
+    @for(day of days; track day.date) {
     <div class="cal-header">
       <ng-container
         [ngTemplateOutlet]="col"

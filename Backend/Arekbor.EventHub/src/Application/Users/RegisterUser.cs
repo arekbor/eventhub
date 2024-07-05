@@ -7,9 +7,8 @@ using MediatR;
 
 namespace Arekbor.EventHub.Application.Users;
 
-public record RegisterUser(
-    string Username, string Email, string Password, string ConfirmPassword
-) : IRequest<Unit>;
+public record RegisterUser
+    (string Username, string Email, string Password, string ConfirmPassword) : IRequest<Unit>;
 
 public class RegisterUserValidator : AbstractValidator<RegisterUser>
 {

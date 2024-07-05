@@ -18,11 +18,11 @@ public class GetCalendarEventsValidator : AbstractValidator<GetCalendarEvents>
 {
     public GetCalendarEventsValidator()
     {
-        // RuleFor(x => x.Start)
-        //     .LessThan(x => x.End);
+        RuleFor(x => x.Start)
+            .LessThan(x => x.End);
 
-        // RuleFor(x => x.End)
-        //     .GreaterThan(x => x.Start);
+        RuleFor(x => x.End)
+            .GreaterThan(x => x.Start);
     }
 }
 

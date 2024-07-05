@@ -8,7 +8,7 @@ import { Perform } from "@modules/perform";
 import { FormControls } from "@shared/utils/form-controls";
 import { CalendarEvent } from "angular-calendar";
 import { addHours } from "date-fns";
-import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { DynamicDialogConfig } from "primeng/dynamicdialog";
 
 @Component({
   selector: "app-calendar-event-dialog",
@@ -21,11 +21,10 @@ export class CalendarEventDialogComponent
   protected calendarEvent: CalendarEvent<string> | undefined;
   protected form: FormGroup<FormGroupControl<CalendarEventBody>>;
 
-  protected calendarEventPerfrom: Perform<void> = new Perform<void>();
+  protected createCalendarEventPerfrom: Perform<void> = new Perform<void>();
 
   constructor(
     private config: DynamicDialogConfig<CalendarEvent<string>>,
-    private ref: DynamicDialogRef,
     private calendarEventService: CalendarEventService
   ) {
     super();
@@ -38,7 +37,7 @@ export class CalendarEventDialogComponent
 
   protected onSubmit(): void {
     this.safeSub(
-      this.calendarEventPerfrom
+      this.createCalendarEventPerfrom
         .load(
           this.calendarEventService.createCalendarEvent(
             this.form.getRawValue()
@@ -46,7 +45,7 @@ export class CalendarEventDialogComponent
           false
         )
         .subscribe((): void => {
-          this.ref.close();
+          window.location.reload();
         })
     );
   }

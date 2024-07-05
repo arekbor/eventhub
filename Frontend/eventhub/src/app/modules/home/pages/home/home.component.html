@@ -23,7 +23,7 @@
 
 <ng-template #monthHeader let-days="days">
   <div class="cal-cell-row cal-header">
-    @for(day of days; track day) {
+    @for(day of days; track day.date) {
     <div class="cal-cell">
       <ng-container
         [ngTemplateOutlet]="col"
@@ -36,7 +36,7 @@
 
 <ng-template #weekHeader let-days="days">
   <div class="cal-day-headers">
-    @for(day of days; track day) {
+    @for(day of days; track day.date) {
     <div class="cal-header">
       <ng-container
         [ngTemplateOutlet]="col"
@@ -121,12 +121,14 @@
       [headerTemplate]="monthHeader"
       [events]="calendarEvents"
       (eventClicked)="onEventClicked($event)"
+      (beforeViewRender)="onCalendarViewPeriodRender($event.period)"
     ></mwl-calendar-month-view>
     } @case (CalendarView.Day) {
     <mwl-calendar-day-view
       [viewDate]="viewDate"
       [events]="calendarEvents"
       (eventClicked)="onEventClicked($event)"
+      (beforeViewRender)="onCalendarViewPeriodRender($event.period)"
     ></mwl-calendar-day-view>
     } @case(CalendarView.Week) {
     <mwl-calendar-week-view
@@ -134,6 +136,7 @@
       [headerTemplate]="weekHeader"
       [events]="calendarEvents"
       (eventClicked)="onEventClicked($event)"
+      (beforeViewRender)="onCalendarViewPeriodRender($event.period)"
     ></mwl-calendar-week-view>
     } }
   </div>

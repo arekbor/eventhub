@@ -4,18 +4,18 @@
   <app-loading-input />
   } @else {
   <p-floatLabel>
-    <input
-      [type]="type"
-      [id]="inputId"
+    <p-calendar
       [formControl]="control"
-      pInputText
-      class="w-full"
+      [inputId]="inputId"
+      styleClass="w-full"
+      [appendTo]="appendTo"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+      [showTime]="showTime"
     />
+
     <label [for]="inputId">{{ label }}</label>
   </p-floatLabel>
-  } @if(control.invalid && (control.dirty || control.touched)) {
-  <app-validation-errors [errors]="control.errors" />
   }
 </div>
-
 }

@@ -7,9 +7,11 @@ import { ModuleWithProviders, NgModule, Type } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AppPrimeNgModule } from "@app/app.primeng.module";
+import { CheckboxComponent } from "@shared/components/checkbox/checkbox.component";
 import { DateTimeInputComponent } from "@shared/components/date-time-input/date-time-input.component";
 import { FormSubmitComponent } from "@shared/components/form-submit/form-submit.component";
 import { InputComponent } from "@shared/components/input/input.component";
+import { LoadingInputComponent } from "@shared/components/loading-input/loading-input.component";
 import { SidebarLinkComponent } from "@shared/components/sidebar-link/sidebar-link.component";
 import { ValidationErrorsComponent } from "@shared/components/validation-errors/validation-errors.component";
 import { CalendarModule, DateAdapter } from "angular-calendar";
@@ -19,8 +21,10 @@ import { DialogService } from "primeng/dynamicdialog";
 
 @NgModule({
   declarations: [
+    LoadingInputComponent,
     InputComponent,
     DateTimeInputComponent,
+    CheckboxComponent,
     ValidationErrorsComponent,
     FormSubmitComponent,
     SidebarLinkComponent,
@@ -40,6 +44,7 @@ import { DialogService } from "primeng/dynamicdialog";
     ReactiveFormsModule,
     InputComponent,
     DateTimeInputComponent,
+    CheckboxComponent,
     FormSubmitComponent,
     SidebarLinkComponent,
   ],

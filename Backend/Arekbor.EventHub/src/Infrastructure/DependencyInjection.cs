@@ -23,6 +23,7 @@ public static class DependencyInjection
 
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICalendarEventRepository, CalendarEventRepository>();
 
         services.AddScoped(typeof(ICacheManager<>), typeof(CacheManager<>));
 

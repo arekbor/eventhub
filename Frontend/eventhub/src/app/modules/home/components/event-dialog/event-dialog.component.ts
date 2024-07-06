@@ -9,6 +9,7 @@ import { Perform } from "@modules/perform";
 import { FormControls } from "@shared/utils/form-controls";
 import { addHours } from "date-fns";
 import { DynamicDialogConfig } from "primeng/dynamicdialog";
+import { of, switchMap } from "rxjs";
 
 @Component({
   selector: "app-event-dialog",
@@ -35,7 +36,19 @@ export class EventDialogComponent extends BaseComponent implements OnInit {
   protected onSubmit(): void {
     this.safeSub(
       this.eventPerform
-        .load(this.eventService.create(this.form.getRawValue()), false)
+        .load(
+          of(this.event).pipe(
+            switchMap((event: Event | undefined) => {
+              if (event) {
+                return this.eventService.update(
+                  event.id as string,
+                  this.form.getRawValue()
+                );
+              }
+              return this.eventService.create(this.form.getRawValue());
+            })
+          )
+        )
         .subscribe((): void => {
           window.location.reload();
         })

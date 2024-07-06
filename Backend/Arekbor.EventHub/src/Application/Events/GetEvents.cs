@@ -39,7 +39,7 @@ internal class GetEventsHandler(
     public async Task<IEnumerable<EventResult>> Handle(GetEvents request, CancellationToken cancellationToken)
     {
         var events = await eventRepository
-            .FetchEvents(request.Start, request.End, cancellationToken);
+            .FindEventsAsync(request.Start, request.End, cancellationToken);
 
         return events.Adapt<IEnumerable<EventResult>>();
     }

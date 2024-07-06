@@ -108,7 +108,7 @@
         severity="info"
         text
         [label]="currentView.charAt(0).toUpperCase() + currentView.slice(1)"
-        [model]="calendarViewMenuItems"
+        [model]="viewMenuItems"
         class="ml-2"
       />
     </div>
@@ -119,24 +119,24 @@
     <mwl-calendar-month-view
       [viewDate]="viewDate"
       [headerTemplate]="monthHeader"
-      [events]="calendarEvents"
-      (eventClicked)="onEventClicked($event)"
-      (beforeViewRender)="onCalendarViewPeriodRender($event.period)"
+      [events]="events"
+      (eventClicked)="onEventClicked($event.event)"
+      (beforeViewRender)="onViewPeriodRender($event.period)"
     ></mwl-calendar-month-view>
     } @case (CalendarView.Day) {
     <mwl-calendar-day-view
       [viewDate]="viewDate"
-      [events]="calendarEvents"
-      (eventClicked)="onEventClicked($event)"
-      (beforeViewRender)="onCalendarViewPeriodRender($event.period)"
+      [events]="events"
+      (eventClicked)="onEventClicked($event.event)"
+      (beforeViewRender)="onViewPeriodRender($event.period)"
     ></mwl-calendar-day-view>
     } @case(CalendarView.Week) {
     <mwl-calendar-week-view
       [viewDate]="viewDate"
       [headerTemplate]="weekHeader"
-      [events]="calendarEvents"
-      (eventClicked)="onEventClicked($event)"
-      (beforeViewRender)="onCalendarViewPeriodRender($event.period)"
+      [events]="events"
+      (eventClicked)="onEventClicked($event.event)"
+      (beforeViewRender)="onViewPeriodRender($event.period)"
     ></mwl-calendar-week-view>
     } }
   </div>

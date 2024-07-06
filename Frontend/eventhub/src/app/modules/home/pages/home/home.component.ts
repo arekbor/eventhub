@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { CalendarEventService } from "@core/services/calendar-event.service";
+import { Event } from "@core/models/event.model";
+import { EventService } from "@core/services/event.service";
 import { BaseComponent } from "@modules/base.component";
-import { CalendarEventDialogComponent } from "@modules/home/components/calendar-event-dialog/calendar-event-dialog.component";
+import { EventDialogComponent } from "@modules/home/components/event-dialog/event-dialog.component";
 import {
   CalendarEvent,
   CalendarView,
@@ -17,76 +18,65 @@ import { DialogService, DynamicDialogConfig } from "primeng/dynamicdialog";
 export class HomeComponent extends BaseComponent implements OnInit {
   protected viewDate: Date = new Date();
 
-  protected calendarEvents: CalendarEvent<string>[] = [];
+  protected events: Event[] = [];
 
   protected currentView: CalendarView;
   protected CalendarView = CalendarView;
 
-  protected calendarViewMenuItems: MenuItem[];
+  protected viewMenuItems: MenuItem[];
 
-  protected calendarViewPeriod: CalendarViewPeriod;
-  private previousCalendarViewPeriod: CalendarViewPeriod;
+  protected viewPeriod: CalendarViewPeriod;
+  private previousViewPeriod: CalendarViewPeriod;
 
   constructor(
     private dialogService: DialogService,
-    private calendarEventService: CalendarEventService
+    private eventService: EventService
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.setView(CalendarView.Month);
-    this.setCalendarViewMenuItems();
+    this.setViewMenuItems();
   }
 
   protected onCreateEvent(): void {
-    this.dialogService.open(CalendarEventDialogComponent, this.configDialog());
+    this.dialogService.open(EventDialogComponent, this.configDialog());
   }
 
-  protected onEventClicked(event: { event: CalendarEvent<string> }): void {
+  protected onEventClicked(calendarEvent: CalendarEvent<unknown>): void {
     this.dialogService.open(
-      CalendarEventDialogComponent,
-      this.configDialog(event.event)
+      EventDialogComponent,
+      this.configDialog(calendarEvent as Event)
     );
   }
 
-
-  protected onCalendarViewPeriodRender(
-    calendarViewPeriod: CalendarViewPeriod
-  ): void {
+  protected onViewPeriodRender(viewPeriod: CalendarViewPeriod): void {
     if (
-      !this.previousCalendarViewPeriod ||
-      this.previousCalendarViewPeriod.start.getTime() !==
-        calendarViewPeriod.start.getTime() ||
-      this.previousCalendarViewPeriod.end.getTime() !==
-        calendarViewPeriod.end.getTime()
+      !this.previousViewPeriod ||
+      this.previousViewPeriod.start.getTime() !== viewPeriod.start.getTime() ||
+      this.previousViewPeriod.end.getTime() !== viewPeriod.end.getTime()
     ) {
-      this.previousCalendarViewPeriod = calendarViewPeriod;
-      this.initCalendarEvents(calendarViewPeriod.start, calendarViewPeriod.end);
+      this.previousViewPeriod = viewPeriod;
+      this.initEvents(viewPeriod.start, viewPeriod.end);
     }
-    this.calendarViewPeriod = calendarViewPeriod;
+    this.viewPeriod = viewPeriod;
   }
 
-  private initCalendarEvents(start: Date, end: Date): void {
+  private initEvents(start: Date, end: Date): void {
     this.safeSub(
-      this.calendarEventService
-        .getCalendarEvents(start, end)
-        .subscribe((calendarEvents: CalendarEvent<string>[]) => {
-          this.calendarEvents = calendarEvents.map(
-            (calendarEvent: CalendarEvent<string>) => {
-              calendarEvent.start = new Date(calendarEvent.start);
-              calendarEvent.end = calendarEvent.end
-                ? new Date(calendarEvent.end)
-                : undefined;
-              return calendarEvent;
-            }
-          );
-        })
+      this.eventService.list(start, end).subscribe((events: Event[]) => {
+        this.events = events.map((event: Event) => {
+          event.start = new Date(event.start);
+          event.end = event.end ? new Date(event.end) : undefined;
+          return event;
+        });
+      })
     );
   }
 
-  private setCalendarViewMenuItems(): void {
-    this.calendarViewMenuItems = [
+  private setViewMenuItems(): void {
+    this.viewMenuItems = [
       {
         label: "Day",
         command: () => {
@@ -112,9 +102,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
     this.currentView = view;
   }
 
-  private configDialog(
-    data?: CalendarEvent<string>
-  ): DynamicDialogConfig<CalendarEvent<string>> {
+  private configDialog(data?: Event): DynamicDialogConfig<Event> {
     return {
       data: data,
       focusOnShow: false,

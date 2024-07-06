@@ -15,7 +15,7 @@ export class FormControls {
     });
   }
 
-  static meta(): FormControl<string | null> {
+  static description(): FormControl<string | null> {
     return new FormControl();
   }
 

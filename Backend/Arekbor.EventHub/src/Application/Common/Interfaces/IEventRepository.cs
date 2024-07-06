@@ -2,8 +2,8 @@ using Arekbor.EventHub.Domain.Entities;
 
 namespace Arekbor.EventHub.Application.Common.Interfaces;
 
-public interface ICalendarEventRepository : IBaseRepository<CalendarEvent>
+public interface IEventRepository : IBaseRepository<Event>
 {
-    Task<List<CalendarEvent>> FetchCalendarEvents(
+    Task<List<Event>> FetchEvents(
         DateTime start, DateTime end, CancellationToken cancellationToken);
 }

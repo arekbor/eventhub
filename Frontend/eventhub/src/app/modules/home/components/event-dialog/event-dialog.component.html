@@ -1,8 +1,9 @@
 <div class="flex flex-column">
   <form [formGroup]="form">
-    @if (calendarEvent?.id) {
+    @if (event) {
     <div class="flex flex-column justify-content-center align-items-center">
-      <div class="text-xs font-light">Event id: {{ calendarEvent?.id }}</div>
+      <div class="text-xs font-light">Event id: {{ event.id }}</div>
+      <div class="text-xs font-light">User id: {{ event.userId }}</div>
     </div>
 
     <p-divider />
@@ -13,13 +14,13 @@
       label="Title"
       inputId="title"
       formControlName="title"
-      [isLoading]="createCalendarEventPerfrom.isLoading"
+      [isLoading]="eventPerform.isLoading"
     />
 
     <app-checkbox
       label="All day"
       formControlName="allDay"
-      [enabled]="!createCalendarEventPerfrom.isLoading"
+      [enabled]="!eventPerform.isLoading"
     />
 
     <app-date-time-input
@@ -29,7 +30,7 @@
       appendTo="body"
       [showTime]="!form.get('allDay')?.value"
       [maxDate]="form.get('end')?.value"
-      [isLoading]="createCalendarEventPerfrom.isLoading"
+      [isLoading]="eventPerform.isLoading"
     />
 
     <app-date-time-input
@@ -39,13 +40,10 @@
       appendTo="body"
       [showTime]="!form.get('allDay')?.value"
       [minDate]="form.get('start')?.value"
-      [isLoading]="createCalendarEventPerfrom.isLoading"
+      [isLoading]="eventPerform.isLoading"
     />
 
-    <p-editor
-      formControlName="meta"
-      [readonly]="createCalendarEventPerfrom.isLoading"
-    >
+    <p-editor formControlName="description" [readonly]="eventPerform.isLoading">
       <ng-template pTemplate="header">
         <span class="ql-formats">
           <button type="button" class="ql-bold" aria-label="Bold"></button>
@@ -81,7 +79,7 @@
     <app-form-submit
       [form]="form"
       (validSubmit)="onSubmit()"
-      [isLoading]="createCalendarEventPerfrom.isLoading"
+      [isLoading]="eventPerform.isLoading"
       >Submit</app-form-submit
     >
   </div>

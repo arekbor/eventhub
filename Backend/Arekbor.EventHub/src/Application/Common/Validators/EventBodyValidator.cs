@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Arekbor.TouchBase.Application.Common.Validators;
 
-public class CalendarEventBodyValidator: AbstractValidator<CalendarEventBody>
+public class EventBodyValidator: AbstractValidator<EventBody>
 {
-    public CalendarEventBodyValidator()
+    public EventBodyValidator()
     {
         RuleFor(x => x.Title)
             .NotEmpty()

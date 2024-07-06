@@ -1,7 +1,7 @@
-export interface CalendarEventBody {
+export interface EventBody {
   title: string;
   allDay: boolean;
   start: Date;
   end: Date | undefined;
-  meta: string | null;
+  description: string | null;
 }

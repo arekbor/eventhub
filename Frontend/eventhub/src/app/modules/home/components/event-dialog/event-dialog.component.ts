@@ -18,7 +18,7 @@ export class EventDialogComponent extends BaseComponent implements OnInit {
   protected event: Event | undefined;
   protected form: FormGroup<FormGroupControl<EventBody>>;
 
-  protected submitEventPerform: Perform<void> = new Perform<void>();
+  protected eventPerform: Perform<void> = new Perform<void>();
 
   constructor(
     private config: DynamicDialogConfig<Event>,
@@ -34,7 +34,7 @@ export class EventDialogComponent extends BaseComponent implements OnInit {
 
   protected onSubmit(): void {
     this.safeSub(
-      this.submitEventPerform
+      this.eventPerform
         .load(this.eventService.create(this.form.getRawValue()), false)
         .subscribe((): void => {
           window.location.reload();

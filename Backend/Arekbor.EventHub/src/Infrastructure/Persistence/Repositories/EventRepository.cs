@@ -7,7 +7,7 @@ namespace Arekbor.EventHub.Infrastructure.Persistence.Repositories;
 public class EventRepository(
     MongoDbContext mongoDbContext) : BaseRepository<Event>(mongoDbContext), IEventRepository
 {
-    public Task<List<Event>> FetchEvents(
+    public Task<List<Event>> FindEventsAsync(
         DateTime start, DateTime end, CancellationToken cancellationToken)
     {
         var filter = Builders<Event>.Filter.And(

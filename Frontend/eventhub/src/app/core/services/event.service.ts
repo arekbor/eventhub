@@ -26,4 +26,12 @@ export class EventService {
       params: params,
     });
   }
+
+  public update(id: string, body: EventBody): Observable<void> {
+    return this.httpClient.put<void>(
+      `${environment.apiUrl}/Events/update`,
+      body,
+      { params: { id: id } }
+    );
+  }
 }

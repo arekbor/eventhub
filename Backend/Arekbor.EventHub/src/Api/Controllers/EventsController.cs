@@ -13,4 +13,8 @@ public class EventsController : BaseApiController
     [HttpGet("list")]
     public async Task<IActionResult> List([FromQuery] GetEvents getEvents, CancellationToken cancellationToken)
         => await Send(getEvents, cancellationToken);
+
+    [HttpPut("update")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] EventBody eventBody, CancellationToken cancellationToken)
+        => await Send(new UpdateEvent(id, eventBody), cancellationToken);
 }

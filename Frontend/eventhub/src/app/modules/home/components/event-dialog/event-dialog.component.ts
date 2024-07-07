@@ -47,12 +47,25 @@ export class EventDialogComponent extends BaseComponent implements OnInit {
               }
               return this.eventService.create(this.form.getRawValue());
             })
-          )
+          ),
+          false
         )
         .subscribe((): void => {
           window.location.reload();
         })
     );
+  }
+
+  protected onDeleteEvent(): void {
+    if (this.event) {
+      this.safeSub(
+        this.eventPerform
+          .load(this.eventService.delete(this.event.id as string), false)
+          .subscribe((): void => {
+            window.location.reload();
+          })
+      );
+    }
   }
 
   private initEvent(): void {

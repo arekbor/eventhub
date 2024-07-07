@@ -10,6 +10,10 @@ public class BaseRepository<TEntity>(
 {
     protected readonly MongoDbContext MongoDbContext = mongoDbContext;
 
+    public Task DeleteOneAsync(TEntity entity, CancellationToken cancellationToken)
+        => MongoDbContext.Collection<TEntity>()
+            .DeleteOneAsync(x => x.Id == entity.Id, cancellationToken: cancellationToken);
+
     public Task<TEntity?> FindAsync(Guid userId, CancellationToken cancellationToken)
     {
         var filter = Builders<TEntity>.Filter.Eq(x => x.Id, userId);

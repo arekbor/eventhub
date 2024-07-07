@@ -10,10 +10,19 @@ export class EventService {
   constructor(private httpClient: HttpClient) {}
 
   public create(body: EventBody): Observable<void> {
-    return this.httpClient.post<void>(
-      `${environment.apiUrl}/Events/create`,
-      body
-    );
+    return this.httpClient.post<void>(`${environment.apiUrl}/Events`, body);
+  }
+
+  public update(id: string, body: EventBody): Observable<void> {
+    return this.httpClient.put<void>(`${environment.apiUrl}/Events`, body, {
+      params: { id: id },
+    });
+  }
+
+  public delete(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${environment.apiUrl}/Events`, {
+      params: { id: id },
+    });
   }
 
   public list(start: Date, end: Date): Observable<Event[]> {
@@ -25,13 +34,5 @@ export class EventService {
     return this.httpClient.get<Event[]>(`${environment.apiUrl}/Events/list`, {
       params: params,
     });
-  }
-
-  public update(id: string, body: EventBody): Observable<void> {
-    return this.httpClient.put<void>(
-      `${environment.apiUrl}/Events/update`,
-      body,
-      { params: { id: id } }
-    );
   }
 }

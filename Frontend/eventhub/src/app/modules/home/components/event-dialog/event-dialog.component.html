@@ -1,13 +1,21 @@
 <div class="flex flex-column">
   <form [formGroup]="form">
-    @if (event) {
+    <!-- @if (event) {
     <div class="flex flex-column justify-content-center align-items-center">
       <div class="text-xs font-light">Event id: {{ event.id }}</div>
       <div class="text-xs font-light">User id: {{ event.userId }}</div>
     </div>
 
     <p-divider />
-    }
+
+    <p-button
+      size="small"
+      severity="danger"
+      label="Delete"
+      outlined="true"
+      [loading]="eventPerform.isLoading"
+    />
+    } -->
 
     <app-input
       type="text"
@@ -76,6 +84,17 @@
   </form>
 
   <div class="flex justify-content-end mt-5">
+    @if(event) {
+    <p-button
+      size="small"
+      severity="danger"
+      label="Delete"
+      outlined="true"
+      [loading]="eventPerform.isLoading"
+      (onClick)="onDeleteEvent()"
+    />
+    }
+
     <app-form-submit
       [form]="form"
       (validSubmit)="onSubmit()"

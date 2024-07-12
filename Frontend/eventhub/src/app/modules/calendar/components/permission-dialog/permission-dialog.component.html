@@ -1,14 +1,14 @@
 <div class="flex flex-column">
   <form [formGroup]="form">
-    @if(userCalendarPermission) {
+    @if(calendarPermission) {
     <div class="flex flex-wrap justify-content-center">
       <div class="border-round border-solid border-1 font-light w-full p-2">
-        {{ userCalendarPermission.email }}
+        {{ calendarPermission.email }}
       </div>
     </div>
     }@else{
     <p-autoComplete
-      [suggestions]="searchUserResults"
+      [suggestions]="searchUsers"
       (completeMethod)="searchByEmail($event)"
       placeholder="Search email"
       appendTo="body"

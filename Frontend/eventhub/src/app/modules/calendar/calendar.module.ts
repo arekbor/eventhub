@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CalendarRoutingModule } from "@modules/calendar/calendar-routing.module";
 import { EventDialogComponent } from "@modules/calendar/components/event-dialog/event-dialog.component";
-import { UserPermissionDialogComponent } from "@modules/calendar/components/user-permission-dialog/user-permission-dialog.component";
+import { PermissionDialogComponent } from "@modules/calendar/components/permission-dialog/permission-dialog.component";
 import { CalendarComponent } from "@modules/calendar/pages/calendar/calendar.component";
 import { SettingsComponent } from "@modules/calendar/pages/settings/settings.component";
 import { SharedModule } from "@shared/shared.module";
@@ -11,7 +11,7 @@ import { SharedModule } from "@shared/shared.module";
     CalendarComponent,
     EventDialogComponent,
     SettingsComponent,
-    UserPermissionDialogComponent,
+    PermissionDialogComponent,
   ],
   imports: [CalendarRoutingModule, SharedModule.forRoot()],
 })

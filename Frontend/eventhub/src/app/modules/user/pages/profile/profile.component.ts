@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { UpdateProfile } from "@core/models/update-profile.model";
-import { UserResult } from "@core/models/user-result.model";
+import { User } from "@core/models/user.model";
 import { UserService } from "@core/services/user.service";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
 import { BaseComponent } from "@modules/base.component";
@@ -15,7 +15,7 @@ import { switchMap } from "rxjs";
 })
 export class ProfileComponent extends BaseComponent implements OnInit {
   protected form: FormGroup<FormGroupControl<UpdateProfile>>;
-  protected userResultPerform: Perform<UserResult> = new Perform<UserResult>();
+  protected userPerform: Perform<User> = new Perform<User>();
   protected updateProfilePerform: Perform<void> = new Perform<void>();
 
   constructor(private userService: UserService) {
@@ -40,9 +40,9 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
   private initUser(): void {
     this.safeSub(
-      this.userResultPerform
+      this.userPerform
         .load(this.userService.getUser())
-        .subscribe((user: UserResult) => {
+        .subscribe((user: User) => {
           this.updateForm(user);
         })
     );

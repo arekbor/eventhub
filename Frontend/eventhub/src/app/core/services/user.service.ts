@@ -8,11 +8,11 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { AuthTokens } from "@core/models/auth-tokens.model";
 import { Login } from "@core/models/login.model";
 import { Register } from "@core/models/register.model";
-import { SearchUserResult } from "@core/models/search-user-result.model";
+import { SearchUser } from "@core/models/search-user.model";
 import { UpdatePassword } from "@core/models/update-password.model";
 import { UpdateProfile } from "@core/models/update-profile.model";
 import { UserClaims } from "@core/models/user-claims.model";
-import { UserResult } from "@core/models/user-result.model";
+import { User } from "@core/models/user.model";
 import { StorageService } from "@core/services/storage.service";
 import { environment } from "@src/environments/environment";
 import { Observable, catchError, tap, throwError } from "rxjs";
@@ -85,16 +85,16 @@ export class UserService {
     window.location.reload();
   }
 
-  public getUser(): Observable<UserResult> {
-    return this.httpClient.get<UserResult>(`${environment.apiUrl}/Users/user`);
+  public getUser(): Observable<User> {
+    return this.httpClient.get<User>(`${environment.apiUrl}/Users/user`);
   }
 
-  public searchByEmail(email: string): Observable<SearchUserResult[]> {
+  public searchByEmail(email: string): Observable<SearchUser[]> {
     let params = new HttpParams();
 
     params = params.append("email", email);
 
-    return this.httpClient.get<SearchUserResult[]>(
+    return this.httpClient.get<SearchUser[]>(
       `${environment.apiUrl}/Users/searchByEmail`,
       {
         params: params,

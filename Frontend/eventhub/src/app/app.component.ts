@@ -43,9 +43,9 @@ export class AppComponent implements OnInit {
   private initItems(): void {
     this.items = [
       {
-        label: "Home",
-        icon: "pi pi-home",
-        routerLink: "home",
+        label: "Calendar",
+        icon: "pi pi-calendar",
+        routerLink: "calendar",
       },
     ];
   }

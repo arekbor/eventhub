@@ -33,6 +33,14 @@
               routerLink="user/profile"
               >Profile</app-sidebar-link
             >
+
+            <app-sidebar-link
+              icon="pi pi-calendar"
+              (click)="onCloseSidebar($event)"
+              routerLink="calendar/settings"
+              >Calendar settings</app-sidebar-link
+            >
+
             <app-sidebar-link
               icon="pi pi-lock"
               (click)="onCloseSidebar($event)"

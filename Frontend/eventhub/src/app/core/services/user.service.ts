@@ -1,12 +1,18 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { AuthTokens } from "@core/models/auth-tokens.model";
 import { Login } from "@core/models/login.model";
-import { Password } from "@core/models/password.model";
 import { Register } from "@core/models/register.model";
+import { SearchUserResult } from "@core/models/search-user-result.model";
+import { UpdatePassword } from "@core/models/update-password.model";
+import { UpdateProfile } from "@core/models/update-profile.model";
 import { UserClaims } from "@core/models/user-claims.model";
-import { User } from "@core/models/user.model";
+import { UserResult } from "@core/models/user-result.model";
 import { StorageService } from "@core/services/storage.service";
 import { environment } from "@src/environments/environment";
 import { Observable, catchError, tap, throwError } from "rxjs";
@@ -33,17 +39,17 @@ export class UserService {
     );
   }
 
-  public updateProfile(user: User): Observable<void> {
+  public updateProfile(user: UpdateProfile): Observable<void> {
     return this.httpClient.put<void>(
       `${environment.apiUrl}/Users/updateProfile`,
       user
     );
   }
 
-  public updatePassword(password: Password): Observable<void> {
+  public updatePassword(updatePassword: UpdatePassword): Observable<void> {
     return this.httpClient.put<void>(
       `${environment.apiUrl}/Users/updatePassword`,
-      password
+      updatePassword
     );
   }
 
@@ -79,7 +85,20 @@ export class UserService {
     window.location.reload();
   }
 
-  public getUser(): Observable<User> {
-    return this.httpClient.get<User>(`${environment.apiUrl}/Users/user`);
+  public getUser(): Observable<UserResult> {
+    return this.httpClient.get<UserResult>(`${environment.apiUrl}/Users/user`);
+  }
+
+  public searchByEmail(email: string): Observable<SearchUserResult[]> {
+    let params = new HttpParams();
+
+    params = params.append("email", email);
+
+    return this.httpClient.get<SearchUserResult[]>(
+      `${environment.apiUrl}/Users/searchByEmail`,
+      {
+        params: params,
+      }
+    );
   }
 }

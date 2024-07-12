@@ -1,7 +1,20 @@
 import { FormControl, Validators } from "@angular/forms";
+import { CalendarAccess } from "@core/enums/calendar-access.enum";
 import { CustomValidators } from "@shared/utils/custom-validators";
 
 export class FormControls {
+  static any<T>(): FormControl<T> {
+    return new FormControl();
+  }
+
+  static calendarAccessPermission(
+    access: CalendarAccess
+  ): FormControl<CalendarAccess> {
+    return new FormControl(access, {
+      nonNullable: true,
+    });
+  }
+
   static boolean(): FormControl<boolean> {
     return new FormControl(false, {
       nonNullable: true,

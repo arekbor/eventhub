@@ -6,7 +6,7 @@ import { UserNotLoggedGuard } from "@core/guards/user-not-logged.guard";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "home",
+    redirectTo: "calendar",
     pathMatch: "full",
   },
   {
@@ -14,9 +14,11 @@ const routes: Routes = [
     canActivate: [UserLoggedGuard],
     children: [
       {
-        path: "home",
+        path: "calendar",
         loadChildren: () =>
-          import("@modules/home/home.module").then((m) => m.HomeModule),
+          import("@modules/calendar/calendar.module").then(
+            (m) => m.CalendarModule
+          ),
       },
       {
         path: "user",

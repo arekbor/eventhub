@@ -1,0 +1,39 @@
+<div class="flex flex-column">
+  <form [formGroup]="form">
+    @if(userCalendarPermission) {
+    <div class="flex flex-wrap justify-content-center">
+      <div class="border-round border-solid border-1 font-light w-full p-2">
+        {{ userCalendarPermission.email }}
+      </div>
+    </div>
+    }@else{
+    <p-autoComplete
+      [suggestions]="searchUserResults"
+      (completeMethod)="searchByEmail($event)"
+      placeholder="Search email"
+      appendTo="body"
+      styleClass="w-full"
+      field="email"
+    />
+    }
+
+    <div class="field mt-5">
+      <p-floatLabel>
+        <p-dropdown
+          [options]="accessOptions"
+          optionLabel="name"
+          optionValue="access"
+          formControlName="access"
+          appendTo="body"
+          styleClass="w-full"
+        />
+      </p-floatLabel>
+    </div>
+  </form>
+
+  <div class="flex justify-content-end mt-5">
+    <app-form-submit [form]="form" (validSubmit)="onSubmit()" class="ml-2"
+      >Submit</app-form-submit
+    >
+  </div>
+</div>

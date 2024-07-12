@@ -52,7 +52,7 @@ export class UserPermissionDialogComponent
   }
 
   protected onSubmit(): void {
-    console.log(this.form.getRawValue());
+    throw new Error("Not implemented");
   }
 
   protected searchByEmail(event: AutoCompleteCompleteEvent): void {

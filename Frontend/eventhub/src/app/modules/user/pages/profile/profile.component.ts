@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { User } from "@core/models/user.model";
+import { UpdateProfile } from "@core/models/update-profile.model";
+import { UserResult } from "@core/models/user-result.model";
 import { UserService } from "@core/services/user.service";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
 import { BaseComponent } from "@modules/base.component";
@@ -13,9 +14,9 @@ import { switchMap } from "rxjs";
   templateUrl: "profile.component.html",
 })
 export class ProfileComponent extends BaseComponent implements OnInit {
-  protected form: FormGroup<FormGroupControl<User>>;
-  protected userPerform: Perform<User> = new Perform<User>();
-  protected updatePerform: Perform<void> = new Perform<void>();
+  protected form: FormGroup<FormGroupControl<UpdateProfile>>;
+  protected userResultPerform: Perform<UserResult> = new Perform<UserResult>();
+  protected updateProfilePerform: Perform<void> = new Perform<void>();
 
   constructor(private userService: UserService) {
     super();
@@ -28,7 +29,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
   protected onSubmit(): void {
     this.safeSub(
-      this.updatePerform
+      this.updateProfilePerform
         .load(this.userService.updateProfile(this.form.getRawValue()), false)
         .pipe(switchMap(() => this.userService.refreshToken()))
         .subscribe((): void => {
@@ -39,25 +40,25 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
   private initUser(): void {
     this.safeSub(
-      this.userPerform
+      this.userResultPerform
         .load(this.userService.getUser())
-        .subscribe((user: User) => {
+        .subscribe((user: UserResult) => {
           this.updateForm(user);
         })
     );
   }
 
   private initForm(): void {
-    this.form = new FormGroup<FormGroupControl<User>>({
+    this.form = new FormGroup<FormGroupControl<UpdateProfile>>({
       email: FormControls.email(),
       username: FormControls.username(),
     });
   }
 
-  private updateForm(user: User): void {
+  private updateForm(updateProfile: UpdateProfile): void {
     this.form.setValue({
-      email: user.email,
-      username: user.username,
+      email: updateProfile.email,
+      username: updateProfile.username,
     });
   }
 }

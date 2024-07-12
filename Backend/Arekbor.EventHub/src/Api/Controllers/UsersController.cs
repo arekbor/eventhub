@@ -25,6 +25,10 @@ public class UsersController : BaseApiController
     public async Task<IActionResult> GetUser(CancellationToken cancellationToken)
         => await Send(new GetUser(), cancellationToken);
 
+    [HttpGet("searchByEmail")]
+    public async Task<IActionResult> SearchByEmail([FromQuery] SearchByEmail query ,CancellationToken cancellationToken)
+        => await Send(query, cancellationToken);
+
     [HttpPut("updateProfile")]
     public async Task<IActionResult> UpdateProfile(UpdateProfile updateProfile, CancellationToken cancellationToken)
         => await Send(updateProfile, cancellationToken);

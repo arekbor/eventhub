@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Password } from "@core/models/password.model";
+import { UpdatePassword } from "@core/models/update-password.model";
 import { UserService } from "@core/services/user.service";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
 import { nameof } from "@core/utils/nameof";
@@ -14,7 +14,7 @@ import { FormControls } from "@shared/utils/form-controls";
   templateUrl: "password.component.html",
 })
 export class PasswordComponent extends BaseComponent implements OnInit {
-  protected form: FormGroup<FormGroupControl<Password>>;
+  protected form: FormGroup<FormGroupControl<UpdatePassword>>;
   protected updatePasswordPerform: Perform<void> = new Perform<void>();
 
   constructor(private userService: UserService) {
@@ -36,15 +36,15 @@ export class PasswordComponent extends BaseComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.form = new FormGroup<FormGroupControl<Password>>(
+    this.form = new FormGroup<FormGroupControl<UpdatePassword>>(
       {
         currentPassword: FormControls.password(),
         newPassword: FormControls.registerPassword(),
         confirmNewPassword: FormControls.password(),
       },
       CustomValidators.passwordMatch(
-        nameof<Password>("newPassword"),
-        nameof<Password>("confirmNewPassword")
+        nameof<UpdatePassword>("newPassword"),
+        nameof<UpdatePassword>("confirmNewPassword")
       )
     );
   }

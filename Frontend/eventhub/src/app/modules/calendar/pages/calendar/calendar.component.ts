@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Event } from "@core/models/event.model";
 import { EventService } from "@core/services/event.service";
 import { BaseComponent } from "@modules/base.component";
-import { EventDialogComponent } from "@modules/home/components/event-dialog/event-dialog.component";
+import { EventDialogComponent } from "@modules/calendar/components/event-dialog/event-dialog.component";
 import {
   CalendarEvent,
   CalendarView,
@@ -12,10 +12,10 @@ import { MenuItem } from "primeng/api";
 import { DialogService, DynamicDialogConfig } from "primeng/dynamicdialog";
 
 @Component({
-  selector: "app-home",
-  templateUrl: "home.component.html",
+  selector: "app-calendar",
+  templateUrl: "calendar.component.html",
 })
-export class HomeComponent extends BaseComponent implements OnInit {
+export class CalendarComponent extends BaseComponent implements OnInit {
   protected viewDate: Date = new Date();
 
   protected events: Event[] = [];

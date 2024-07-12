@@ -1,4 +1,4 @@
-export class UserResult {
+export class User {
   email: string;
   username: string;
 }

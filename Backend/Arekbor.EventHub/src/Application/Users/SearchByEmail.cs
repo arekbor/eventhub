@@ -15,7 +15,7 @@ internal class SearchByEmailHandler(
     public async Task<IEnumerable<SearchUserResult>> Handle(SearchByEmail request, CancellationToken cancellationToken)
     {
         var users = await userRepository
-            .SearchManyByEmailAsync(request.Email, cancellationToken);
+            .SearchByEmailAsync(request.Email, cancellationToken);
 
         return users.Adapt<IEnumerable<SearchUserResult>>();
     }

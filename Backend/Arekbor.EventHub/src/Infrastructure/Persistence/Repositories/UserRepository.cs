@@ -17,7 +17,7 @@ public class UserRepository(
             .FirstOrDefaultAsync(cancellationToken)!;
     }
 
-    public Task<List<User>> SearchManyByEmailAsync(string email, CancellationToken cancellationToken)
+    public Task<List<User>> SearchByEmailAsync(string email, CancellationToken cancellationToken)
     {
         var filter = Builders<User>.Filter
             .Regex(x => x.Email, BsonRegularExpression.Create(Regex.Escape(email)));

@@ -30,10 +30,10 @@ internal class UpdateUserCalendarPermissionHandler(
 
         var calendarPermission = await calendarPermissionRepository
             .FindUserCalendarPermissionAsync(request.UserId, currentId, cancellationToken)
-                ?? throw new NotFoundException($"Calendar permission of user ${currentId} not found");
+                ?? throw new NotFoundException($"Calendar permission of user ${currentId} not found.");
 
         if(!calendarPermission.CanModify)
-            throw new BadRequestException("Cannot modify calendar permission");
+            throw new BadRequestException("Cannot modify calendar permission.");
         
         calendarPermission = request.CalendarPermissionBody.Adapt(calendarPermission);
 

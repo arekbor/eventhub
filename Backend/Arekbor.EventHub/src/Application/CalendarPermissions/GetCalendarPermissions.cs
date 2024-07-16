@@ -1,3 +1,4 @@
+using Arekbor.EventHub.Application.Common.Dtos;
 using Arekbor.EventHub.Application.Common.Exceptions;
 using Arekbor.EventHub.Application.Common.Interfaces;
 using Arekbor.EventHub.Application.Common.Models;
@@ -38,7 +39,7 @@ internal class GetCalendarPermissionsHandler(
         foreach(var item in resultList) {
             var user = await userRepository
                 .FindAsync(item.UserId, cancellationToken)
-                    ?? throw new NotFoundException($"{item.UserId} not found");
+                    ?? throw new NotFoundException($"{item.UserId} not found.");
             
             item.Username = user.Username;
             item.Email = user.Email;

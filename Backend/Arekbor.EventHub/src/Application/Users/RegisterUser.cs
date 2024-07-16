@@ -40,7 +40,7 @@ internal class RegisterUserHandler(
         var existingUser = await userRepository
             .FindByEmailAsync(request.Email, cancellationToken);
         if (existingUser is not null)
-            throw new BadRequestException($"User with email: {request.Email} already exists");
+            throw new BadRequestException($"User with email: {request.Email} already exists.");
             
         var user = new User
         {

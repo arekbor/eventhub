@@ -23,14 +23,23 @@ public class UpdateEventValidator : AbstractValidator<UpdateEvent>
 }
 
 internal class UpdateEventHandler(
-    IEventRepository eventRepository
+    IEventRepository eventRepository,
+    ICurrentUserService currentUserService,
+    ICalendarPermissionRepository calendarPermissionRepository
 ) : IRequestHandler<UpdateEvent, Unit>
 {
     public async Task<Unit> Handle(UpdateEvent request, CancellationToken cancellationToken)
     {
         var e = await eventRepository
             .FindAsync(request.Id, cancellationToken)
-                ?? throw new NotFoundException($"Event ${request.Id} not found");
+                ?? throw new NotFoundException($"Event ${request.Id} not found.");
+        
+        var calendarPermission = await calendarPermissionRepository
+            .FindUserCalendarPermissionAsync(currentUserService.GetId(), e.UserId, cancellationToken)
+                ?? throw new ForbiddenException("You don't have permission.");
+        
+        if (calendarPermission.Access != Domain.Enums.CalendarAccess.CanReadAndModify)
+            throw new ForbiddenException("You don't have permission.");
 
         e = request.EventBody.Adapt(e);
 

@@ -34,7 +34,7 @@ internal class UpdatePasswordHandler(
     {
         var user = await userRepository
             .FindAsync(currentUserService.GetId(), cancellationToken)
-                ??  throw new NotFoundException($"User ${currentUserService.GetId()} not found");
+                ??  throw new NotFoundException($"User ${currentUserService.GetId()} not found.");
         
         if (!identityService.VerifyPasswordHash(user.Password, request.CurrentPassword))
             throw new BadRequestException("Invalid current password.");

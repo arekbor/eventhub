@@ -29,16 +29,16 @@ internal class UpdateProfileHandler(
     {
         var user = await userRepository
             .FindAsync(currentUserService.GetId(), cancellationToken)
-                ?? throw new NotFoundException($"User {currentUserService.GetId()} not found");
+                ?? throw new NotFoundException($"User {currentUserService.GetId()} not found.");
 
         if (user.Username.Equals(request.Username) && user.Email.Equals(request.Email))
-            throw new BadRequestException("No changes detected");
+            throw new BadRequestException("No changes detected.");
 
         var userWithSameEmail = await userRepository
             .FindByEmailAsync(request.Email, cancellationToken);
 
         if (userWithSameEmail?.Email is not null && !userWithSameEmail.Email.Equals(user.Email))
-            throw new BadRequestException($"User with email: {request.Email} already exists");
+            throw new BadRequestException($"User with email: {request.Email} already exists.");
 
         user.Username = request.Username;
         user.Email = request.Email;

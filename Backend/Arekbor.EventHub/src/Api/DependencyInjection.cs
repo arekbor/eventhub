@@ -85,6 +85,11 @@ public static class DependencyInjection
                 Status = StatusCodes.Status401Unauthorized
             });
 
+            setup.Map<ForbiddenException>(ex => new ProblemDetails{
+                Detail = ex.Message,
+                Status = StatusCodes.Status403Forbidden
+            });
+
             setup.Map<NotFoundException>(ex => new ProblemDetails{
                 Detail = ex.Message,
                 Status = StatusCodes.Status404NotFound

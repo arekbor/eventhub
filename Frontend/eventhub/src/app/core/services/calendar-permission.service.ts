@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { CalendarPermissionBody } from "@core/models/calendar-permission-body.model";
 import { CalendarPermission } from "@core/models/calendar-permission.model";
 import { PaginatedList } from "@core/models/paginated-list.model";
+import { UserManagerCalendarPermissionResult } from "@core/models/user-manager-calendar-permission-result.model";
 import { environment } from "@src/environments/environment";
 import { Observable } from "rxjs";
 
@@ -49,6 +50,17 @@ export class CalendarPermissionService {
       calendarPermissionBody,
       {
         params: { userId: userId },
+      }
+    );
+  }
+
+  public getUserManagerCalendarPermission(
+    userManagerId: string
+  ): Observable<UserManagerCalendarPermissionResult> {
+    return this.httpClient.get<UserManagerCalendarPermissionResult>(
+      `${environment.apiUrl}/CalendarPermissions`,
+      {
+        params: { userManagerId: userManagerId },
       }
     );
   }

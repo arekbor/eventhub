@@ -18,7 +18,7 @@ internal class GetUserHandler(
     {
         var user = await userRepository
             .FindAsync(currentUserService.GetId(), cancellationToken)
-                ?? throw new NotFoundException("Current user not found");
+                ?? throw new NotFoundException("Current user not found.");
 
         return user.Adapt<UserResult>();
     }

@@ -12,6 +12,8 @@
       [minDate]="minDate"
       [maxDate]="maxDate"
       [showTime]="showTime"
+      [showOnFocus]="readonly ? false : true"
+      [readonlyInput]="readonly"
     />
 
     <label [for]="inputId">{{ label }}</label>

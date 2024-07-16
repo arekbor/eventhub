@@ -1,4 +1,5 @@
 using Arekbor.EventHub.Application.Common.Interfaces;
+using Arekbor.EventHub.Application.Common.Models;
 using Arekbor.EventHub.Domain.Common;
 using MongoDB.Driver;
 
@@ -30,4 +31,24 @@ public class BaseRepository<TEntity>(
     public Task UpdateOneAsync(TEntity entity, CancellationToken cancellationToken)
         => MongoDbContext.Collection<TEntity>()
             .ReplaceOneAsync(d => d.Id == entity.Id, entity, cancellationToken: cancellationToken);
+
+    public async Task<PaginatedList<TEntity>> PaginatedList(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    {
+        const int MaxPageSize = 10;
+
+        pageNumber = pageNumber <= 0 ? 1 : pageNumber;
+        pageSize = pageSize <= 0 ? 1 : pageSize;
+        pageSize = pageSize > MaxPageSize ? MaxPageSize : pageSize;
+
+        var count = await MongoDbContext.Collection<TEntity>()
+            .EstimatedDocumentCountAsync(cancellationToken: cancellationToken); 
+
+        var items = await MongoDbContext.Collection<TEntity>()
+            .Find(x => true)
+            .Skip((pageNumber -1) * pageSize)
+            .Limit(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PaginatedList<TEntity>(items, count, pageNumber, pageSize);
+    }
 }

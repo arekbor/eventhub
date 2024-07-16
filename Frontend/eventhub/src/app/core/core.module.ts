@@ -7,6 +7,7 @@ import { EventService } from "@core/services/event.service";
 import { StorageService } from "@core/services/storage.service";
 import { UserService } from "@core/services/user.service";
 import { SharedModule } from "@shared/shared.module";
+import { CalendarPermissionService } from "./services/calendar-permission.service";
 
 const HttpInterceptors = [
   {
@@ -28,6 +29,7 @@ const HttpInterceptors = [
     UserService,
     EventService,
     StorageService,
+    CalendarPermissionService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
   ],

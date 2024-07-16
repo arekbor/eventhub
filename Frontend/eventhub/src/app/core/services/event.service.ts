@@ -9,14 +9,21 @@ import { Observable } from "rxjs";
 export class EventService {
   constructor(private httpClient: HttpClient) {}
 
-  public create(body: EventBody): Observable<void> {
-    return this.httpClient.post<void>(`${environment.apiUrl}/Events`, body);
+  public create(eventBody: EventBody): Observable<void> {
+    return this.httpClient.post<void>(
+      `${environment.apiUrl}/Events`,
+      eventBody
+    );
   }
 
-  public update(id: string, body: EventBody): Observable<void> {
-    return this.httpClient.put<void>(`${environment.apiUrl}/Events`, body, {
-      params: { id: id },
-    });
+  public update(id: string, eventBody: EventBody): Observable<void> {
+    return this.httpClient.put<void>(
+      `${environment.apiUrl}/Events`,
+      eventBody,
+      {
+        params: { id: id },
+      }
+    );
   }
 
   public delete(id: string): Observable<void> {

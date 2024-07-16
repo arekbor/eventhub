@@ -4,48 +4,82 @@ import {
   CalendarAccessMap,
 } from "@core/enums/calendar-access.enum";
 import { CalendarPermission } from "@core/models/calendar-permission.model";
-import { PermissionDialogComponent } from "@modules/calendar/components/permission-dialog/permission-dialog.component";
+import { PaginatedList } from "@core/models/paginated-list.model";
+import { CalendarPermissionService } from "@core/services/calendar-permission.service";
+import { BaseComponent } from "@modules/base.component";
+import { CalendarPermissionDialogComponent } from "@modules/calendar/components/calendar-permission-dialog/calendar-permission-dialog.component";
+import { Perform } from "@modules/perform";
 import { DialogService, DynamicDialogConfig } from "primeng/dynamicdialog";
+import { PaginatorState } from "primeng/paginator";
 
 @Component({
   selector: "app-settings",
   templateUrl: "settings.component.html",
 })
-export class SettingsComponent implements OnInit {
-  protected calendarPermissions: CalendarPermission[];
+export class SettingsComponent extends BaseComponent implements OnInit {
+  protected calendarPermissionsPerform = new Perform<
+    PaginatedList<CalendarPermission>
+  >();
 
-  constructor(private dialogService: DialogService) {}
+  protected first = 1;
+  protected rows = 5;
+
+  constructor(
+    private dialogService: DialogService,
+    private calendarPermissionService: CalendarPermissionService
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.initCalendarPermissions();
+    this.getCalendarPermissions(this.first, this.rows);
   }
 
   protected mapCalendarAccess(access: CalendarAccess): string | undefined {
     return CalendarAccessMap.find((x) => x.access === access)?.name;
   }
 
-  protected onEdit(calendarPermission: CalendarPermission): void {
+  protected onUpdate(calendarPermission: CalendarPermission): void {
     this.dialogService.open(
-      PermissionDialogComponent,
+      CalendarPermissionDialogComponent,
       this.configDialog(calendarPermission)
     );
   }
 
-  protected onAddUser(): void {
-    this.dialogService.open(PermissionDialogComponent, this.configDialog());
+  protected onAdd(): void {
+    this.dialogService.open(
+      CalendarPermissionDialogComponent,
+      this.configDialog()
+    );
+  }
+
+  protected onPageChange(event: PaginatorState): void {
+    this.getCalendarPermissions(
+      event.page ? event.page + 1 : 1,
+      event.rows ?? 5
+    );
+  }
+
+  private getCalendarPermissions(pageNumber: number, pageSize: number): void {
+    this.safeSub(
+      this.calendarPermissionsPerform
+        .load(
+          this.calendarPermissionService.getUserCalendarPermissions(
+            pageNumber,
+            pageSize
+          )
+        )
+        .subscribe()
+    );
   }
 
   private configDialog(
     calendarPermission?: CalendarPermission
-  ): DynamicDialogConfig {
+  ): DynamicDialogConfig<CalendarPermission> {
     return {
       data: calendarPermission,
       focusOnShow: false,
       draggable: true,
     };
-  }
-
-  private initCalendarPermissions(): void {
-    throw new Error("Not Implemented");
   }
 }

@@ -44,7 +44,7 @@ internal class GetEventsHandler(
         var events = await eventRepository
             .FindEventsAsync(request.Start, request.End, cancellationToken);
 
-        var filterEvents = new List<Event>();
+        var filteredEvents = new List<Event>();
 
         foreach(var e in events) {
             var calendarPermission = await calendarPermissionRepository
@@ -54,10 +54,10 @@ internal class GetEventsHandler(
                 (calendarPermission.Access == Domain.Enums.CalendarAccess.CanOnlyRead || 
                 calendarPermission.Access == Domain.Enums.CalendarAccess.CanReadAndModify))
             {
-                filterEvents.Add(e);
+                filteredEvents.Add(e);
             }
         }
 
-        return filterEvents.Adapt<IEnumerable<EventResult>>();
+        return filteredEvents.Adapt<IEnumerable<EventResult>>();
     }
 }

@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { CalendarPermissionBody } from "@core/models/calendar-permission-body.model";
 import { CalendarPermission } from "@core/models/calendar-permission.model";
+import { PaginatedList } from "@core/models/paginated-list.model";
 import { environment } from "@src/environments/environment";
 import { Observable } from "rxjs";
-import { CalendarPermissionBody } from "../models/calendar-permission-body.model";
-import { PaginatedList } from "../models/paginated-list.model";
 
 @Injectable()
 export class CalendarPermissionService {

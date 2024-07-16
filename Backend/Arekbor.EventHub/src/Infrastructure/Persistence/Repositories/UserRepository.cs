@@ -16,7 +16,7 @@ public class UserRepository(
         return MongoDbContext.Collection<User>().Find(filter)
             .FirstOrDefaultAsync(cancellationToken)!;
     }
-
+    
     public Task<List<User>> SearchByEmailAsync(string email, CancellationToken cancellationToken)
     {
         var filter = Builders<User>.Filter

@@ -1,12 +1,6 @@
 <div class="flex flex-column">
   <form [formGroup]="form">
-    @if(calendarPermission) {
-    <div class="flex flex-wrap justify-content-center">
-      <div class="border-round border-solid border-1 font-light w-full p-2">
-        {{ calendarPermission.email }}
-      </div>
-    </div>
-    }@else{
+    @if(!calendarPermission) {
     <p-autoComplete
       [suggestions]="searchUsers"
       (completeMethod)="searchByEmail($event)"
@@ -14,7 +8,17 @@
       appendTo="body"
       styleClass="w-full"
       field="email"
+      (onSelect)="onSelectEmail($event)"
+      [disabled]="calendarPermissionPerform.isLoading"
     />
+    } @else {
+    <div class="flex flex-row justify-content-center w-full">
+      <div class="font-light">
+        {{ calendarPermission.email }}
+      </div>
+    </div>
+
+    <p-divider />
     }
 
     <div class="field mt-5">
@@ -26,13 +30,18 @@
           formControlName="access"
           appendTo="body"
           styleClass="w-full"
+          [loading]="calendarPermissionPerform.isLoading"
         />
       </p-floatLabel>
     </div>
   </form>
 
   <div class="flex justify-content-end mt-5">
-    <app-form-submit [form]="form" (validSubmit)="onSubmit()" class="ml-2"
+    <app-form-submit
+      [form]="form"
+      (validSubmit)="onSubmit()"
+      class="ml-2"
+      [isLoading]="calendarPermissionPerform.isLoading"
       >Submit</app-form-submit
     >
   </div>

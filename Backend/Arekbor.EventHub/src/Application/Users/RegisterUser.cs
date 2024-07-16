@@ -1,6 +1,7 @@
 using Arekbor.EventHub.Application.Common.Exceptions;
 using Arekbor.EventHub.Application.Common.Interfaces;
 using Arekbor.EventHub.Domain.Entities;
+using Arekbor.EventHub.Domain.Enums;
 using Arekbor.TouchBase.Application.Common.Validators;
 using FluentValidation;
 using MediatR;
@@ -30,6 +31,7 @@ public class RegisterUserValidator : AbstractValidator<RegisterUser>
 
 internal class RegisterUserHandler(
     IUserRepository userRepository,
+    ICalendarPermissionRepository calendarPermissionRepository,
     IIdentityService identityService
 ) : IRequestHandler<RegisterUser, Unit>
 {
@@ -42,12 +44,24 @@ internal class RegisterUserHandler(
             
         var user = new User
         {
+            Id = Guid.NewGuid(),
             Username = request.Username,
             Email = request.Email,
             Password = identityService.HashPassword(request.Password)
         };
 
-        await userRepository.InsertAsync(user, cancellationToken);
+        await userRepository
+            .InsertAsync(user, cancellationToken);
+
+        var calendarPermission = new CalendarPermission
+        {
+            UserManagerId = user.Id,
+            UserId = user.Id,
+            Access = CalendarAccess.CanReadAndModify
+        };
+
+        await calendarPermissionRepository
+            .InsertAsync(calendarPermission, cancellationToken);
  
         return Unit.Value;
     }

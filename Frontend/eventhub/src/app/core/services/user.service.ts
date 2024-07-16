@@ -41,14 +41,14 @@ export class UserService {
 
   public updateProfile(user: UpdateProfile): Observable<void> {
     return this.httpClient.put<void>(
-      `${environment.apiUrl}/Users/updateProfile`,
+      `${environment.apiUrl}/Users/profile`,
       user
     );
   }
 
   public updatePassword(updatePassword: UpdatePassword): Observable<void> {
     return this.httpClient.put<void>(
-      `${environment.apiUrl}/Users/updatePassword`,
+      `${environment.apiUrl}/Users/password`,
       updatePassword
     );
   }
@@ -86,7 +86,7 @@ export class UserService {
   }
 
   public getUser(): Observable<User> {
-    return this.httpClient.get<User>(`${environment.apiUrl}/Users/user`);
+    return this.httpClient.get<User>(`${environment.apiUrl}/Users`);
   }
 
   public searchByEmail(email: string): Observable<SearchUser[]> {

@@ -20,7 +20,7 @@ export class CalendarPermissionService {
     params = params.append("pageSize", pageSize);
 
     return this.httpClient.get<PaginatedList<CalendarPermission>>(
-      `${environment.apiUrl}/CalendarPermissions/userList`,
+      `${environment.apiUrl}/CalendarPermissions/list`,
       {
         params: params,
       }

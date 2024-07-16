@@ -1,3 +1,4 @@
+
 using Arekbor.EventHub.Application.CalendarPermissions;
 using Arekbor.EventHub.Application.Common.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ namespace Arekbor.EventHub.Api.Controllers;
 
 public class CalendarPermissionsController : BaseApiController
 {
-    [HttpGet("userList")]
+    [HttpGet("list")]
     public async Task<IActionResult> GetUserCalendarPermissions(int pageNumber, int pageSize, CancellationToken cancellationToken)
         => await Send(new GetCalendarPermissions(pageNumber, pageSize), cancellationToken);
 

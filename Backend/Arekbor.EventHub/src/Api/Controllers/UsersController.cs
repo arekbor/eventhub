@@ -21,7 +21,7 @@ public class UsersController : BaseApiController
     public async Task<IActionResult> Refresh(RefreshToken refreshToken, CancellationToken cancellationToken)
         => await Send(refreshToken, cancellationToken);
 
-    [HttpGet("user")]
+    [HttpGet]
     public async Task<IActionResult> GetUser(CancellationToken cancellationToken)
         => await Send(new GetUser(), cancellationToken);
 
@@ -29,11 +29,11 @@ public class UsersController : BaseApiController
     public async Task<IActionResult> SearchByEmail([FromQuery] SearchByEmail query ,CancellationToken cancellationToken)
         => await Send(query, cancellationToken);
 
-    [HttpPut("updateProfile")]
+    [HttpPut("profile")]
     public async Task<IActionResult> UpdateProfile(UpdateProfile updateProfile, CancellationToken cancellationToken)
         => await Send(updateProfile, cancellationToken);
 
-    [HttpPut("updatePassword")]
+    [HttpPut("password")]
     public async Task<IActionResult> UpdatePassword(UpdatePassword updatePassword, CancellationToken cancellationToken)
         => await Send(updatePassword, cancellationToken);
 }

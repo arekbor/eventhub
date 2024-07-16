@@ -11,6 +11,10 @@ public class CalendarPermissionsController : BaseApiController
     public async Task<IActionResult> GetUserCalendarPermissions(int pageNumber, int pageSize, CancellationToken cancellationToken)
         => await Send(new GetCalendarPermissions(pageNumber, pageSize), cancellationToken);
 
+    [HttpGet]
+    public async Task<IActionResult> GetUserManagerCalendarPermission(Guid userManagerId, CancellationToken cancellationToken)
+        => await Send(new GetUserManagerCalendarPermission(userManagerId), cancellationToken);
+
     [HttpPost]
     public async Task<IActionResult> Add(Guid userId, [FromBody] CalendarPermissionBody calendarPermissionBody, CancellationToken cancellationToken)
         => await Send(new AddUserCalendarPermission(userId, calendarPermissionBody), cancellationToken);

@@ -23,4 +23,5 @@ export class DateTimeInputComponent<
   @Input() maxDate: Date | undefined;
   @Input() showTime = true;
   @Input() isLoading = false;
+  @Input() readonly: boolean;
 }

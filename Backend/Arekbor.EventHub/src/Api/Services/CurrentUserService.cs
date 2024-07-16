@@ -20,7 +20,7 @@ public class CurrentUserService(
         Guard.Against.Null(id);
 
         if (!Guid.TryParse(id, out Guid guidId))
-            throw new Exception($"Error while parsing {id} to GUID");
+            throw new Exception($"Error while parsing {id} to GUID.");
 
         return guidId;
     }

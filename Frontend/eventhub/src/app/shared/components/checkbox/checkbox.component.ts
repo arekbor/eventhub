@@ -15,5 +15,6 @@ import { ControlValueAccessorDirective } from "@shared/directives/control-value-
 })
 export class CheckboxComponent<T> extends ControlValueAccessorDirective<T> {
   @Input({ required: true }) label: string;
+  @Input() readonly: boolean;
   @Input() enabled = true;
 }

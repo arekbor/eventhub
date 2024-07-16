@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
+import { CalendarAccess } from "@core/enums/calendar-access.enum";
 import { EventBody } from "@core/models/event-body.model";
 import { Event } from "@core/models/event.model";
+import { UserManagerCalendarPermissionResult } from "@core/models/user-manager-calendar-permission-result.model";
+import { CalendarPermissionService } from "@core/services/calendar-permission.service";
 import { EventService } from "@core/services/event.service";
 import { FormGroupControl } from "@core/utils/form-group-control.type";
 import { BaseComponent } from "@modules/base.component";
@@ -19,11 +22,16 @@ export class EventDialogComponent extends BaseComponent implements OnInit {
   protected event: Event | undefined;
   protected form: FormGroup<FormGroupControl<EventBody>>;
 
-  protected eventPerform: Perform<void> = new Perform<void>();
+  protected eventPerform = new Perform<void>();
+  protected userManagerCalendarPermissionPerform =
+    new Perform<UserManagerCalendarPermissionResult>();
+
+  protected calendarAccess = CalendarAccess;
 
   constructor(
     private config: DynamicDialogConfig<Event>,
-    private eventService: EventService
+    private eventService: EventService,
+    private calendarPermissionService: CalendarPermissionService
   ) {
     super();
   }
@@ -72,8 +80,21 @@ export class EventDialogComponent extends BaseComponent implements OnInit {
     this.event = this.config.data;
 
     if (this.event) {
+      this.initUserMangerCalendarPermission(this.event.userId);
       this.updateForm(this.event);
     }
+  }
+
+  private initUserMangerCalendarPermission(userManagerId: string): void {
+    this.safeSub(
+      this.userManagerCalendarPermissionPerform
+        .load(
+          this.calendarPermissionService.getUserManagerCalendarPermission(
+            userManagerId
+          )
+        )
+        .subscribe()
+    );
   }
 
   private updateForm(event: Event): void {

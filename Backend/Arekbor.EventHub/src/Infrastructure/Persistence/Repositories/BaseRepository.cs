@@ -10,7 +10,10 @@ public class BaseRepository<TEntity>(
 {
     protected readonly MongoDbContext MongoDbContext = mongoDbContext;
 
-    public Task DeleteOneAsync(TEntity entity, CancellationToken cancellationToken)
+    public IMongoCollection<TEntity> Collection()
+        => MongoDbContext.Collection<TEntity>();
+
+    public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
         => MongoDbContext.Collection<TEntity>()
             .DeleteOneAsync(x => x.Id == entity.Id, cancellationToken: cancellationToken);
 
@@ -27,7 +30,7 @@ public class BaseRepository<TEntity>(
         => MongoDbContext.Collection<TEntity>()
             .InsertOneAsync(entity, cancellationToken: cancellationToken);
 
-    public Task UpdateOneAsync(TEntity entity, CancellationToken cancellationToken)
+    public Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
         => MongoDbContext.Collection<TEntity>()
             .ReplaceOneAsync(d => d.Id == entity.Id, entity, cancellationToken: cancellationToken);
 }

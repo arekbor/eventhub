@@ -25,7 +25,7 @@ internal class DeleteEventHandler(
         if (calendarPermission.Access != Domain.Enums.CalendarAccess.CanReadAndModify)
             throw new ForbiddenException("You don't have permission.");
 
-        await eventRepository.DeleteOneAsync(e, cancellationToken);
+        await eventRepository.DeleteAsync(e, cancellationToken);
 
         return Unit.Value;
     }

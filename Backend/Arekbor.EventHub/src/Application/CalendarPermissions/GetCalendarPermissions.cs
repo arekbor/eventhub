@@ -28,7 +28,7 @@ internal class GetCalendarPermissionsHandler(
     public async Task<PaginatedList<CalendarPermissionResult>> Handle(GetCalendarPermissions request, CancellationToken cancellationToken)
     {
         var pagiantedList = await calendarPermissionRepository
-            .FindAllUserCalendarPermissionsAsync(
+            .FindUserCalendarPermissionsAsync(
                 currentUserService.GetId(), request.PageNumber, request.PageSize, cancellationToken);
 
         var result = pagiantedList

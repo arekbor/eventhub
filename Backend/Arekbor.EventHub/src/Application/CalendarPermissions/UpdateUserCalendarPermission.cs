@@ -38,7 +38,7 @@ internal class UpdateUserCalendarPermissionHandler(
         calendarPermission = request.CalendarPermissionBody.Adapt(calendarPermission);
 
         await calendarPermissionRepository
-            .UpdateOneAsync(calendarPermission, cancellationToken);
+            .UpdateAsync(calendarPermission, cancellationToken);
 
         return Unit.Value;
     }

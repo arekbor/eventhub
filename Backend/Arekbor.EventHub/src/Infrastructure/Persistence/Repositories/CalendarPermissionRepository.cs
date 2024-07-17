@@ -17,7 +17,7 @@ public class CalendarPermissionRepository(
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public Task<PaginatedList<CalendarPermission>> FindAllUserCalendarPermissionsAsync(
+    public Task<PaginatedList<CalendarPermission>> FindUserCalendarPermissionsAsync(
         Guid userManagerId, int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         return MongoDbContext.Collection<CalendarPermission>()

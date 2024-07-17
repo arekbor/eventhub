@@ -44,7 +44,7 @@ internal class UpdateEventHandler(
         e = request.EventBody.Adapt(e);
 
         await eventRepository
-            .UpdateOneAsync(e, cancellationToken);
+            .UpdateAsync(e, cancellationToken);
 
         return Unit.Value;
     }

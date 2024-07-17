@@ -43,7 +43,7 @@ internal class UpdateProfileHandler(
         user.Username = request.Username;
         user.Email = request.Email;
 
-        await userRepository.UpdateOneAsync(user, cancellationToken);
+        await userRepository.UpdateAsync(user, cancellationToken);
 
         return Unit.Value;
     }

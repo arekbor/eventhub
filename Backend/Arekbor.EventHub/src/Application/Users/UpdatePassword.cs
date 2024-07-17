@@ -41,7 +41,7 @@ internal class UpdatePasswordHandler(
 
         user.Password = identityService.HashPassword(request.NewPassword);
 
-        await userRepository.UpdateOneAsync(user, cancellationToken);
+        await userRepository.UpdateAsync(user, cancellationToken);
 
         return Unit.Value;
     }

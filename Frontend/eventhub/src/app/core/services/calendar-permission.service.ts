@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { CalendarAccess } from "@core/enums/calendar-access.enum";
 import { CalendarPermissionBody } from "@core/models/calendar-permission-body.model";
 import { CalendarPermission } from "@core/models/calendar-permission.model";
 import { PaginatedList } from "@core/models/paginated-list.model";
-import { UserManagerCalendarPermissionResult } from "@core/models/user-manager-calendar-permission-result.model";
 import { environment } from "@src/environments/environment";
 import { Observable } from "rxjs";
 
@@ -54,11 +54,11 @@ export class CalendarPermissionService {
     );
   }
 
-  public getUserManagerCalendarPermission(
+  public getUserManagerAccess(
     userManagerId: string
-  ): Observable<UserManagerCalendarPermissionResult> {
-    return this.httpClient.get<UserManagerCalendarPermissionResult>(
-      `${environment.apiUrl}/CalendarPermissions`,
+  ): Observable<CalendarAccess> {
+    return this.httpClient.get<CalendarAccess>(
+      `${environment.apiUrl}/CalendarPermissions/access`,
       {
         params: { userManagerId: userManagerId },
       }

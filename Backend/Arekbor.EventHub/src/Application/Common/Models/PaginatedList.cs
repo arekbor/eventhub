@@ -5,7 +5,7 @@ public sealed class PaginatedList<T>
     public IEnumerable<T> Items { get; set; } = [];
     public int PageNumber { get; set; }
     public int TotalPages { get; set; }
-    public long TotalCount { get; set; }
+    public int TotalCount { get; set; }
     public bool HasPreviousPage 
         => PageNumber > 1;
     
@@ -17,7 +17,7 @@ public sealed class PaginatedList<T>
         
     }
 
-    public PaginatedList(IEnumerable<T> items, long totalCount, int pageNumber, int pageSize)
+    public PaginatedList(IEnumerable<T> items, int totalCount, int pageNumber, int pageSize)
     {
         PageNumber = pageNumber;
         TotalCount = totalCount;

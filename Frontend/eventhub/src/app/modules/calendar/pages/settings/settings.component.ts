@@ -6,6 +6,7 @@ import {
 import { CalendarPermission } from "@core/models/calendar-permission.model";
 import { PaginatedList } from "@core/models/paginated-list.model";
 import { CalendarPermissionService } from "@core/services/calendar-permission.service";
+import { UserService } from "@core/services/user.service";
 import { BaseComponent } from "@modules/base.component";
 import { CalendarPermissionDialogComponent } from "@modules/calendar/components/calendar-permission-dialog/calendar-permission-dialog.component";
 import { Perform } from "@modules/perform";
@@ -24,14 +25,18 @@ export class SettingsComponent extends BaseComponent implements OnInit {
   protected first = 1;
   protected rows = 5;
 
+  protected userManagerId: string | undefined;
+
   constructor(
     private dialogService: DialogService,
-    private calendarPermissionService: CalendarPermissionService
+    private calendarPermissionService: CalendarPermissionService,
+    private userService: UserService
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.initUserManagerId();
     this.getCalendarPermissions(this.first, this.rows);
   }
 
@@ -60,6 +65,10 @@ export class SettingsComponent extends BaseComponent implements OnInit {
     );
   }
 
+  protected canModify(userId: string): boolean {
+    return this.userManagerId !== userId;
+  }
+
   private getCalendarPermissions(pageNumber: number, pageSize: number): void {
     this.safeSub(
       this.calendarPermissionsPerform
@@ -71,6 +80,10 @@ export class SettingsComponent extends BaseComponent implements OnInit {
         )
         .subscribe()
     );
+  }
+
+  private initUserManagerId(): void {
+    this.userManagerId = this.userService.getClaims()?.nameid;
   }
 
   private configDialog(

@@ -8,8 +8,7 @@
       [isLoading]="eventPerform.isLoading"
       [readonly]="
         event !== undefined &&
-        userManagerCalendarPermissionPerform.data?.access !==
-          calendarAccess.CanReadAndModify
+        userManagerCalendarAccess.data !== calendarAccess.CanReadAndModify
       "
     />
 
@@ -19,8 +18,7 @@
       [enabled]="!eventPerform.isLoading"
       [readonly]="
         event !== undefined &&
-        userManagerCalendarPermissionPerform.data?.access !==
-          calendarAccess.CanReadAndModify
+        userManagerCalendarAccess.data !== calendarAccess.CanReadAndModify
       "
     />
 
@@ -34,8 +32,7 @@
       [isLoading]="eventPerform.isLoading"
       [readonly]="
         event !== undefined &&
-        userManagerCalendarPermissionPerform.data?.access !==
-          calendarAccess.CanReadAndModify
+        userManagerCalendarAccess.data !== calendarAccess.CanReadAndModify
       "
     />
 
@@ -49,8 +46,7 @@
       [isLoading]="eventPerform.isLoading"
       [readonly]="
         event !== undefined &&
-        userManagerCalendarPermissionPerform.data?.access !==
-          calendarAccess.CanReadAndModify
+        userManagerCalendarAccess.data !== calendarAccess.CanReadAndModify
       "
     />
 
@@ -59,8 +55,7 @@
       [readonly]="
         eventPerform.isLoading ||
         (event !== undefined &&
-          userManagerCalendarPermissionPerform.data?.access !==
-            calendarAccess.CanReadAndModify)
+          userManagerCalendarAccess.data !== calendarAccess.CanReadAndModify)
       "
     >
       <ng-template pTemplate="header">
@@ -102,12 +97,9 @@
       label="Delete"
       outlined="true"
       [disabled]="
-        userManagerCalendarPermissionPerform.data?.access !==
-        calendarAccess.CanReadAndModify
+        userManagerCalendarAccess.data !== calendarAccess.CanReadAndModify
       "
-      [loading]="
-        eventPerform.isLoading || userManagerCalendarPermissionPerform.isLoading
-      "
+      [loading]="eventPerform.isLoading || userManagerCalendarAccess.isLoading"
       (onClick)="onDeleteEvent()"
     />
     }
@@ -117,11 +109,10 @@
       (validSubmit)="onSubmit()"
       [disabled]="
         event !== undefined &&
-        userManagerCalendarPermissionPerform.data?.access !==
-          calendarAccess.CanReadAndModify
+        userManagerCalendarAccess.data !== calendarAccess.CanReadAndModify
       "
       [isLoading]="
-        eventPerform.isLoading || userManagerCalendarPermissionPerform.isLoading
+        eventPerform.isLoading || userManagerCalendarAccess.isLoading
       "
       class="ml-2"
       >Submit</app-form-submit

@@ -33,7 +33,7 @@
           <td>
             <p-tag [value]="mapCalendarAccess(item.access)" severity="info" />
           </td>
-          @if(item.canModify) {
+          @if(canModify(item.userId)) {
           <td>
             <p-button
               label="Edit"

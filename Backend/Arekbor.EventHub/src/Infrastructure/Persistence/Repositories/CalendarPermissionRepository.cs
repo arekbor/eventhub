@@ -15,7 +15,7 @@ public class CalendarPermissionRepository(
         Guid userId, Guid userManagerId, CancellationToken cancellationToken)
     {
         return MongoDbContext.Collection<CalendarPermission>()
-            .Find(x => x.UserManagerId == userId && x.UserId == userManagerId)
+            .Find(x => x.UserManagerId == userManagerId && x.UserId == userId)
             .FirstOrDefaultAsync(cancellationToken);
     }
 

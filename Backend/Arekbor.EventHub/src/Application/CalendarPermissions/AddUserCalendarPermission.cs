@@ -30,6 +30,7 @@ internal class AddUserCalendarPermissionHandler(
 
         var existingUser = await calendarPermissionRepository
             .FindUserCalendarPermissionAsync(request.UserId, currentId, cancellationToken);
+            
         if(existingUser is not null)
             throw new BadRequestException($"User with id: {request.UserId} already has assigned permission.");
 

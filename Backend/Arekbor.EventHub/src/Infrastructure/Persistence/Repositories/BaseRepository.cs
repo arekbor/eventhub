@@ -9,10 +9,7 @@ public class BaseRepository<TEntity>(
         where TEntity : BaseEntity
 {
     protected readonly MongoDbContext MongoDbContext = mongoDbContext;
-
-    public IMongoCollection<TEntity> Collection()
-        => MongoDbContext.Collection<TEntity>();
-
+    
     public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
         => MongoDbContext.Collection<TEntity>()
             .DeleteOneAsync(x => x.Id == entity.Id, cancellationToken: cancellationToken);

@@ -1,8 +1,6 @@
 using Arekbor.EventHub.Application.Common.Dtos;
 using Arekbor.EventHub.Application.Common.Interfaces;
-using Arekbor.EventHub.Domain.Entities;
 using FluentValidation;
-using Mapster;
 using MediatR;
 
 namespace Arekbor.EventHub.Application.Events;
@@ -33,21 +31,5 @@ internal class GetEventsHandler(
     {
         return await eventRepository
             .FindEventsAsync(currentUserService.GetId(), request.Start, request.End, cancellationToken);
-
-        // var filteredEvents = new List<Event>();
-
-        // foreach(var e in events) {
-        //     var calendarPermission = await calendarPermissionRepository
-        //         .FindUserCalendarPermissionAsync(currentUserService.GetId(), e.UserId, cancellationToken);
-
-        //     if (calendarPermission is not null && 
-        //         (calendarPermission.Access == Domain.Enums.CalendarAccess.CanOnlyRead || 
-        //         calendarPermission.Access == Domain.Enums.CalendarAccess.CanReadAndModify))
-        //     {
-        //         filteredEvents.Add(e);
-        //     }
-        // }
-
-        // return filteredEvents.Adapt<IEnumerable<EventResult>>();
     }
 }

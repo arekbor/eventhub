@@ -31,8 +31,8 @@ public class EventRepository(
                                 {
                                     { "$and", new BsonArray
                                         {
-                                            new BsonDocument("$eq", new BsonArray { "$UserManagerId", "$$userId" }),
-                                            new BsonDocument("$eq", new BsonArray { "$UserId", userId.ToString() })
+                                            new BsonDocument("$eq", new BsonArray { "$UserManagerId", userId.ToString() }),
+                                            new BsonDocument("$eq", new BsonArray { "$UserId", "$$userId" })
                                         }
                                     }
                                 }
@@ -42,12 +42,17 @@ public class EventRepository(
                         {
                             { "Access", true },
                             { "_id", false }
-                        })
+                        }),
+                        new BsonDocument("$limit", 1)
                     }
                 },
                 { "as", "permissions" }
             }),
-            new BsonDocument("$unwind", "$permissions"),
+            new BsonDocument("$unwind", new BsonDocument
+            {
+                { "path", "$permissions" },
+                { "preserveNullAndEmptyArrays", true }
+            }),
             new BsonDocument("$match", new BsonDocument
             {
                 { "$or", new BsonArray

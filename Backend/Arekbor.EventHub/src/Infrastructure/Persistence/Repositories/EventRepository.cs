@@ -31,8 +31,8 @@ public class EventRepository(
                                 {
                                     { "$and", new BsonArray
                                         {
-                                            new BsonDocument("$eq", new BsonArray { "$UserManagerId", userId.ToString() }),
-                                            new BsonDocument("$eq", new BsonArray { "$UserId", "$$userId" })
+                                            new BsonDocument("$eq", new BsonArray { "$UserManagerId", "$$userId" }),
+                                            new BsonDocument("$eq", new BsonArray { "$UserId", userId.ToString() })
                                         }
                                     }
                                 }

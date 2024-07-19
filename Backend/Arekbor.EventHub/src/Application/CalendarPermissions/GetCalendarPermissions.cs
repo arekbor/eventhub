@@ -1,4 +1,3 @@
-
 using Arekbor.EventHub.Application.Common.Dtos;
 using Arekbor.EventHub.Application.Common.Interfaces;
 using Arekbor.EventHub.Application.Common.Models;

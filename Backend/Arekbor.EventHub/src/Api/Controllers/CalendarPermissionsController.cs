@@ -23,6 +23,6 @@ public class CalendarPermissionsController : BaseApiController
         => await Send(new UpdateUserCalendarPermission(userId, calendarPermissionBody), cancellationToken);
 
     [HttpDelete]
-    public async Task<IActionResult> RemoveUser(Guid userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Remove(Guid userId, CancellationToken cancellationToken)
         => await Send(new RemoveUserCalendarPermission(userId), cancellationToken);
 }

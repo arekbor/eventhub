@@ -92,7 +92,7 @@ export class CalendarPermissionDialogComponent
       this.safeSub(
         this.calendarPermissionPerform
           .load(
-            this.calendarPermissionService.removeUser(
+            this.calendarPermissionService.remove(
               this.calendarPermission.userId
             ),
             false

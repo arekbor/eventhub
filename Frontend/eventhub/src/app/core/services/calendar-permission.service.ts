@@ -54,7 +54,7 @@ export class CalendarPermissionService {
     );
   }
 
-  public removeUser(userId: string): Observable<void> {
+  public remove(userId: string): Observable<void> {
     return this.httpClient.delete<void>(
       `${environment.apiUrl}/CalendarPermissions`,
       {

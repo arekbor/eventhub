@@ -37,6 +37,7 @@
   </form>
 
   <div class="flex justify-content-end mt-5">
+    @if(calendarPermission) {
     <p-button
       size="small"
       severity="danger"
@@ -45,6 +46,7 @@
       [loading]="calendarPermissionPerform.isLoading"
       (onClick)="onRemoveUser()"
     />
+    }
 
     <app-form-submit
       [form]="form"

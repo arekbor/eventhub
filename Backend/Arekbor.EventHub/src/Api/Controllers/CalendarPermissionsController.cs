@@ -1,4 +1,3 @@
-
 using Arekbor.EventHub.Application.CalendarPermissions;
 using Arekbor.EventHub.Application.Common.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -22,4 +21,8 @@ public class CalendarPermissionsController : BaseApiController
     [HttpPut]
     public async Task<IActionResult> Update(Guid userId, [FromBody] CalendarPermissionBody calendarPermissionBody, CancellationToken cancellationToken)
         => await Send(new UpdateUserCalendarPermission(userId, calendarPermissionBody), cancellationToken);
+
+    [HttpDelete]
+    public async Task<IActionResult> RemoveUser(Guid userId, CancellationToken cancellationToken)
+        => await Send(new RemoveUserCalendarPermission(userId), cancellationToken);
 }

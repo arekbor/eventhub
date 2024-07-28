@@ -22,11 +22,7 @@ public class UpdateCalendarSettingsValidator : AbstractValidator<UpdateCalendarS
             .NotEmpty()
             .NotNull();
 
-        RuleFor(x => x.Body.Color.Primary)
-            .NotEmpty()
-            .NotNull();
-
-        RuleFor(x => x.Body.Color.Secondary)
+        RuleFor(x => x.Body.Color)
             .NotEmpty()
             .NotNull();
     }

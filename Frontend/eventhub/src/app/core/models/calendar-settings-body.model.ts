@@ -1,5 +1,6 @@
+import { EventColor } from "calendar-utils";
+
 export interface CalendarSettingsBody {
-  primaryColor: string;
-  secondaryColor: string;
+  color: EventColor;
   calendarView: string;
 }

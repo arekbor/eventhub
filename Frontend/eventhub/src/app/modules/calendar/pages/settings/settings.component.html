@@ -33,8 +33,9 @@
           <td>
             <p-tag [value]="mapCalendarAccess(item.access)" severity="info" />
           </td>
-          @if(canModify(item.userId)) {
+
           <td>
+            @if(canModify(item.userId)) {
             <p-button
               label="Edit"
               severity="primary"
@@ -42,8 +43,8 @@
               outlined="true"
               (onClick)="onUpdate(item)"
             />
+            }
           </td>
-          }
         </tr>
       </ng-template>
     </p-table>

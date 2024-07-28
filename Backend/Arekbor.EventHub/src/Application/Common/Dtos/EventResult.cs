@@ -1,3 +1,5 @@
+using Arekbor.EventHub.Domain.Entities;
+
 namespace Arekbor.EventHub.Application.Common.Dtos;
 
 public record EventResult(
@@ -7,5 +9,6 @@ public record EventResult(
     DateTime Start, 
     DateTime? End, 
     string? Description, 
-    string UserId
+    string UserId,
+    EventColor Color
 );

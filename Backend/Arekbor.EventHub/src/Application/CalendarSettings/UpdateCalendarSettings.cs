@@ -1,5 +1,6 @@
 using Arekbor.EventHub.Application.Common.Exceptions;
 using Arekbor.EventHub.Application.Common.Interfaces;
+using Arekbor.EventHub.Domain.Entities;
 using FluentValidation;
 using Mapster;
 using MediatR;
@@ -7,8 +8,7 @@ using MediatR;
 namespace Arekbor.EventHub.Application.CalendarSettings;
 
 public record CalendarSettingsBody(
-    string PrimaryColor,
-    string SecondaryColor,
+    EventColor Color,
     string CalendarView
 );
 
@@ -22,11 +22,7 @@ public class UpdateCalendarSettingsValidator : AbstractValidator<UpdateCalendarS
             .NotEmpty()
             .NotNull();
 
-        RuleFor(x => x.Body.PrimaryColor)
-            .NotEmpty()
-            .NotNull();
-
-        RuleFor(x => x.Body.SecondaryColor)
+        RuleFor(x => x.Body.Color)
             .NotEmpty()
             .NotNull();
     }

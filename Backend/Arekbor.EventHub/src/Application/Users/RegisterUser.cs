@@ -55,19 +55,18 @@ internal class RegisterUserHandler(
         await userRepository
             .InsertAsync(user, cancellationToken);
 
-        var calendarPermission = new CalendarPermission
-        {
-            UserManagerId = user.Id,
-            UserId = user.Id,
-            Access = CalendarAccess.CanReadAndModify
-        };
+        await InsertCalendarPermission(user.Id, cancellationToken);
 
-        await calendarPermissionRepository
-            .InsertAsync(calendarPermission, cancellationToken);
+        await InsertCalendarSettings(user.Id, cancellationToken);
+ 
+        return Unit.Value;
+    }
 
+    private async Task InsertCalendarSettings(Guid userId, CancellationToken cancellationToken)
+    {
         var calendarSettings = new Domain.Entities.CalendarSettings
         {
-            UserId = user.Id,
+            UserId = userId,
             PrimaryColor = Domain.Entities
                 .CalendarSettings.GetRandomHex(),
             SecondaryColor = Domain.Entities
@@ -77,7 +76,17 @@ internal class RegisterUserHandler(
 
         await calendarSettingsRepository
             .InsertAsync(calendarSettings, cancellationToken);
- 
-        return Unit.Value;
+    }
+
+    private async Task InsertCalendarPermission(Guid userId, CancellationToken cancellationToken) {
+        var calendarPermission = new CalendarPermission
+        {
+            UserManagerId = userId,
+            UserId = userId,
+            Access = CalendarAccess.CanReadAndModify
+        };
+
+        await calendarPermissionRepository
+            .InsertAsync(calendarPermission, cancellationToken);
     }
 }

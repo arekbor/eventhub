@@ -14,10 +14,10 @@ public class EventBodyValidator: AbstractValidator<EventBody>
             .WithMessage("{PropertyName} cannot contain more than 30 characters.");
 
         RuleFor(x => x.Start)
-            .LessThan(x => x.End);
+            .LessThanOrEqualTo(x => x.End);
 
         RuleFor(x => x.End)
-            .GreaterThan(x => x.Start);
+            .GreaterThanOrEqualTo(x => x.Start);
     }
 } 
  

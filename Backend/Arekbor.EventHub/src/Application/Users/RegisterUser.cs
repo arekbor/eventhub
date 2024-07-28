@@ -1,5 +1,6 @@
 using Arekbor.EventHub.Application.Common.Exceptions;
 using Arekbor.EventHub.Application.Common.Interfaces;
+using Arekbor.EventHub.Domain.Consts;
 using Arekbor.EventHub.Domain.Entities;
 using Arekbor.EventHub.Domain.Enums;
 using Arekbor.TouchBase.Application.Common.Validators;
@@ -32,6 +33,7 @@ public class RegisterUserValidator : AbstractValidator<RegisterUser>
 internal class RegisterUserHandler(
     IUserRepository userRepository,
     ICalendarPermissionRepository calendarPermissionRepository,
+    ICalendarSettingsRepository calendarSettingsRepository,
     IIdentityService identityService
 ) : IRequestHandler<RegisterUser, Unit>
 {
@@ -53,16 +55,38 @@ internal class RegisterUserHandler(
         await userRepository
             .InsertAsync(user, cancellationToken);
 
+        await InsertCalendarPermission(user.Id, cancellationToken);
+
+        await InsertCalendarSettings(user.Id, cancellationToken);
+ 
+        return Unit.Value;
+    }
+
+    private async Task InsertCalendarSettings(Guid userId, CancellationToken cancellationToken)
+    {
+        var calendarSettings = new Domain.Entities.CalendarSettings
+        {
+            UserId = userId,
+            PrimaryColor = Domain.Entities
+                .CalendarSettings.GetRandomHex(),
+            SecondaryColor = Domain.Entities
+                .CalendarSettings.GetRandomHex(),
+            CalendarView = CalendarView.Month,
+        };
+
+        await calendarSettingsRepository
+            .InsertAsync(calendarSettings, cancellationToken);
+    }
+
+    private async Task InsertCalendarPermission(Guid userId, CancellationToken cancellationToken) {
         var calendarPermission = new CalendarPermission
         {
-            UserManagerId = user.Id,
-            UserId = user.Id,
+            UserManagerId = userId,
+            UserId = userId,
             Access = CalendarAccess.CanReadAndModify
         };
 
         await calendarPermissionRepository
             .InsertAsync(calendarPermission, cancellationToken);
- 
-        return Unit.Value;
     }
 }

@@ -16,7 +16,7 @@ import { FormControls } from "@shared/utils/form-controls";
 })
 export class LoginComponent extends BaseComponent implements OnInit {
   protected form: FormGroup<FormGroupControl<Login>>;
-  protected authTokensPerform: Perform<AuthTokens> = new Perform<AuthTokens>();
+  protected loginPerform: Perform<AuthTokens> = new Perform<AuthTokens>();
 
   constructor(
     private router: Router,
@@ -32,7 +32,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
   protected onSubmit(): void {
     this.safeSub(
-      this.authTokensPerform
+      this.loginPerform
         .load(this.userService.login(this.form.getRawValue()), false)
         .subscribe((authTokens: AuthTokens) => {
           this.storageService.setAuthTokens(authTokens);

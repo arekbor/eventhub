@@ -67,10 +67,10 @@ internal class RegisterUserHandler(
         var calendarSettings = new Domain.Entities.CalendarSettings
         {
             UserId = userId,
-            PrimaryColor = Domain.Entities
-                .CalendarSettings.GetRandomHex(),
-            SecondaryColor = Domain.Entities
-                .CalendarSettings.GetRandomHex(),
+            Color = new EventColor(
+                Domain.Entities.CalendarSettings.GetRandomHex(), 
+                Domain.Entities.CalendarSettings.GetRandomHex()
+            ),
             CalendarView = CalendarView.Month,
         };
 

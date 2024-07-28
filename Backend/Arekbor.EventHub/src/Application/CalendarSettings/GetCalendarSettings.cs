@@ -1,13 +1,13 @@
 using Arekbor.EventHub.Application.Common.Exceptions;
 using Arekbor.EventHub.Application.Common.Interfaces;
+using Arekbor.EventHub.Domain.Entities;
 using Mapster;
 using MediatR;
 
 namespace Arekbor.EventHub.Application.CalendarSettings;
 
 public record CalendarSettingsResult(
-    string PrimaryColor,
-    string SecondaryColor,
+    EventColor Color,
     string CalendarView
 );
 

@@ -19,6 +19,7 @@ public class EventRepository(
                 { "Start", new BsonDocument("$gte", start) },
                 { "End", new BsonDocument("$lte", end) }
             }),
+
             new BsonDocument("$lookup", new BsonDocument
             {
                 { "let", new BsonDocument("userId", "$UserId") },
@@ -38,21 +39,25 @@ public class EventRepository(
                                 }
                             }
                         }),
+
                         new BsonDocument("$project", new BsonDocument
                         {
                             { "Access", true },
                             { "_id", false }
                         }),
+
                         new BsonDocument("$limit", 1)
                     }
                 },
                 { "as", "permissions" }
             }),
+
             new BsonDocument("$unwind", new BsonDocument
             {
                 { "path", "$permissions" },
                 { "preserveNullAndEmptyArrays", true }
             }),
+
             new BsonDocument("$match", new BsonDocument
             {
                 { "$or", new BsonArray
@@ -62,6 +67,20 @@ public class EventRepository(
                     }
                 }
             }),
+
+            new BsonDocument("$lookup", new BsonDocument{
+                { "from", "calendarsettings" },
+                { "localField", "UserId" },
+                { "foreignField", "UserId" },
+                { "as", "settings" }
+            }),
+
+            new BsonDocument("$unwind", new BsonDocument
+            {
+                { "path", "$settings" },
+                { "preserveNullAndEmptyArrays", true }
+            }),
+
             new BsonDocument("$project", new BsonDocument
             {
                 { "Id", true },
@@ -70,7 +89,8 @@ public class EventRepository(
                 { "Start", true },
                 { "End", true },
                 { "Description", true },
-                { "UserId", true }
+                { "UserId", true },
+                { "Color", "$settings.Color" }
             })
         };
 

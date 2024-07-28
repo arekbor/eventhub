@@ -14,7 +14,7 @@ public class MongoDbContext
     private readonly IMongoDatabase _mongoDatabase;
 
     public IMongoCollection<TDocument> Collection<TDocument>()
-        => _mongoDatabase.GetCollection<TDocument>(name: $"{typeof(TDocument).Name.ToLower()}s");
+        => _mongoDatabase.GetCollection<TDocument>(CollectionName<TDocument>());
         
     public MongoDbContext(IOptions<MongoDbOptions> options)
     {
@@ -31,5 +31,11 @@ public class MongoDbContext
         var indexDefinition = new IndexKeysDefinitionBuilder<User>().Ascending(field);
         var indexModel = new CreateIndexModel<User>(indexDefinition, indexOptions);
         Collection<User>().Indexes.CreateOneAsync(indexModel);
+    }
+
+    private static string CollectionName<TDocument>() 
+    {
+        var name = typeof(TDocument).Name.ToLower();
+        return name.EndsWith('s') ? name : $"{name}s";
     }
 }

@@ -118,8 +118,7 @@ export class CalendarComponent extends BaseComponent implements OnInit {
             switchMap((calendarSettings: CalendarSettings) => {
               const body = {
                 calendarView: view,
-                primaryColor: calendarSettings.primaryColor,
-                secondaryColor: calendarSettings.secondaryColor,
+                color: calendarSettings.color,
               } as CalendarSettingsBody;
 
               return this.calendarSettingsService.updateCalendarSettings(body);

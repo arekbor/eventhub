@@ -87,6 +87,23 @@ export class CalendarPermissionDialogComponent
     );
   }
 
+  protected onRemoveUser(): void {
+    if (this.calendarPermission?.userId) {
+      this.safeSub(
+        this.calendarPermissionPerform
+          .load(
+            this.calendarPermissionService.remove(
+              this.calendarPermission.userId
+            ),
+            false
+          )
+          .subscribe((): void => {
+            window.location.reload();
+          })
+      );
+    }
+  }
+
   protected searchByEmail(event: AutoCompleteCompleteEvent): void {
     this.safeSub(
       this.userService

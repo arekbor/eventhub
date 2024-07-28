@@ -1,5 +1,6 @@
 using Arekbor.EventHub.Application.Common.Exceptions;
 using Arekbor.EventHub.Application.Common.Interfaces;
+using Arekbor.EventHub.Domain.Consts;
 using Arekbor.EventHub.Domain.Entities;
 using Arekbor.EventHub.Domain.Enums;
 using Arekbor.TouchBase.Application.Common.Validators;
@@ -32,6 +33,7 @@ public class RegisterUserValidator : AbstractValidator<RegisterUser>
 internal class RegisterUserHandler(
     IUserRepository userRepository,
     ICalendarPermissionRepository calendarPermissionRepository,
+    ICalendarSettingsRepository calendarSettingsRepository,
     IIdentityService identityService
 ) : IRequestHandler<RegisterUser, Unit>
 {
@@ -62,6 +64,19 @@ internal class RegisterUserHandler(
 
         await calendarPermissionRepository
             .InsertAsync(calendarPermission, cancellationToken);
+
+        var calendarSettings = new Domain.Entities.CalendarSettings
+        {
+            UserId = user.Id,
+            PrimaryColor = Domain.Entities
+                .CalendarSettings.GetRandomHex(),
+            SecondaryColor = Domain.Entities
+                .CalendarSettings.GetRandomHex(),
+            CalendarView = CalendarView.Month,
+        };
+
+        await calendarSettingsRepository
+            .InsertAsync(calendarSettings, cancellationToken);
  
         return Unit.Value;
     }

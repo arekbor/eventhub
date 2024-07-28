@@ -59,6 +59,7 @@
         label="Create event"
         outlined="true"
         (click)="onCreateEvent()"
+        [loading]="calendarSettingsPerform.isLoading"
       />
 
       <span class="ml-4 text-2xl font-light">{{
@@ -80,6 +81,7 @@
         size="small"
         label="Today"
         [(viewDate)]="viewDate"
+        [loading]="calendarSettingsPerform.isLoading"
       />
 
       <p-button
@@ -90,6 +92,7 @@
         severity="secondary"
         size="small"
         icon="pi pi-chevron-left"
+        [loading]="calendarSettingsPerform.isLoading"
       />
 
       <p-button
@@ -101,8 +104,12 @@
         size="small"
         icon="pi pi-chevron-right"
         class="ml-1"
+        [loading]="calendarSettingsPerform.isLoading"
       />
 
+      @if(calendarSettingsPerform.isLoading) {
+      <p-skeleton width="7rem" />
+      } @else {
       <p-splitButton
         size="small"
         severity="info"
@@ -111,6 +118,7 @@
         [model]="viewMenuItems"
         class="ml-2"
       />
+      }
     </div>
   </div>
 

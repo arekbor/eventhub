@@ -10,7 +10,7 @@
           type="email"
           inputId="email"
           label="Email"
-          [isLoading]="authTokensPerform.isLoading"
+          [isLoading]="loginPerform.isLoading"
           formControlName="email"
         />
 
@@ -18,7 +18,7 @@
           type="password"
           inputId="password"
           label="Password"
-          [isLoading]="authTokensPerform.isLoading"
+          [isLoading]="loginPerform.isLoading"
           formControlName="password"
         />
       </form>
@@ -28,7 +28,7 @@
       <div class="flex flex-column align-items-center">
         <app-form-submit
           [form]="form"
-          [isLoading]="authTokensPerform.isLoading"
+          [isLoading]="loginPerform.isLoading"
           (validSubmit)="onSubmit()"
           >Login</app-form-submit
         >
@@ -40,7 +40,7 @@
           link="true"
           severity="contrast"
           size="small"
-          [loading]="authTokensPerform.isLoading"
+          [loading]="loginPerform.isLoading"
           (onClick)="onCreateAccount()"
         />
       </div>

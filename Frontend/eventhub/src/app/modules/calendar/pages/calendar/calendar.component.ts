@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { CalendarSettingsBody } from "@core/models/calendar-settings-body.model";
 import { Event } from "@core/models/event.model";
+import { CalendarSettingsService } from "@core/services/calendar-settings.service";
 import { EventService } from "@core/services/event.service";
+import { StorageService } from "@core/services/storage.service";
 import { BaseComponent } from "@modules/base.component";
 import { EventDialogComponent } from "@modules/calendar/components/event-dialog/event-dialog.component";
 import {
@@ -10,6 +13,7 @@ import {
 } from "angular-calendar";
 import { MenuItem } from "primeng/api";
 import { DialogService, DynamicDialogConfig } from "primeng/dynamicdialog";
+import { Perform } from "../../../perform";
 
 @Component({
   selector: "app-calendar",
@@ -26,17 +30,22 @@ export class CalendarComponent extends BaseComponent implements OnInit {
   protected viewMenuItems: MenuItem[];
 
   protected viewPeriod: CalendarViewPeriod;
+
+  protected calendarSettingsPerform = new Perform<void>();
+
   private previousViewPeriod: CalendarViewPeriod;
 
   constructor(
     private dialogService: DialogService,
-    private eventService: EventService
+    private eventService: EventService,
+    private calendarSettingsService: CalendarSettingsService,
+    private storageService: StorageService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.setView(CalendarView.Month);
+    this.initView();
     this.setViewMenuItems();
   }
 
@@ -80,22 +89,46 @@ export class CalendarComponent extends BaseComponent implements OnInit {
       {
         label: "Day",
         command: () => {
-          this.setView(CalendarView.Day);
+          this.updateView(CalendarView.Day);
         },
       },
       {
         label: "Week",
         command: () => {
-          this.setView(CalendarView.Week);
+          this.updateView(CalendarView.Week);
         },
       },
       {
         label: "Month",
         command: () => {
-          this.setView(CalendarView.Month);
+          this.updateView(CalendarView.Month);
         },
       },
     ];
+  }
+
+  private updateView(view: CalendarView): void {
+    const body = {
+      calendarView: view,
+      primaryColor: this.storageService.getPrimaryColor(),
+      secondaryColor: this.storageService.getSecondaryColor(),
+    } as CalendarSettingsBody;
+
+    this.safeSub(
+      this.calendarSettingsPerform
+        .load(this.calendarSettingsService.updateCalendarSettings(body))
+        .subscribe((): void => {
+          this.setView(view);
+          this.storageService.setCalendarView(view);
+        })
+    );
+  }
+
+  private initView(): void {
+    const view = this.storageService.getCalendarView();
+    if (view) {
+      this.setView(view as CalendarView);
+    }
   }
 
   private setView(view: CalendarView): void {

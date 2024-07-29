@@ -32,8 +32,10 @@ import { TieredMenuModule } from "primeng/tieredmenu";
 import { ToastModule } from "primeng/toast";
 import { ToggleButtonModule } from "primeng/togglebutton";
 import { PaginatorModule } from 'primeng/paginator';
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 export const AppPrimeNgModule = [
+  ColorPickerModule,
   PaginatorModule,
   MessagesModule,
   TagModule,

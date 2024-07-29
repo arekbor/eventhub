@@ -4,7 +4,6 @@ import { CalendarSettings } from "@core/models/calendar-settings.model";
 import { Event } from "@core/models/event.model";
 import { CalendarSettingsService } from "@core/services/calendar-settings.service";
 import { EventService } from "@core/services/event.service";
-import { StorageService } from "@core/services/storage.service";
 import { BaseComponent } from "@modules/base.component";
 import { EventDialogComponent } from "@modules/calendar/components/event-dialog/event-dialog.component";
 import { Perform } from "@modules/perform";
@@ -41,8 +40,7 @@ export class CalendarComponent extends BaseComponent implements OnInit {
   constructor(
     private dialogService: DialogService,
     private eventService: EventService,
-    private calendarSettingsService: CalendarSettingsService,
-    private storageService: StorageService
+    private calendarSettingsService: CalendarSettingsService
   ) {
     super();
   }

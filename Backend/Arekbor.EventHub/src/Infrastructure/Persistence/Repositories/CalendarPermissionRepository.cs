@@ -13,11 +13,9 @@ public class CalendarPermissionRepository(
 {
     public Task<CalendarPermission> FindUserCalendarPermissionAsync(
         Guid userId, Guid userManagerId, CancellationToken cancellationToken)
-    {
-        return MongoDbContext.Collection<CalendarPermission>()
-            .Find(x => x.UserManagerId == userManagerId && x.UserId == userId)
-            .FirstOrDefaultAsync(cancellationToken);
-    }
+            => MongoDbContext.Collection<CalendarPermission>()
+                .Find(x => x.UserManagerId == userManagerId && x.UserId == userId)
+                .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<PaginatedList<CalendarPermissionResult>> FindUserCalendarPermissionsAsync
         (Guid userManagerId, int pageNumber, int pageSize, CancellationToken cancellationToken)
@@ -28,6 +26,7 @@ public class CalendarPermissionRepository(
             {
                 { "UserManagerId", userManagerId.ToString() }
             }),
+
             new BsonDocument("$lookup", new BsonDocument
             {
                 { "from", "users" },
@@ -35,12 +34,15 @@ public class CalendarPermissionRepository(
                 { "foreignField", "_id" },
                 { "as", "userResult" }
             }),
+
             new BsonDocument("$unwind", "$userResult"),
+
             new BsonDocument("$addFields", new BsonDocument
             {
                 { "Username", "$userResult.Username" },
                 { "Email", "$userResult.Email" }
             }),
+
             new BsonDocument("$project", new BsonDocument
             {
                 { "_id", false },

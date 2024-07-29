@@ -9,8 +9,6 @@ public class CalendarSettingsRepository(
 ) : BaseRepository<CalendarSettings>(mongoDbContext), ICalendarSettingsRepository
 {
     public Task<CalendarSettings> FindCalendarSettings(Guid userId, CancellationToken cancellationToken)
-    {
-        return MongoDbContext.Collection<CalendarSettings>()
+        => MongoDbContext.Collection<CalendarSettings>()
             .Find(x => x.UserId == userId).FirstOrDefaultAsync(cancellationToken);
-    }
 }

@@ -31,6 +31,7 @@ public class PaginatedQuery
                         new BsonDocument("$count", "count")
                     }
                 },
+                
                 { "results", new BsonArray
                     {
                         new BsonDocument("$skip", (pageNumber -1) * pageSize),
